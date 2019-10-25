@@ -1,0 +1,38 @@
+.container-fluid {
+    min-height: 100vh;
+}
+
+.spotify {
+    color: white;
+    border-radius: 100px;
+    width: 70%;
+    border: 2px solid #282828;
+    background-color: white;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition-duration: 0.3s;
+}
+
+.spotify:hover {
+    background-color: #282828;
+    border: 2px solid #1DB954;
+    box-shadow: 0 0 8px rgba(30, 215, 96, 0.6);
+}
+
+.start-game {
+    width: 70%;
+    border-radius: 100px;
+    border-style: none;
+    font-weight: bold;
+}
+
+.spotify_logo {
+    width: 70%;
+    height: auto;
+}
+
+.before-login, .after-login {
+    margin-top: 100px;
+    border-style: none;
+}
+

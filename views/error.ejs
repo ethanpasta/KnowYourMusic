@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Error</title>
+</head>
+
+<body>
+
+    <script>
+        let count = 0;
+        window.setInterval(function () {
+            const fullWidth = window.innerWidth;
+            const fullHeight = window.innerHeight;
+            const text = "error";
+            const elem = document.createElement("div");
+            elem.textContent = text;
+            elem.style.position = "absolute";
+            elem.style.fontWeight = "bold";
+            elem.style.fontSize = Math.round(Math.random() * 100) + "px";
+            elem.style.color = "rgb(" + Math.round(Math.random() * 255) + ", " + Math.round(Math.random() * 254 + 1) + ", " + Math.round(Math.random() * 254 + 1) + ")";
+            elem.style.fontFamily = 'OCR A Std, monospace';
+            elem.style.left = Math.round(Math.random() * fullWidth) + "px";
+            elem.style.top = Math.round(Math.random() * fullHeight) + "px";
+            document.body.appendChild(elem);
+            count++;
+        }, 40);
+        if (count === 300) {
+            document.body.innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>

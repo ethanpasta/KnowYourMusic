@@ -1,0 +1,36 @@
+.songs {
+    padding-top: 10%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+.song-option:hover {
+    background-color: #4CC2DB;
+}
+
+.clicked {
+    border: 2px solid purple;
+}
+
+.success {
+    background-color: green !important;
+}
+
+.failed {
+    background-color: red !important;
+}
+
+.song-option {
+    margin: 20px 0;
+    border-radius: 7px;
+    border: 2px solid #4CC2DB;
+    background: none;
+    flex-basis: 35%;
+    transition: 0.5s;
+}
+
+.song-name {
+    display: inline-block;
+    padding: 5% 0;
+    font-size: 20px;
+}

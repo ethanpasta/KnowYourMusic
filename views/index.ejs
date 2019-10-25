@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/index.css">
+
+    <title>KnowYourMusic</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center display-2">Know Your Music</h1>
+
+        <% if (name) { %>
+        <div class="mx-auto card text-center w-25 after-login">
+            <div class="card-header">Let's Play!</div>
+            <div class="card-body">
+                <h5 class="card-title">Welcome <%= name %>, are you ready?</h5>
+                <p class="card-text">Let's do this.</p>
+                <div class="text-center"><a href="/game"
+                        class="start-game btn btn-secondary btn-lg">Start!</a></div>
+            </div>
+        </div>
+        <% } else {%>
+        <div class="mx-auto card text-center w-25 before-login">
+            <div class="card-header">Play With Your Stuff</div>
+            <div class="card-body">
+                <p class="card-text">Login using your Spotify account and play with your own songs!</p>
+                <br/>
+                <div class="text-center"><a href="/login" class="spotify btn btn-lg"><img src="images/spotify.png" class="spotify_logo" /></a></div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="javascripts/index.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.start-game').click(function() {
+                const $this = $(this);
+                $this.prop('disabled', true);
+                $this.removeClass('hvr-grow-shadow');
+                const load = '<span class="align-middle spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  Loading...';
+                $this.html(load);
+            })
+        });
+    </script>
+</body>
+
+</html>
