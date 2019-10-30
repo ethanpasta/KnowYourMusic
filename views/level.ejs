@@ -2,33 +2,54 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
     <link rel="stylesheet" href="stylesheets/level.css">
+    <link rel="stylesheet" href="stylesheets/general.css">
     <title>KnowYourMusic</title>
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="header">
-            <h4 class="text-center display-4">What song is this?</h4>
-            <h3 class="text-center display-3 line"><i></i></h3>
-            <h3 class="text-center display-3 timer"></h3>
+        <div class="navbar">
+            <a href="#">
+                <h2 class="head-logo" data-shadow="KnowYourMusic">KnowYourMusic</h2>
+            </a>
+            <a href="#" class="head-about" data-toggle="modal" data-target="#aboutModal">About</a>
         </div>
-        <form method="POST" class="songs">
-            <button class="song-option" type="button" name="option1"><span class="song-name"></span></button>
-            <button class="song-option" type="button" name="option2"><span class="song-name"></span></button>
-            <button class="song-option" type="button" name="option3"><span class="song-name"></span></button>
-            <button class="song-option" type="button" name="option4"><span class="song-name"></span></button>
-        </form>
-        <p class="data"></p>
+        <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">About KnowYourMusic</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        KnowYourMusic is a lyric guessing game built by <a href="http://eitanmayer.com"
+                            target="#"><i><b>Ethan Mayer</b></i></a>. This game was built as an end-of-year project at
+                        Holberton School. If you're interested in how this game was built, check out its <a href="#"
+                            target="#"><i><b>Github repository</b></i></a>.<br />Enjoy!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cont-body">
+            <div class="header">
+                <div class="line"><i></i></div>
+                <div class="timer"></div>
+            </div>
+            <div class="songs"></div>
+        </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="javascripts/jquery-3.4.1.min.js"></script>
+    <script src="javascripts/bootstrap.js"></script>
     <script src="javascripts/level.js"></script>
 </body>
 

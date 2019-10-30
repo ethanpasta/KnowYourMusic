@@ -1,29 +1,42 @@
-.container-fluid {
-    min-height: 100vh;
+.cont-body {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  height: 80vh;
+}
+
+.cont-body .titles {
+  color: 	rgba(0,58,89,0.7);
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+}
+
+.titles p:first-child {
+  font-size: 4em;
+  animation: 1s ease-out 0s slideInFromLeft;
+}
+
+.subtitle {
+  font-size: 1.3em;
+  text-align: center;
+  animation: 1s ease-out 0s slideInFromRight;
 }
 
 .spotify {
     color: white;
     border-radius: 100px;
-    width: 70%;
-    border: 2px solid #282828;
-    background-color: white;
+    border: 3px solid #282828;
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     transition-duration: 0.3s;
+    width: 300px;
+    animation: 1s ease-out 0s slideInFromBottom;
 }
 
 .spotify:hover {
     background-color: #282828;
-    border: 2px solid #1DB954;
+    border: 3px solid #1DB954;
     box-shadow: 0 0 8px rgba(30, 215, 96, 0.6);
-}
-
-.start-game {
-    width: 70%;
-    border-radius: 100px;
-    border-style: none;
-    font-weight: bold;
 }
 
 .spotify_logo {
@@ -31,8 +44,60 @@
     height: auto;
 }
 
-.before-login, .after-login {
-    margin-top: 100px;
-    border-style: none;
+.greetings {
+  line-height: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  margin-top: 150px;
+  color: rgba(0,58,89, 0.8);
+  height: 50vh;
 }
+
+#welcome {
+  font-family: 'Alegreya SC', serif;
+  font-style: italic;
+  font-size: 30px;
+  animation: 1s ease-out 0s slideInFromTop;
+}
+
+#name {
+  font-family: 'Monoton', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  word-spacing: 10px;
+  font-size: 5em;
+  animation: 1s ease-out 0s slideInFromLeft;
+}
+
+#play {
+  font-family: 'Alegreya SC', serif;
+  font-style: italic;
+  font-size: 30px;
+  text-align: right;
+  animation: 1s ease-out 0s slideInFromBottom;
+}
+
+.start-game {
+  text-decoration: none;
+  background-color: rgba(0, 58, 89, 0.7);
+  width: 150px;
+  height: 75px;
+  font-family: 'Raleway', sans-serif;
+  color: white;
+  font-weight: 600;
+  font-size: 1.5em;
+  line-height: 75px;
+  text-align: center;
+  border-radius: 3px;
+  align-self: flex-end;
+  animation: 1s ease-out 0s slideInFromRight;
+}
+
+.start-game:hover {
+  text-decoration: none;
+  color: white;
+  background-color: rgba(0,34,53, 0.7);
+}
+
 

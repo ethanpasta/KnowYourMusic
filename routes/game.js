@@ -29,7 +29,7 @@ const getAllTracks = async function (access_token) {
             artists: artists,
         })
     });
-    while (offset <= 100 /* res.next */) {
+    while (res.next) {
         offset += 50;
         res = await getTrack(offset, access_token);
         res.items.forEach(element => {
@@ -70,7 +70,6 @@ const getTrackLyrics = function (obj) {
 };
 const getRandomSongs = async function (all) {
     const result = [];
-    const answers = [];
     let len = all.length;
     while (result.length != 10) {
         const r = Math.floor(Math.random() * len);
@@ -79,7 +78,6 @@ const getRandomSongs = async function (all) {
             lyrics = lyrics.split(/\r\n|\r|\n/).slice(1, -4).filter((el) => {
                 return el && el.split(' ').length > 1;
             });
-            answers.push(all[r]);
             result.push({
                 tracks: [all[r]],
                 line: lyrics[Math.floor(Math.random() * lyrics.length)]
@@ -92,10 +90,7 @@ const getRandomSongs = async function (all) {
         result[i % 10].tracks.push(all[r]);
         all[r] = all[--len];
     }
-    return {
-        result: result,
-        answers: answers
-    };
+    return result;
 }
 const letsFinishThis = async function (access_token) {
     return getAllTracks(access_token).then(data => {
@@ -116,8 +111,8 @@ router.get('/', function (req, res) {
         const access_token = req.session.token;
         if (!req.session.game) {
             letsFinishThis(access_token).then(data => {
-                req.session.game = data.result;
-                req.session.answers = data.answers;
+                req.session.game = data;
+                console.log(data);
                 res.render('level');
             }).catch(err => {
                 res.render('error');
@@ -137,19 +132,18 @@ router.get('/data', function (req, res) {
     }
 });
 
-let level = 0;
+router.post('/score', function (req, res) {
+    const score = req.body.score;
+    req.session.score = score;
+    res.redirect('/game/end');
+})
 
-router.post('/', function (req, res) {
-    const name = req.body.name;
-    if (!req.session.score) {
-        req.session.score = 0;
-    }
-    if (name === req.session.answers[level].song) {
-        req.session.score++;
-        res.send(true);
-    } else {
-        res.send(false);
-    }
-});
+router.get('/end', function (req, res) {
+    res.render('end', { score: req.session.score });
+})
+
+
+
+
 
 module.exports = router;

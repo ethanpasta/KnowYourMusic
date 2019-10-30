@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ethanpasta/KnowYourMusic#readme",
   "dependencies": {
     "async": "^3.1.0",
+    "await-timeout": "^0.6.0",
     "axios": "^0.19.0",
     "cookie-parser": "^1.4.4",
     "debug": "~2.6.9",

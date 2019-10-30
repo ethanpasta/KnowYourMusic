@@ -1,16 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="stylesheets/bootstrap.css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheets/index.css">
-    <link rel="stylesheet" href="stylesheets/general.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>KnowYourMusic</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="stylesheets/level.css">
+    <link rel="stylesheet" href="stylesheets/general.css">
+    <style>
+        .cont-body {
+            text-align: center;
+            margin-top: 200px;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,42 +46,17 @@
                 </div>
             </div>
         </div>
-        <% if (name) { %>
-        <div class="greetings">
-            <div class="greet-name">
-                <p id="welcome">welcome,</p><br />
-                <p id="name"><%= name %></p>
-                <p id="play">Are you ready to play?</p>
-            </div>
-            <a href="/game" class="start-game">Start!</a>
-        </div>
-
-        <% } else {%>
         <div class="cont-body">
-            <div class="titles">
-                <p>A Lyric Guessing Game</p><br />
-                <p class="subtitle">Log In with your Spotify account, and play with your own songs!</p>
-            </div>
-            <div class="text-center"><a href="/login" class="spotify btn btn-lg"><img src="images/spotify.png"
-                        class="spotify_logo" /></a></div>
-        </div>
-        <% } %>
-        <div class="footer">
-            <p>Created by <a href="http://eitanmayer.com" target="#"><i><b>Ethan Mayer</b></i></a></p>
+            <div class="score" style="display: none;"><%= score %></div>
+            <h1>Game Over!</h1>
+            <h3></h3>
         </div>
     </div>
     <script src="javascripts/jquery-3.4.1.min.js"></script>
     <script src="javascripts/bootstrap.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.start-game').click(function () {
-                const $this = $(this);
-                $this.prop('disabled', true);
-                $this.removeClass('hvr-grow-shadow');
-                const load = '<span class="align-middle spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  Loading...';
-                $this.html(load);
-            })
-        });
+        const score = $('score').html();
+        $('h3').html('You\'re score: ' + ((score / 10) * 100) + '%');
     </script>
 </body>
 
