@@ -8,7 +8,7 @@ const router = express.Router();
 
 const my_client_id = 'f47820612ffa4f99aa3da9cbcd4efc5f';
 const my_client_secret = 'c3f2f2615a544171802c4d41fcb59ca4';
-const redirect_uri = 'http://localhost:3000/callback';
+const redirect_uri = 'https://knowyourmusic.herokuapp.com/callback';
 
 
 router.get('/', function (req, res) {
