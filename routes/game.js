@@ -53,7 +53,7 @@ const getTrackLyrics = function (obj) {
             format: 'json',
             q_track: utf8.encode(title),
             q_artist: utf8.encode(artist),
-            apikey: process.env.MUSIX_API_KEY
+            apikey: '5f6eabe9cb91ff48968b2c582d8c88cc'
         });
     return axios.get(url).then(res => {
         if (res.status === 200 &&

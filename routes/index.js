@@ -4,12 +4,11 @@ const querystring = require('query-string');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
 const router = express.Router();
-require('dotenv').config();
 
 
-const my_client_id = process.env.SPOTIFY_API_ID;
-const my_client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const redirect_uri = process.env.CALLBACK_URL;
+const my_client_id = 'f47820612ffa4f99aa3da9cbcd4efc5f';
+const my_client_secret = 'c3f2f2615a544171802c4d41fcb59ca4';
+const redirect_uri = 'http://localhost:3000/callback';
 
 
 router.get('/', function (req, res) {
