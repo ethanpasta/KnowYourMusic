@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>KnowYourMusic</title>
-    <link rel="stylesheet" href="stylesheets/bootstrap.css">
-    <link rel="stylesheet" href="stylesheets/level.css">
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/general.css">
     <style>
         .cont-body {
@@ -49,14 +48,17 @@
         <div class="cont-body">
             <div class="score" style="display: none;"><%= score %></div>
             <h1>Game Over!</h1>
-            <h3></h3>
+            <h3 class="final"></h3>
         </div>
     </div>
+    <script src="javascripts/bootstrap.min.js"></script>
     <script src="javascripts/jquery-3.4.1.min.js"></script>
-    <script src="javascripts/bootstrap.js"></script>
     <script>
-        const score = $('score').html();
-        $('h3').html('You\'re score: ' + ((score / 10) * 100) + '%');
+        $(document).ready(() => {
+            const score = $('score').html();
+            console.log(score);
+            $('.final').html('You\'re score: ' + (score * 10) + '%');
+        })
     </script>
 </body>
 
