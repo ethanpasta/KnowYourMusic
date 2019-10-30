@@ -12,16 +12,20 @@ const redirect_uri = 'https://knowyourmusic.herokuapp.com/callback';
 
 
 router.get('/', function (req, res) {
-  if (req.session.token != undefined){
+  res.render('index', { name: false });
+});
+
+router.get('/start', function (req, res) {
+  if (req.session.token != undefined) {
     axios.get('https://api.spotify.com/v1/me?access_token=' + req.session.token).then(data => {
       const name = data.data.display_name;
-      res.render('index', {name: name});
+      res.render('index', { name: name });
     }).catch(err => {
       console.log(err);
       res.render('error');
     });
   } else {
-    res.render('index', {name: false});
+    res.render('error');
   }
 });
 
