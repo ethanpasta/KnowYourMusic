@@ -93,7 +93,7 @@ router.get('/callback', function (req, res) {
         const refresh_token = body.refresh_token;
         req.session.token = access_token;
         req.session.refresh = refresh_token;
-        res.redirect('/');
+        res.redirect('/start');
       } else {
         console.log(error);
         console.log(response.statusCode);
