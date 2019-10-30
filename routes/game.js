@@ -3,7 +3,6 @@ const request = require('request');
 const axios = require('axios');
 const utf8 = require('utf8')
 var querystring = require('query-string');
-require('dotenv').config();
 const router = express.Router();
 
 const getTrack = function (offset, access_token) {
