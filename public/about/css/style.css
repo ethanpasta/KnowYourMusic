@@ -143,6 +143,12 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 
+.my-face {
+  width: 30%;
+  background: url(../img/team-1.jpg) center center;
+  background-size: cover;
+}
+
 @media (min-width: 1024px) {
   #hero {
     background-attachment: fixed;
