@@ -6,15 +6,9 @@ const axios = require('axios');
 const router = express.Router();
 
 
-<<<<<<< HEAD
 const my_client_id = 'f47820612ffa4f99aa3da9cbcd4efc5f';
 const my_client_secret = 'c3f2f2615a544171802c4d41fcb59ca4';
 const redirect_uri = 'http://localhost:4000/callback' /* 'https://knowyourmusic.herokuapp.com/callback' */;
-=======
-const my_client_id = '';
-const my_client_secret = '';
-const redirect_uri = 'https://knowyourmusic.herokuapp.com/callback';
->>>>>>> 515fc0cc23b079c34b4e22a81c110936abdc7bde
 
 
 router.get('/', function (req, res) {
