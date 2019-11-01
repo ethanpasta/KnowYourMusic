@@ -1,34 +1,68 @@
-.cont-body {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    background: -webkit-linear-gradient(#7927b2, #fb3182);
-    background: -moz-linear-gradient(#7927b2, #fb3182);
-    background: -o-linear-gradient(#7927b2, #fb3182);
-    background: linear-gradient(#7927b2, #fb3182);
-    height: 85vh;
-    padding-bottom: 10px;
+body {
+    overflow: hidden;
+}
+
+.container-fluid {
+  width: 98%;
+  padding: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  background: -webkit-linear-gradient(#7927b2, #fb3182);
+  background: -moz-linear-gradient(#7927b2, #fb3182);
+  background: -o-linear-gradient(#7927b2, #fb3182);
+  background: linear-gradient(#7927b2, #fb3182);
+  background-size: cover;
+  overflow-y: scroll;
+  overflow: hidden;
 }
 
 .line {
-    font-family: 'Nunito', sans-serif;
+    margin-top: 5%;
+    font-family: 'Raleway', sans-serif;
     font-size: 2.5em;
-    font-weight: bold;
     color: white;
     text-align: center;
+    font-style: italic;
+}
+.quest {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  color: #012959;
 }
 
-.timer {
-    font-size: 60px;
-    height: 100px;
-    font-weight: 200;
+.bar {
+    height: 30px;
+    width: 100%;
     text-align: center;
+    margin: 0 auto;
+}
+
+.in {
+    animation: empty 10s linear;
+    height: 100%;
+    background-color: #ffedfc;
+    float: right;
+}
+
+@keyframes empty {
+    0% {
+      width: 100%;
+    }
+    60% {
+      background-color: #ffedfc;
+    }
+    100% {
+      width: 0%;
+      background-color: #ee0000;
+    }
 }
 
 .songs {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
+  margin-top: 5%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
 }
 
 
@@ -118,20 +152,4 @@
         align-content: center;
         overflow-y: scroll;
     }
-  }
-
-  .hvr-grow-rotate {
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-  }
-  .hvr-grow-rotate:hover, .hvr-grow-rotate:focus, .hvr-grow-rotate:active {
-    -webkit-transform: scale(1.1) rotate(4deg);
-    transform: scale(1.1) rotate(4deg);
   }

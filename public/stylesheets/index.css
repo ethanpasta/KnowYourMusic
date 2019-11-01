@@ -1,11 +1,12 @@
-.cont-body {
+
+.container-fluid {
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-evenly;
-  height: 80vh;
+  justify-content: space-around;
+  padding: 100px 50px;
 }
 
-.cont-body .titles {
+.container-fluid .titles {
   color: 	rgba(0,58,89,0.7);
   text-align: center;
   font-family: 'Raleway', sans-serif;
@@ -23,6 +24,7 @@
 }
 
 .spotify {
+  margin-top: 50px;
     color: white;
     border-radius: 100px;
     border: 3px solid #282828;
@@ -44,14 +46,8 @@
     height: auto;
 }
 
-.greetings {
-  line-height: 1;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  margin-top: 150px;
-  color: rgba(0,58,89, 0.8);
-  height: 50vh;
+.greet-name {
+  margin: 0 auto;
 }
 
 #welcome {
@@ -70,27 +66,17 @@
   animation: 1s ease-out 0s slideInFromLeft;
 }
 
-#play {
-  font-family: 'Alegreya SC', serif;
-  font-style: italic;
-  font-size: 30px;
-  text-align: right;
-  animation: 1s ease-out 0s slideInFromBottom;
-}
-
 .start-game {
   text-decoration: none;
   background-color: rgba(0, 58, 89, 0.7);
-  width: 150px;
-  height: 75px;
   font-family: 'Raleway', sans-serif;
+  padding: 15px 15px;
   color: white;
   font-weight: 600;
   font-size: 1.5em;
   line-height: 75px;
   text-align: center;
   border-radius: 3px;
-  align-self: flex-end;
   animation: 1s ease-out 0s slideInFromRight;
 }
 
@@ -99,5 +85,8 @@
   color: white;
   background-color: rgba(0,34,53, 0.7);
 }
+
+
+
 
 

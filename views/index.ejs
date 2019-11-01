@@ -14,9 +14,9 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="everything">
         <div class="navbar">
-            <a href="#">
+            <a href="/">
                 <h2 class="head-logo" data-shadow="KnowYourMusic">KnowYourMusic</h2>
             </a>
             <a href="#" class="head-about" data-toggle="modal" data-target="#aboutModal">About</a>
@@ -42,42 +42,32 @@
                 </div>
             </div>
         </div>
-        <% if (name) { %>
-        <div class="greetings">
+        <div class="container-fluid">
+            <% if (name) { %>
             <div class="greet-name">
-                <p id="welcome">welcome,</p><br />
+                <p id="welcome">welcome,</p>
                 <p id="name"><%= name %></p>
-                <p id="play">Are you ready to play?</p>
             </div>
-            <a href="/game" class="start-game">Start!</a>
-        </div>
-
-        <% } else {%>
-        <div class="cont-body">
+            <div style="align-self: center;" class="hvr-grow-shadow"><a href="/game" class="start-game">Ready to play?</a></div>
+            <% } else {%>
             <div class="titles">
                 <p>A Lyric Guessing Game</p><br />
                 <p class="subtitle">Log In with your Spotify account, and play with your own songs!</p>
             </div>
-            <div class="text-center"><a href="/login" class="spotify btn btn-lg"><img src="images/spotify.png"
-                        class="spotify_logo" /></a></div>
+            <div class="text-center"><button class="spotify btn btn-lg"><img src="images/spotify.png"
+                        class="spotify_logo" /></button></div>
+            <% } %>
         </div>
-        <% } %>
         <div class="footer">
             <p>Created by <a href="http://eitanmayer.com" target="#"><i><b>Ethan Mayer</b></i></a></p>
         </div>
     </div>
     <script src="javascripts/jquery-3.4.1.min.js"></script>
     <script src="javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/index.js"></script>
+    <script src="javascripts/login.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.start-game').click(function () {
-                const $this = $(this);
-                $this.prop('disabled', true);
-                $this.removeClass('hvr-grow-shadow');
-                const load = '<span class="align-middle spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  Loading...';
-                $this.html(load);
-            })
-        });
+
     </script>
 </body>
 

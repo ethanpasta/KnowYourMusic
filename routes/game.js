@@ -108,18 +108,14 @@ router.get('/', function (req, res) {
         res.redirect('/');
     } else {
         const access_token = req.session.token;
-        if (!req.session.game) {
-            letsFinishThis(access_token).then(data => {
-                req.session.game = data;
-                console.log(data);
-                res.render('level');
-            }).catch(err => {
-                res.render('error');
-                console.log(err);
-            });
-        } else {
+        letsFinishThis(access_token).then(data => {
+            req.session.game = data;
+            console.log(data);
             res.render('level');
-        }
+        }).catch(err => {
+            res.render('error');
+            console.log(err);
+        });
     }
 });
 
@@ -134,15 +130,7 @@ router.get('/data', function (req, res) {
 router.post('/score', function (req, res) {
     const score = req.body.score;
     req.session.score = score;
-    res.redirect('/game/end');
+    res.end();
 })
-
-router.get('/end', function (req, res) {
-    res.render('end', { score: req.session.score });
-})
-
-
-
-
 
 module.exports = router;

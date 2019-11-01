@@ -13,6 +13,21 @@
             text-align: center;
             margin-top: 200px;
         }
+        a.again {
+            text-decoration: none;
+            background-color: rgba(0, 58, 89, 0.7);
+            font-family: 'Raleway', sans-serif;
+            padding: 15px 15px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.5em;
+            line-height: 75px;
+            text-align: center;
+            border-radius: 3px;
+            margin: 0 auto;
+            border: none;
+        }
+        
     </style>
 </head>
 
@@ -49,13 +64,14 @@
             <div class="score" style="display: none;"><%= score %></div>
             <h1>Game Over!</h1>
             <h3 class="final"></h3>
+            <div class="hvr-grow-shadow"><a href="/start" class="again">Play again?</a></div>
         </div>
     </div>
     <script src="javascripts/bootstrap.min.js"></script>
     <script src="javascripts/jquery-3.4.1.min.js"></script>
     <script>
         $(document).ready(() => {
-            const score = $('score').html();
+            const score = $('.score').html();
             console.log(score);
             $('.final').html('You\'re score: ' + (score * 10) + '%');
         })

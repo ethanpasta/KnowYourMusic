@@ -1,7 +1,8 @@
 function displayPage(data, level) {
     $('button.song-option').removeClass('clicked done');
     $('.song-name').removeClass('true false');
-    $('.line').html(data[level].line);
+    $('.line').html('" ' + data[level].line + ' "');
+    $('.quest').html('What song is this line from?')
     function shuffle(a) {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -12,26 +13,27 @@ function displayPage(data, level) {
     const buttons = document.getElementsByClassName('song-option')
     const arr = shuffle($.makeArray(buttons));
     $('.songs').html(arr);
+    let pretty;
     for (let i = 0; i < 4; i++) {
-        $(`button[name='${i}']`).find('.song-title').html(data[level].tracks[i].song.replace(/ *\([^)]*\) */g, ""));
+        pretty = data[level].tracks[i].song.replace(/ *\([^)]*\) */g, "");
+        pretty = pretty.replace(/ *-.+/g, "");
+        $(`button[name='${i}']`).find('.song-title').html(pretty);
         $(`button[name='${i}']`).find('.song-artist').html(data[level].tracks[i].artists[0]);
     }
-    let counter = 10;
-    $('.timer').html(counter);
-    const timer = setInterval(function () {
-        counter--;
-        if (counter === 0) { clearInterval(timer); $('.timer').html('') }
-        else $('.timer').html(counter);
-    }, 1000);
+    $('.in-progress').addClass('in');
 }
 
 function parseResult(result) {
-    if (result === true) {
+    if ($('button.song-option').hasClass('clicked') && $('.clicked').attr('name') === '0') {
         $('.clicked').addClass('done').find('.song-name').addClass("true");
+        $('.quest').html('CORRECT!')
+        return 1;
     } else {
         $('button[name="0"]').find('.song-name').addClass("true");
         $('button[name!="0"]').find('.song-name').addClass("false");
         $('button.song-option').addClass('done');
+        $('button.song-option').hasClass('clicked') ? $('.quest').html('WRONG :(') : $('.quest').html('Too late!');
+        return 0;
     }
 }
 
@@ -76,16 +78,12 @@ async function loop() {
     for (let level = 0; level < 10; level++) {
         displayPage(data, level);
         await timeout(10000);
-        if ($('button.song-option').hasClass('clicked') && $('.clicked').attr('name') === '0') {
-            parseResult(true)
-            score++;
-        } else {
-            parseResult(false);
-        }
+        $('.in-progress').removeClass('in');
+        score += parseResult();
         await timeout(2000);
     }
     await $.post('/game/score', { score: score });
-    location.href = "/game/end";
+    window.location.href = "/end";
 }
 
 loop();

@@ -8,7 +8,7 @@ const router = express.Router();
 
 const my_client_id = 'f47820612ffa4f99aa3da9cbcd4efc5f';
 const my_client_secret = 'c3f2f2615a544171802c4d41fcb59ca4';
-const redirect_uri = 'https://knowyourmusic.herokuapp.com/callback';
+const redirect_uri = 'http://localhost:4000/callback' /* 'https://knowyourmusic.herokuapp.com/callback' */;
 
 
 router.get('/', function (req, res) {
@@ -19,17 +19,31 @@ router.get('/start', function (req, res) {
   if (req.session.token != undefined) {
     axios.get('https://api.spotify.com/v1/me?access_token=' + req.session.token).then(data => {
       const name = data.data.display_name;
+      console.log("name is: ", name);
       res.render('index', { name: name });
     }).catch(err => {
       console.log(err);
       res.render('error');
     });
   } else {
-    res.render('error');
+    res.redirect('/');
   }
 });
 
+router.post('/access', function (req, res) {
+  const token = req.body.token;
+  req.session.token = token;
+  res.end();
+})
 
+router.get('/end', function (req, res) {
+  if (req.session.score) {
+      const score = req.session.score;
+      res.render('end', { score: score });
+  } else {
+      res.redirect('/');
+  }
+});
 
 /**
  * Generates a random string containing numbers and letters
@@ -49,8 +63,13 @@ var generateRandomString = function (length) {
 var stateKey = 'spotify_auth_state';
 
 
-router.get('/login', function (req, res) {
-  var state = generateRandomString(16);
+router.post('/client-id', function (req, res) {
+  res.send(my_client_id);
+})
+
+
+/* router.get('/login', function (req, res) {
+  const state = generateRandomString(16);
   res.cookie(stateKey, state);
   const scopes = ['user-library-read', 'user-read-email'];
   res.redirect('https://accounts.spotify.com/authorize?' +
@@ -59,22 +78,14 @@ router.get('/login', function (req, res) {
       client_id: my_client_id,
       scope: scopes,
       redirect_uri: redirect_uri,
-      state: state
+      state: state,
+      show_dialog: true
     }));
-});
+}); */
 
 router.get('/callback', function (req, res) {
-  const code = req.query.code || null;
-  const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies[stateKey] : null;
-
-  if (state === null || state !== storedState) {
-    res.redirect('/#' +
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
-  } else {
-    res.clearCookie(stateKey);
+  res.render('callback');
+  /* const code = req.query.code || null;
     const authOptions = {
       url: 'https://accounts.spotify.com/api/token',
       form: {
@@ -102,8 +113,7 @@ router.get('/callback', function (req, res) {
             error: 'invalid_token'
           }));
       }
-    });
-  }
+    }); */
 });
 
 
