@@ -11,10 +11,6 @@ const my_client_secret = 'c3f2f2615a544171802c4d41fcb59ca4';
 const redirect_uri = 'http://localhost:4000/callback' /* 'https://knowyourmusic.herokuapp.com/callback' */;
 
 
-router.get('/about', function (req, res) {
-  res.render('landing');
-})
-
 router.get('/', function (req, res) {
   res.render('index', { name: false });
 });
