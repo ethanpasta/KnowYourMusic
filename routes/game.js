@@ -5,6 +5,8 @@ const utf8 = require('utf8')
 var querystring = require('query-string');
 const router = express.Router();
 
+const api_key = '';
+
 /**
  * Fetches 50 tracks from Spotify API with offset
  * @param  {Number} offset       The offset
@@ -63,7 +65,7 @@ const getTrackLyrics = async function (obj) {
             format: 'json',
             q_track: utf8.encode(title),
             q_artist: utf8.encode(artist),
-            apikey: '5f6eabe9cb91ff48968b2c582d8c88cc'
+            apikey: api_key
         });
     return await axios.get(url);
 };
