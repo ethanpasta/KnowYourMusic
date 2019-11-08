@@ -66,4 +66,8 @@ Feel free to reach out if you would like to contribute!
 
 * **Eitan Mayer** - [LinkedIn](https://www.linkedin.com/in/ethan-mayer/) [Twitter](https://twitter.com/eitanmayer57)
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
 
