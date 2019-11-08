@@ -1,8 +1,18 @@
+/**
+ * Function displays page
+ * @param  {JSON}   data  All data for the game
+ * @param  {Number} level current game level
+ */
 function displayPage(data, level) {
     $('button.song-option').removeClass('clicked done');
     $('.song-name').removeClass('true false');
     $('.line').html('" ' + data[level].line + ' "');
     $('.quest').html('What song is this line from?')
+    /**
+     * Function shuffles list
+     * @param  {List} a  List full of data
+     * @return {List}    Shuffled list
+     */
     function shuffle(a) {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -11,19 +21,25 @@ function displayPage(data, level) {
         return a;
     }
     const buttons = document.getElementsByClassName('song-option')
+    // Shuffle list of current level options, since 0 is always answer
     const arr = shuffle($.makeArray(buttons));
     $('.songs').html(arr);
     let pretty;
     for (let i = 0; i < 4; i++) {
+        // Remove parentheses and hyphens from song name
         pretty = data[level].tracks[i].song.replace(/ *\([^)]*\) */g, "");
         pretty = pretty.replace(/ *-.+/g, "");
         $(`button[name='${i}']`).find('.song-title').html(pretty);
-        $(`button[name='${i}']`).find('.song-artist').html(data[level].tracks[i].artists[0]);
+        $(`button[name='${i}']`).find('.song-artist').html(data[level].tracks[i].artist);
     }
     $('.in-progress').addClass('in');
 }
 
-function parseResult(result) {
+/**
+ * Function parses level result (after 10 seconds)
+ * @return  {Number} 1 if level passed, 0 otherwise
+ */
+function parseResult() {
     if ($('button.song-option').hasClass('clicked') && $('.clicked').attr('name') === '0') {
         $('.clicked').addClass('done').find('.song-name').addClass("true");
         $('.quest').html('CORRECT!')
@@ -54,6 +70,9 @@ $('.songs').on('click', 'button[name="3"]', () => {
     $('button[name!="3"]').removeClass('clicked');
 });
 
+/**
+ * Function adds level buttons
+ */
 function loadHtml() {
     for (let i = 0; i < 4; i++) {
         $('.songs').append(`
@@ -66,12 +85,18 @@ function loadHtml() {
     }
 }
 
-
+/**
+ * Function sets timeout for certain amount of time
+ * @param {Number} ms Amount of time (in milliseconds)
+ */
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function loop() {
+/**
+ * Function runs main loop for game. 10 levels, load page, wait 10 seconds, add score.
+ */
+(async () => {
     const data = await $.get('/game/data');
     loadHtml();
     let score = 0;
@@ -84,9 +109,7 @@ async function loop() {
     }
     await $.post('/game/score', { score: score });
     window.location.href = "/end";
-}
-
-loop();
+})();
 
 
 

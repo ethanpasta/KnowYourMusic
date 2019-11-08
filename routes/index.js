@@ -8,18 +8,23 @@ const router = express.Router();
 
 const my_client_id = 'f47820612ffa4f99aa3da9cbcd4efc5f';
 const my_client_secret = 'c3f2f2615a544171802c4d41fcb59ca4';
-const redirect_uri = 'http://localhost:4000/callback' /* 'https://knowyourmusic.herokuapp.com/callback' */;
 
 
+/**
+ * Route for index page before user logs in
+ */
 router.get('/', function (req, res) {
   res.render('index', { name: false });
 });
 
+/**
+ * Route for index page after user logs in
+ */
 router.get('/start', function (req, res) {
   if (req.session.token != undefined) {
-    axios.get('https://api.spotify.com/v1/me?access_token=' + req.session.token).then(data => {
-      const name = data.data.display_name;
-      console.log("name is: ", name);
+    // Get name of Spotify user
+    axios.get('https://api.spotify.com/v1/me?access_token=' + req.session.token).then(response => {
+      const name = response.data.display_name;
       res.render('index', { name: name });
     }).catch(err => {
       console.log(err);
@@ -30,12 +35,18 @@ router.get('/start', function (req, res) {
   }
 });
 
+/**
+ * Client-side posts access token after spotify login
+ */
 router.post('/access', function (req, res) {
   const token = req.body.token;
   req.session.token = token;
   res.end();
 })
 
+/**
+ * Route for end of game
+ */
 router.get('/end', function (req, res) {
   if (req.session.score) {
       const score = req.session.score;
@@ -46,24 +57,9 @@ router.get('/end', function (req, res) {
 });
 
 /**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
+ * Client-side route, to send over Spotify API code
  */
-var generateRandomString = function (length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
-
-var stateKey = 'spotify_auth_state';
-
-
-router.post('/client-id', function (req, res) {
+router.get('/client-id', function (req, res) {
   res.send(my_client_id);
 })
 
@@ -83,6 +79,9 @@ router.post('/client-id', function (req, res) {
     }));
 }); */
 
+/**
+ * Route for callback after Spotify login
+ */
 router.get('/callback', function (req, res) {
   res.render('callback');
   /* const code = req.query.code || null;
