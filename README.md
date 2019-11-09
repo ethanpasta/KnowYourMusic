@@ -6,7 +6,7 @@
 
 KnowYourMusic was built as a portfolio project for the end of Year 1 at Holberton School. KnowYourMusic is a memory game that determines how well you know your music! Log in with your Spotify account, and guess which song a certain line comes from. This project was built within 2 weeks, and taught me more about creating full-stack applications (more to come :smirk:).
 
-## Getting Started
+## Getting Started :point_down:
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -49,24 +49,24 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
     $ cd KnowYourMusic
     $ npm install
 
-## Configuration
+## Configuration :wrench:
 
 - Add your MusixMatch API key in [routes/game.js](routes/game.js)
 - Add your Spotify API key and secret key in [routes/index.js](routes/index.js)
 
-## Deployment
+## Deployment :fire:
 
 To run locally, enter `npm start` and open your browser on `localhost:4000` (or the port logged in the console)
 
-## Contributing
+## Contributing :family:
 
 Feel free to reach out if you would like to contribute!
 
-## Authors
+## Authors :raising_hand:
 
-* **Eitan Mayer** - [LinkedIn](https://www.linkedin.com/in/ethan-mayer/) [Twitter](https://twitter.com/eitanmayer57)
+* **Eitan Mayer** - [LinkedIn](https://www.linkedin.com/in/ethan-mayer/) | [Twitter](https://twitter.com/eitanmayer57)
 
-## License
+## License :pencil:
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
