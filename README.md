@@ -2,6 +2,8 @@
 
 ![Image Logo](public/images/logo.png)
 
+### Live Demo - [https://knowyourmusic.herokuapp.com](https://knowyourmusic.herokuapp.com/)
+
 ## Introduction
 
 KnowYourMusic was built as a portfolio project for the end of Year 1 at Holberton School. KnowYourMusic is a memory game that determines how well you know your music! Log in with your Spotify account, and guess which song a certain line comes from. This project was built within 2 weeks, and taught me more about creating full-stack applications (more to come :smirk:).
@@ -17,7 +19,7 @@ For development, you will only need Node.js and a node global package, npm, inst
 ### Node
 - #### Node installation on Windows
 
-  Just go on [official Node.js website](https://nodejs.org/) and download the installer.
+  Just go to [official Node.js website](https://nodejs.org/) and download the installer.
 Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
 
 - #### Node installation on Ubuntu
