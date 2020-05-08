@@ -33,6 +33,9 @@
     "pino-colada": "^1.6.1"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.7",
+    "spotify-web-api-node": "^4.0.0"
   }
 }

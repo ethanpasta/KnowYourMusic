@@ -1,30 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const callBackEndAPI = async () => {
-    const res = await fetch('/api/express_backend');
-    console.log(res);
-    const body = await res.json();
-    if (res.status != 200) {
-        console.log("API request error: " + res);
-        throw Error(body.message)
-    }
-    return body;
+const app_style = {
+    paddingTop: "100px",
+    textAlign: "center"
 };
 
+const button_style = {
+    height: "60px",
+    width: "120px",
+    background: 'url("https://www.scdn.co/i/_global/open-graph-default.png")',
+    backgroundSize: "contain",
+    borderRadius: "40px",
+    margin: "0 auto"
+}
+
 const App = () => {
-    const [data, setData] = useState();
-    useEffect(() => {
-        callBackEndAPI()
-            .then(res => setData(res.express))
-            .catch(err => console.log(err))
-    }, []);
     return (
-        <div>
-            <h1>React App</h1>
-            {!data ? 
-            <h3>Loading data from server...</h3>
-            : <h3>Data from server: {data}</h3>}
-            
+        <div style={app_style}>
+            <a href="/auth"><div style={button_style}></div></a>
         </div>
     );
 };
