@@ -1,2 +1,7 @@
 node_modules
 .env
+.eslintrc.js
+.cache/
+.babelrc
+dist
+.cache
