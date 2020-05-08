@@ -1,25 +1,15 @@
-import React from 'react';
-
-const app_style = {
-    paddingTop: "100px",
-    textAlign: "center"
-};
-
-const button_style = {
-    height: "60px",
-    width: "120px",
-    background: 'url("https://www.scdn.co/i/_global/open-graph-default.png")',
-    backgroundSize: "contain",
-    borderRadius: "40px",
-    margin: "0 auto"
-}
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import Home from "./Home";
+import About from "./About";
 
 const App = () => {
-    return (
-        <div style={app_style}>
-            <a href="/auth"><div style={button_style}></div></a>
-        </div>
-    );
+	return (
+		<Switch>
+			<Route path="/" component={Home} exact />
+			<Route path="/me" component={About} />
+		</Switch>
+	);
 };
 
 export default App;
