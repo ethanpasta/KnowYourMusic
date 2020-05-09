@@ -1,16 +1,14 @@
-const express = require("express");
-const pino = require("express-pino-logger")();
+const { expressPino } = require("./utils/logger");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 //const MongoClient = require("mongodb").MongoClient;
-const spotify_auth = require("./routes/auth").router;
+const spotify_auth = require("./routes/auth");
 const api = require("./routes/api");
-require("dotenv").config();
 
-const app = express();
-const port = process.env.PORT || 5000;
+const app = require("express")();
+const port = 5000;
 
-app.use(pino);
+app.use(expressPino);
 app.use(cookieParser());
 app.use(
 	session({

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import About from "./About";
 
 const app_style = {
 	paddingTop: "100px",
@@ -15,11 +16,24 @@ const button_style = {
 };
 
 const Home = () => {
+	const [loggedIn, setLoggedIn] = useState();
+	useEffect(() => {
+		fetch("/api/auth")
+			.then(res => res.json())
+			.then(data => {
+				setLoggedIn(data.loggedIn);
+			});
+	}, []);
 	return (
-		<div style={app_style}>
-			<a href="/auth">
-				<div style={button_style}></div>
-			</a>
+		<div>
+			{loggedIn && <About />}
+			{!loggedIn && (
+				<div style={app_style}>
+					<a href="/auth">
+						<div style={button_style}></div>
+					</a>
+				</div>
+			)}
 		</div>
 	);
 };
