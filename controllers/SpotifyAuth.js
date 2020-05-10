@@ -1,7 +1,15 @@
 const SpotifyWebApi = require("spotify-web-api-node");
 const { pino } = require("../utils/logger");
-const session_controllers = require("./mapSessionControllers");
+const sessionControllers = require("./SessionInstanceMap");
 require("dotenv").config();
+
+/**
+ * SpotifyAuth - A controller for the Spotify authorization process.
+ * login - A user is redirected to the Spotify authentication modal. On acception, he's redirected to:
+ * callback - With the code we can get the real authorization code and store it.
+ *
+ * Each individual SpotifyWebApi instance is mapped with the user for future use.
+ */
 
 const credentials = {
 	clientId: process.env.SPOTIFY_CLIENT_ID,
@@ -10,6 +18,7 @@ const credentials = {
 };
 const scopes = ["user-library-read", "user-read-email", "user-read-currently-playing"];
 
+// Generates a random string used for the state in the Spotify authorization process
 function generateRandomString(length) {
 	let text = "";
 	const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -22,22 +31,23 @@ function generateRandomString(length) {
 let credsSpotifyApi = new SpotifyWebApi(credentials);
 const state = generateRandomString(16);
 
-const login = res => {
-	const auth_url = credsSpotifyApi.createAuthorizeURL(scopes, state);
-	res.cookie("spotify_auth_state", state).redirect(auth_url);
+const login = (req, res) => {
+	const authURL = credsSpotifyApi.createAuthorizeURL(scopes, state);
+	res.cookie("spotify_auth_state", state).redirect(authURL);
 };
 
 const callback = async (req, res) => {
 	const userSpotifyApi = new SpotifyWebApi(credentials);
 	const { code, state, error } = req.query,
-		orig_state = req.cookies["spotify_auth_state"];
-	if (error || state != orig_state) {
+		origState = req.cookies["spotify_auth_state"];
+	// If the user did not authorize, or some type of cross-site request happened
+	if (error || state != origState) {
 		pino.error(
 			"User didn't authorize OR state didn't match. \n" +
 				"Request param error: " +
 				error +
 				", Cookie state: " +
-				orig_state +
+				origState +
 				", req state: " +
 				state
 		);
@@ -54,7 +64,7 @@ const callback = async (req, res) => {
 		userSpotifyApi.setRefreshToken(data.body["refresh_token"]);
 		const user = await userSpotifyApi.getMe();
 		req.session.user = user.body["id"];
-		session_controllers[user.body["id"]] = userSpotifyApi;
+		sessionControllers[user.body["id"]] = userSpotifyApi;
 		res.clearCookie("spotify_auth_state").redirect("/");
 	} catch (error) {
 		pino.error("Something went wrong: " + error);

@@ -1,16 +1,12 @@
 const express = require("express");
-const { login, callback } = require("../controllers/spotifyAuthControl");
+const spotifyAuth = require("../controllers/SpotifyAuth");
 const { pino } = require("../utils/logger");
 require("dotenv").config();
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-	login(res);
-});
-router.get("/callback", (req, res) => {
-	callback(req, res);
-});
+router.get("/", spotifyAuth.login);
+router.get("/callback", spotifyAuth.callback);
 router.get("/logout", (req, res) => {
 	req.session.destroy(err => {
 		if (err) {
