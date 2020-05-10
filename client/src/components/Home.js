@@ -18,7 +18,7 @@ const button_style = {
 const Home = () => {
 	const [loggedIn, setLoggedIn] = useState();
 	useEffect(() => {
-		fetch("/api/auth")
+		fetch("/auth/check")
 			.then(res => res.json())
 			.then(data => {
 				setLoggedIn(data.loggedIn);

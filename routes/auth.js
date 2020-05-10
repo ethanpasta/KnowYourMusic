@@ -1,12 +1,16 @@
 const express = require("express");
-const spotifyController = require("../controllers/spotifyController");
+const { login, callback } = require("../controllers/spotifyAuthControl");
 const { pino } = require("../utils/logger");
 require("dotenv").config();
 
 const router = express.Router();
 
-router.get("/", (req, res) => spotifyController.login(res));
-router.get("/callback", (req, res) => spotifyController.callback(req, res));
+router.get("/", (req, res) => {
+	login(res);
+});
+router.get("/callback", (req, res) => {
+	callback(req, res);
+});
 router.get("/logout", (req, res) => {
 	req.session.destroy(err => {
 		if (err) {
@@ -14,6 +18,9 @@ router.get("/logout", (req, res) => {
 		}
 		res.redirect("/");
 	});
+});
+router.get("/check", (req, res) => {
+	res.send({ loggedIn: req.session.user != undefined });
 });
 
 module.exports = router;

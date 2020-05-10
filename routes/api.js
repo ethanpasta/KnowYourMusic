@@ -1,18 +1,19 @@
 const express = require("express");
-const { spotifyApi } = require("../controllers/spotifyController");
 const { pino } = require("../utils/logger");
+const sessionApiMapper = require("../controllers/mapSessionControllers");
+const { getMe } = require("../controllers/spotifyInfoControl");
 const router = express.Router();
 
-router.get("/me", (req, res) => {
-	spotifyApi
-		.getMe()
-		.then(data => res.send(data.body))
-		.catch(err => {
-			pino.error("Something went wrong!", err);
-			res.send({ err });
-		});
+router.use((req, res, next) => {
+	if (req.session.user) {
+		req.api = sessionApiMapper[req.session.user];
+	} else {
+		console.log("User is not logged in");
+		res.redirect("/");
+	}
+	next();
 });
 
-router.get("/auth", (req, res) => res.send({ loggedIn: req.session.user != undefined }));
+router.get("/me", getMe);
 
 module.exports = router;
