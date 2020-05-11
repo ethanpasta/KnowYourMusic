@@ -8,6 +8,7 @@ const router = express.Router();
 router.get("/", spotifyAuth.login);
 router.get("/callback", spotifyAuth.callback);
 router.get("/logout", (req, res) => {
+	spotifyAuth.logout(req, res);
 	req.session.destroy(err => {
 		if (err) {
 			pino.error("Logout failed: " + err);

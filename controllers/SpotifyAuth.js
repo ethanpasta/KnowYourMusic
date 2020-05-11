@@ -1,6 +1,7 @@
 const SpotifyWebApi = require("spotify-web-api-node");
 const { pino } = require("../utils/logger");
 const sessionControllers = require("./SessionInstanceMap");
+const userModel = require("../models/user.model");
 require("dotenv").config();
 
 /**
@@ -31,9 +32,13 @@ function generateRandomString(length) {
 let credsSpotifyApi = new SpotifyWebApi(credentials);
 const state = generateRandomString(16);
 
-const login = (req, res) => {
+const login = (_, res) => {
 	const authURL = credsSpotifyApi.createAuthorizeURL(scopes, state);
 	res.cookie("spotify_auth_state", state).redirect(authURL);
+};
+
+const logout = req => {
+	delete sessionControllers[req.session.user];
 };
 
 const callback = async (req, res) => {
@@ -62,9 +67,18 @@ const callback = async (req, res) => {
 		// Set the access token on the API object to use it in later calls
 		userSpotifyApi.setAccessToken(data.body["access_token"]);
 		userSpotifyApi.setRefreshToken(data.body["refresh_token"]);
+
 		const user = await userSpotifyApi.getMe();
 		req.session.user = user.body["id"];
 		sessionControllers[user.body["id"]] = userSpotifyApi;
+		new userModel({
+			username: user.body["id"],
+			display_name: user.body["display_name"],
+		})
+			.save()
+			.then(doc => console.log("Added user to db: " + doc))
+			.catch(console.error);
+
 		res.clearCookie("spotify_auth_state").redirect("/");
 	} catch (error) {
 		pino.error("Something went wrong: " + error);
@@ -76,4 +90,5 @@ const callback = async (req, res) => {
 module.exports = {
 	login,
 	callback,
+	logout,
 };

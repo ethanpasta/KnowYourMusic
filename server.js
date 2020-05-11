@@ -4,6 +4,8 @@ const session = require("express-session");
 const spotifyAuthRouter = require("./routes/auth");
 const apiRouter = require("./routes/api");
 const bodyParser = require("body-parser");
+const MongoStore = require("connect-mongo")(session);
+require("./database");
 
 const app = require("express")();
 const port = 5000;
@@ -14,7 +16,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
 	session({
-		secret: "pi3.14159",
+		store: new MongoStore({
+			url: process.env.MONGO_DB_URI,
+		}),
+		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
 	})
@@ -22,4 +27,4 @@ app.use(
 app.use("/auth", spotifyAuthRouter);
 app.use("/api", apiRouter);
 
-app.listen(port, () => console.log("Back-end is listening on port " + port));
+app.listen(port, () => console.log("Server listening on port " + port));

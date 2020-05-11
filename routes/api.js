@@ -1,5 +1,4 @@
 const express = require("express");
-const { pino } = require("../utils/logger");
 const sessionApiMapper = require("../controllers/SessionInstanceMap");
 const { getMe, getSongs } = require("../controllers/SpotifyApi");
 const router = express.Router();
@@ -10,7 +9,14 @@ const router = express.Router();
  */
 router.use((req, res, next) => {
 	if (req.session.user) {
-		req.api = sessionApiMapper[req.session.user];
+		if (req.session.user in sessionApiMapper) {
+			req.api = sessionApiMapper[req.session.user];
+		} else {
+			// This happens if server was restarted, session still exists in mongo, but the users api was erased since they are stored in memory dictionary
+			// Find user from database, find his access token, create a new spotify web api instance, save it to memory
+			/* userModel.findOne({ username: req.session.user })
+				.then(doc => (req.api ) */
+		}
 	} else {
 		console.log("User is not logged in");
 		res.redirect("/");
