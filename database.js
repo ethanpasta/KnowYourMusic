@@ -15,6 +15,7 @@ class Database {
 				useNewUrlParser: true,
 				useUnifiedTopology: true,
 				useCreateIndex: true,
+				useFindAndModify: false,
 			},
 			function (err, db) {
 				if (err) console.error("Database connection error: " + err);

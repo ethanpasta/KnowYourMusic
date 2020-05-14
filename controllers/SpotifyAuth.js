@@ -27,7 +27,6 @@ const login = (_, res) => {
 			state,
 		},
 	});
-	console.log(authURL);
 	res.cookie("spotify_auth_state", state).redirect(authURL);
 };
 
@@ -57,9 +56,6 @@ const callback = async (req, res) => {
 		const data = await userSpotifyApi.authorizationCodeGrant(code);
 		const access_token = data.body["access_token"],
 			refresh_token = data.body["refresh_token"];
-		pino.info("The token expires in " + data.body["expires_in"]);
-		pino.info("The access token is " + access_token);
-		pino.info("The refresh token is " + refresh_token);
 		// Set the access token on the API object
 		userSpotifyApi.setAccessToken(access_token);
 		userSpotifyApi.setRefreshToken(refresh_token);
@@ -73,13 +69,21 @@ const callback = async (req, res) => {
 		// Create user session
 		req.session.user = user.body["id"];
 
-		new User({
-			username,
-			display_name,
-			access_token,
-			refresh_token,
-		})
-			.save()
+		User.findOneAndUpdate(
+			{
+				username,
+			},
+			{
+				display_name,
+				access_token,
+				refresh_token,
+				updated_at: userSpotifyApi.getUpdatedAt(),
+			},
+			{
+				upset: true,
+				new: true,
+			}
+		)
 			.then(doc => console.log("Added user to db: " + doc))
 			.catch(err => pino.warn(err.errors.username.message + ", Skipping."));
 		sessionControllers[username] = userSpotifyApi;

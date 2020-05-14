@@ -21,7 +21,6 @@ exports.sessionAttach = (req, res, next) => {
 				userApi.setUpdatedAt(user.updated_at);
 				userApi.setAccessToken(user.access_token);
 				userApi.setRefreshToken(user.refresh_token);
-				userApi.setExpiresIn(3600);
 				sessionApiMapper[req.session.user] = userApi;
 				req.api = userApi;
 				console.log("User existed, added a new api to the map");

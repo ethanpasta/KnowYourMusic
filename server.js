@@ -6,7 +6,6 @@ const apiRouter = require("./routes/api.route");
 const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo")(session);
 require("./database");
-const mongoose = require("mongoose");
 
 const app = require("express")();
 const port = 5000;

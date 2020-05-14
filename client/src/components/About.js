@@ -36,9 +36,11 @@ const About = () => {
 					<img src={accountInfo.imageUrl}></img>
 					<br />
 					<a href="/auth/logout">Logout</a>
-					{accountInfo.songs.map((song, i) => (
-						<p key={i}>{song}</p>
-					))}
+					{accountInfo.songs ? (
+						accountInfo.songs.map((song, i) => <p key={i}>{song}</p>)
+					) : (
+						<p>Loading songs..</p>
+					)}
 				</div>
 			)}
 		</div>
