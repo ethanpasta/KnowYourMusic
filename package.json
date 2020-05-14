@@ -39,6 +39,7 @@
 		"express": "^4.17.1",
 		"express-session": "^1.17.1",
 		"mongoose": "^5.9.13",
+		"query-string": "^6.12.1",
 		"spotify-web-api-node": "^4.0.0"
 	}
 }

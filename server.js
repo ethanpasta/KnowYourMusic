@@ -1,11 +1,12 @@
 const { expressPino } = require("./utils/logger");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const spotifyAuthRouter = require("./routes/auth");
-const apiRouter = require("./routes/api");
+const spotifyAuthRouter = require("./routes/auth.route");
+const apiRouter = require("./routes/api.route");
 const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo")(session);
 require("./database");
+const mongoose = require("mongoose");
 
 const app = require("express")();
 const port = 5000;
@@ -20,7 +21,7 @@ app.use(
 			url: process.env.MONGO_DB_URI,
 		}),
 		secret: process.env.SESSION_SECRET,
-		resave: false,
+		resave: true,
 		saveUninitialized: true,
 	})
 );
