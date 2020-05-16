@@ -1,11 +1,16 @@
 const SpotifyWebApi = require("spotify-web-api-node");
-const { credentials } = require("./constants");
+const { credentials } = require("../utils/constants");
 
+/**
+ * --- Spotify API Service ---
+ * The class SpotifyAPI extends the SpotifyWebApi package, and adds custom functionalities
+ */
 class SpotifyAPI extends SpotifyWebApi {
 	constructor() {
 		super(credentials);
-		this.expiresIn = 3600 * 1000;
+		this.expiresIn = 3500 * 1000;
 	}
+	// this.updatedAt is the last time the access_token was refreshed, including the first time
 	setUpdatedAt(time = Date.now()) {
 		this.updatedAt = time;
 	}
@@ -15,15 +20,20 @@ class SpotifyAPI extends SpotifyWebApi {
 	setExpiresIn(timeSeconds) {
 		this.expiresIn = timeSeconds * 1000;
 	}
+	// Check if the access token is still valid (true if valid, false otherwise)
 	needsToRefresh() {
 		return Date.now() - this.updatedAt > this.expiresIn;
 	}
+	// Get all of the users saved songs
 	async getAllSongs() {
 		try {
 			let response = (await this.getMySavedTracks({ limit: 50 })).body;
 			let allSongs = extractSongs(response);
-			// Wait for all promises to finish
-			let finishedPromises = await Promise.all(createAllPromises(this, response.total));
+			// Create a list of promises: each promise is an api request fetching 50 songs with an offset (length of list = number of total songs / 50)
+			let songRequests = [...Array(Math.ceil((response.total - 50) / 50)).keys()].map(val =>
+				this.getMySavedTracks({ limit: 50, offset: (val + 1) * 50 })
+			);
+			let finishedPromises = await Promise.all(songRequests);
 			finishedPromises.map(item => {
 				// Add songs from each object to the total list of songs
 				allSongs = allSongs.concat(extractSongs(item.body));
@@ -37,21 +47,5 @@ class SpotifyAPI extends SpotifyWebApi {
 
 // Function extracts the track names from the response object
 const extractSongs = apiResponse => apiResponse.items.map(item => item.track.name);
-
-/**
- * Function returns a list of promise requests 50 songs (with different offsets) from the users library
- */
-function createAllPromises(api, totalSongs) {
-	const promises = [];
-	for (let i = 50; i <= totalSongs; i += 50) {
-		promises.push(
-			api.getMySavedTracks({
-				limit: 50,
-				offset: i,
-			})
-		);
-	}
-	return promises;
-}
 
 module.exports = SpotifyAPI;

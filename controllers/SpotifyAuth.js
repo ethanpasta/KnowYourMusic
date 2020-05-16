@@ -1,7 +1,7 @@
-const SpotifyAPI = require("../utils/spotifyWrapper");
+const SpotifyAPI = require("../services/spotifyWrapper");
 const { pino } = require("../utils/logger");
 const sessionControllers = require("./SessionInstanceMap");
-const User = require("../models/user.model");
+const User = require("../models/users/model.js");
 const querystring = require("query-string");
 const { credentials, scopes } = require("../utils/constants");
 
@@ -69,23 +69,9 @@ const callback = async (req, res) => {
 		// Create user session
 		req.session.user = user.body["id"];
 
-		User.findOneAndUpdate(
-			{
-				username,
-			},
-			{
-				display_name,
-				access_token,
-				refresh_token,
-				updated_at: userSpotifyApi.getUpdatedAt(),
-			},
-			{
-				upset: true,
-				new: true,
-			}
-		)
-			.then(doc => console.log("Added user to db: " + doc))
-			.catch(err => pino.warn(err.errors.username.message + ", Skipping."));
+		User.upsert(username, display_name, access_token, refresh_token, Date.now())
+			.then(pino.log)
+			.catch(pino.error);
 		sessionControllers[username] = userSpotifyApi;
 		res.clearCookie("spotify_auth_state").redirect("/");
 	} catch (error) {

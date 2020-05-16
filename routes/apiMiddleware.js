@@ -1,6 +1,7 @@
 const sessionApiMapper = require("../controllers/SessionInstanceMap");
-const SpotifyAPI = require("../utils/spotifyWrapper");
-const User = require("../models/user.model");
+const SpotifyAPI = require("../services/spotifyWrapper");
+const User = require("../models/users/model.js");
+const { pino } = require("../utils/logger");
 
 /**
  * Add the spotifyApi instance to the request object.
@@ -47,7 +48,11 @@ exports.checkRefresh = (req, res, next) => {
 			data => {
 				// Save the access token so that it's used in future calls
 				api.setAccessToken(data.body["access_token"]);
-				api.setUpdatedAt(Date.now());
+				const newUpdateTime = Date.now();
+				api.setUpdatedAt(newUpdateTime);
+				User.refreshUpdate(req.session.user, data.body["access_token"], newUpdateTime)
+					.then(pino.log)
+					.catch(pino.error);
 				next();
 			},
 			err => {

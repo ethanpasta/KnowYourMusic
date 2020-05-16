@@ -1,6 +1,6 @@
 const express = require("express");
 const apiController = require("../controllers/SpotifyApi");
-const middleware = require("./apiMiddle");
+const middleware = require("./apiMiddleware");
 const router = express.Router();
 
 router.use(middleware.sessionAttach);

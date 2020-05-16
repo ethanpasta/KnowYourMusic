@@ -27,4 +27,4 @@ app.use(
 app.use("/auth", spotifyAuthRouter);
 app.use("/api", apiRouter);
 
-app.listen(port, () => console.log("Server listening on port " + port));
+app.listen(port, () => console.log(`Server listening on port ${port}`));

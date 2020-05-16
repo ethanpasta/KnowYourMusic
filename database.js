@@ -22,10 +22,10 @@ class Database {
 				else {
 					console.log("Database connection successful");
 					// DEV MODE ONLY: Remove all sessions on server start
-					db.collection("sessions").deleteMany({}, function (err) {
+					/* db.collection("sessions").deleteMany({}, function (err) {
 						if (err) console.log(err);
 						else console.log("Removed all sessions");
-					});
+					}); */
 				}
 			}
 		);
