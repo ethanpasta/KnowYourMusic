@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"dev:client": "cd client && node server.js",
-		"dev:server": "nodemon server.js | pino-colada",
+		"dev:server": "nodemon index.js | pino-colada",
 		"dev": "concurrently --kill-others \"npm run dev:client\" \"npm run dev:server\"",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -38,7 +38,9 @@
 		"cookie-parser": "^1.4.5",
 		"express": "^4.17.1",
 		"express-session": "^1.17.1",
+		"genius-lyrics-api": "^2.0.3",
 		"mongoose": "^5.9.13",
+		"node-fetch": "^2.6.0",
 		"query-string": "^6.12.1",
 		"spotify-web-api-node": "^4.0.0"
 	}

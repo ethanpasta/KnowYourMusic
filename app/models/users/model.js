@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 const helpers = require("./helpers");
 
 /**
- * Mongoose model for the Users collection
+ * Mongoose schema for the Users collection
  */
-
 const userSchema = new mongoose.Schema({
 	username: {
 		type: String,

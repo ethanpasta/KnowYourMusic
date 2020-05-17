@@ -1,11 +1,11 @@
-const { expressPino } = require("./utils/logger");
+const { expressPino } = require("./app/utils/logger");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const spotifyAuthRouter = require("./routes/auth.route");
-const apiRouter = require("./routes/api.route");
+const spotifyAuthRouter = require("./app/routes/auth.route");
+const apiRouter = require("./app/routes/api.route");
 const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo")(session);
-require("./database");
+require("./app/database");
 
 const app = require("express")();
 const port = 5000;
