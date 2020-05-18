@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
+const helpers = require("./songHelpers");
 
 /**
  * Mongoose schema for the songs collection
  */
 const songSchema = new mongoose.Schema({
-	title: {
+	_id: {
 		type: String,
 		unique: true,
 		// Make sure song is unique
@@ -13,14 +14,17 @@ const songSchema = new mongoose.Schema({
 			message: props => `Song ${props.value} already exists`,
 		},
 	},
+	title: String,
 	artist: String,
-	lyrics: String,
+	lyrics: {
+		type: String,
+		default: undefined,
+	},
 });
 
 // Attach all helper methods to the static model methods
-/* Object.keys(helpers).forEach(func => userSchema.static(func, helpers[func]));
- */
+Object.keys(helpers).forEach(func => songSchema.static(func, helpers[func]));
 
-const Song = mongoose.model("songs", songSchema);
+const Song = mongoose.model("Song", songSchema);
 
 module.exports = Song;

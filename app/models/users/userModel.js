@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const helpers = require("./helpers");
+const helpers = require("./userHelpers");
 
 /**
  * Mongoose schema for the Users collection
@@ -22,11 +22,12 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now(),
 	},
+	songs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Song" }],
 });
 
 // Attach all helper methods to the static model methods
 Object.keys(helpers).forEach(func => userSchema.static(func, helpers[func]));
 
-const User = mongoose.model("users", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

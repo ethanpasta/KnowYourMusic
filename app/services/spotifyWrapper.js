@@ -38,9 +38,9 @@ class SpotifyAPI extends SpotifyWebApi {
 				// Add songs from each object to the total list of songs
 				allSongs = allSongs.concat(extractSongs(item.body));
 			});
-			return Promise.resolve(allSongs);
+			return allSongs;
 		} catch (error) {
-			return Promise.reject("Error while fetching songs: " + error);
+			return new Error("Error while fetching songs: " + error);
 		}
 	}
 }
