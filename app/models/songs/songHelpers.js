@@ -10,9 +10,8 @@ function addLotsOfSongs(songs) {
 	return this.insertMany(songs, (err, docs) => (err ? undefined : docs));
 }
 
-function 
-
 module.exports = {
 	findLyricsIfExists,
-	addLyrics,
+	addLyricsToSong,
+	addLotsOfSongs,
 };
