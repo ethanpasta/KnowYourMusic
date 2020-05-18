@@ -18,7 +18,11 @@ const userSchema = new mongoose.Schema({
 	access_token: String,
 	refresh_token: String,
 	// Last time the user recieved an access token from Spotify
-	updated_at: {
+	last_refresh_update: {
+		type: Date,
+		default: Date.now(),
+	},
+	last_song_update: {
 		type: Date,
 		default: Date.now(),
 	},

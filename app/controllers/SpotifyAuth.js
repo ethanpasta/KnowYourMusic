@@ -69,7 +69,7 @@ const callback = async (req, res) => {
 		// Create user session
 		req.session.user = user.body["id"];
 
-		User.upsert(username, display_name, access_token, refresh_token, Date.now())
+		User.upsert(username, display_name, access_token, refresh_token, Date.now(), Date.now())
 			.then(pino.log)
 			.catch(pino.error);
 		sessionControllers[username] = userSpotifyApi;
