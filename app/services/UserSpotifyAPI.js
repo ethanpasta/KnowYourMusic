@@ -1,21 +1,25 @@
 const SpotifyWebApi = require("spotify-web-api-node");
 const { credentials } = require("../utils/constants");
+const { sanitizeSongTitle } = require("../utils/sanitizer");
 
 /**
  * --- Spotify API Service ---
- * The class SpotifyAPI extends the SpotifyWebApi package, and adds custom functionalities
+ * The class SpotifyAPI uses SpotifyWebApi package, and adds custom functionalities
  */
-class SpotifyAPI extends SpotifyWebApi {
-	constructor() {
-		super(credentials);
-		this.expiresIn = 3500 * 1000;
+class UserSpotifyAPI {
+	constructor(access_token, refresh_token, expires_in = 3600) {
+		const api = new SpotifyWebApi(credentials);
+		api.setAccessToken(access_token);
+		api.setRefreshToken(refresh_token);
+		this.api = api;
+		this.expiresIn = (expires_in - 100) * 1000;
+		this.lastRefresh = Date.now();
 	}
-	// this.updatedAt is the last time the access_token was refreshed, including the first time
-	setUpdatedAt(time = Date.now()) {
-		this.updatedAt = time;
+	updateRefreshTime() {
+		return (this.lastRefresh = Date.now());
 	}
 	getUpdatedAt() {
-		return this.updatedAt;
+		return this.lastRefresh;
 	}
 	setExpiresIn(timeSeconds) {
 		this.expiresIn = timeSeconds * 1000;
@@ -27,7 +31,7 @@ class SpotifyAPI extends SpotifyWebApi {
 	// Get all of the users saved songs
 	async getAllSongs() {
 		try {
-			let response = (await this.getMySavedTracks({ limit: 50 })).body;
+			let response = (await this.api.getMySavedTracks({ limit: 50 })).body;
 			let allSongs = extractSongs(response);
 			// Create a list of promises: each promise is an api request fetching 50 songs with an offset (length of list = number of total songs / 50)
 			let songRequests = [...Array(Math.ceil((response.total - 50) / 50)).keys()].map(val =>
@@ -45,7 +49,12 @@ class SpotifyAPI extends SpotifyWebApi {
 	}
 }
 
-// Function extracts the track names from the response object
-const extractSongs = apiResponse => apiResponse.items.map(item => item.track.name);
+// Function extracts the relevant track information from the response body
+const extractSongs = apiResponse =>
+	apiResponse.items.map(item => ({
+		id: item.track.id,
+		title: sanitizeSongTitle(item.track.name),
+		artist: item.track.artists[0].name,
+	}));
 
-module.exports = SpotifyAPI;
+module.exports = UserSpotifyAPI;
