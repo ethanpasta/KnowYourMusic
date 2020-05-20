@@ -1,4 +1,5 @@
 require("dotenv").config();
+const SpotifyWebApi = require("spotify-web-api-node");
 
 const credentials = {
 	clientId: process.env.SPOTIFY_CLIENT_ID,
@@ -10,4 +11,5 @@ const scopes = ["user-library-read", "user-read-email", "user-read-currently-pla
 module.exports = {
 	credentials,
 	scopes,
+	myApi: new SpotifyWebApi(credentials),
 };

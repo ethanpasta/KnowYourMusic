@@ -1,6 +1,6 @@
 // "rld" stands for "Random Lyric Dude" - as this api was made by a random lyric dudes' api 🤓
 const fetch = require("node-fetch");
-const { pino } = require("../../utils/logger");
+const { pino } = require("../../utils");
 
 class lyricsCanarado {
 	constructor() {
