@@ -20,6 +20,10 @@ const songSchema = new mongoose.Schema({
 		type: String,
 		default: undefined,
 	},
+	broken: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 // Attach all helper methods to the static model methods
