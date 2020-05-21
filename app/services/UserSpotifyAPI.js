@@ -49,7 +49,9 @@ class UserSpotifyAPI {
 	}
 	getMe() {
 		return this.api.getMe().then(res => {
-			this.profile = res.body;
+			if (!this.profile) {
+				this.profile = res.body;
+			}
 			return res.body;
 		});
 	}
