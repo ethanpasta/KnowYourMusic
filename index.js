@@ -1,8 +1,7 @@
 const { expressPino } = require("./app/utils");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const spotifyAuthRouter = require("./app/routes/auth.route");
-const apiRouter = require("./app/routes/api.route");
+const { authRouter, apiRouter } = require("./app/routes");
 const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo")(session);
 require("./app/database");
@@ -24,7 +23,7 @@ app.use(
 		saveUninitialized: true,
 	})
 );
-app.use("/auth", spotifyAuthRouter);
+app.use("/auth", authRouter);
 app.use("/api", apiRouter);
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
