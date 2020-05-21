@@ -1,5 +1,5 @@
 const { getLyrics } = require("genius-lyrics-api");
-const { pino } = require("../../utils/logger");
+const { pino } = require("../../utils");
 require("dotenv").config();
 
 class geniusAPI {

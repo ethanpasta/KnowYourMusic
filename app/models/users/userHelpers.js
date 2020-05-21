@@ -1,36 +1,4 @@
-/**
- * Method used for Spotify authorization.
- * Two things could happen:
- *   - User is authorizing for the first time, and doesn't exist in the DB - he's created
- *   - User is logged out/logging in from an unrecognized IP, but already exists in the DB, so needs to be updated
- */
-function updateOrCreate(
-	username,
-	display_name,
-	access_token,
-	refresh_token,
-	last_refresh_update,
-	last_song_update
-) {
-	return this.findOneAndUpdate(
-		{
-			username,
-		},
-		{
-			display_name,
-			access_token,
-			refresh_token,
-			last_refresh_update,
-			last_song_update,
-		},
-		{
-			upsert: true,
-			new: true,
-		}
-	)
-		.then(doc => doc)
-		.catch(err => new Error(err));
-}
+const { pino } = require("../../utils");
 
 /**
  * Users' access token was expired - a refresh happened and the user needs an update
@@ -57,8 +25,29 @@ function needsSongsUpdate(username) {
 	});
 }
 
+function getUserByAccessToken(access_token) {
+	return this.findOne({ access_token }, "username")
+		.then(user => {
+			pino.info(user);
+			return user ? user.username : undefined;
+		})
+		.catch(err => {
+			pino.error(err);
+			return;
+		});
+}
+
+function addSongsToUser(songs, username) {
+	return this.findOne({ username }).then(user => {
+		pino.info(`>>> Adding ${songs.length} songs to user '${username}'`);
+		user.songs.push(...songs);
+		user.save();
+	});
+}
+
 module.exports = {
-	upsert: updateOrCreate,
 	refreshUpdate,
 	needsSongsUpdate,
+	getUserByAccessToken,
+	addSongsToUser,
 };

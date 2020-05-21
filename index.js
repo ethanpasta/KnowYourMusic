@@ -1,4 +1,4 @@
-const { expressPino } = require("./app/utils/logger");
+const { expressPino } = require("./app/utils");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const spotifyAuthRouter = require("./app/routes/auth.route");

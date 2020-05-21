@@ -5,15 +5,7 @@ const helpers = require("./songHelpers");
  * Mongoose schema for the songs collection
  */
 const songSchema = new mongoose.Schema({
-	_id: {
-		type: String,
-		unique: true,
-		// Make sure song is unique
-		validate: {
-			validator: value => Song.countDocuments({ title: value }).then(count => count == 0),
-			message: props => `Song ${props.value} already exists`,
-		},
-	},
+	_id: String,
 	title: String,
 	artist: String,
 	lyrics: {

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const helpers = require("./userHelpers");
+const uniqueValidator = require("mongoose-unique-validator");
 
 /**
  * Mongoose schema for the Users collection
@@ -8,11 +9,6 @@ const userSchema = new mongoose.Schema({
 	username: {
 		type: String,
 		unique: true,
-		// Make sure user is unique
-		validate: {
-			validator: value => User.countDocuments({ username: value }).then(count => count == 0),
-			message: props => `Username ${props.value} already exists`,
-		},
 	},
 	display_name: String,
 	access_token: String,
@@ -31,6 +27,8 @@ const userSchema = new mongoose.Schema({
 
 // Attach all helper methods to the static model methods
 Object.keys(helpers).forEach(func => userSchema.static(func, helpers[func]));
+
+userSchema.plugin(uniqueValidator);
 
 const User = mongoose.model("User", userSchema);
 

@@ -25,7 +25,7 @@ function generateRandomString(length) {
 	return text;
 }
 
-exports = {
+module.exports = {
 	sanitizeLyrics,
 	sanitizeSongTitle,
 	generateRandomString,

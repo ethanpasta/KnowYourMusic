@@ -1,67 +1,62 @@
-const sessionApiMapper = require("../controllers/SessionInstanceMap");
-const SpotifyAPI = require("../services/spotifyWrapper");
-const User = require("../models/users/model.js");
-const { pino } = require("../utils/logger");
+const userMap = require("../services/userMap");
+const UserSpotifyAPI = require("../services/UserSpotifyAPI");
+const { User } = require("../models");
+const { pino } = require("../utils");
 
 /**
  * Add the spotifyApi instance to the request object.
  * If session is found in the local memory mapper, it's attached to the req object
  * Otherwise, new API is created, saved, and attached to the req object
  */
-exports.sessionAttach = (req, res, next) => {
-	if (req.session.user && req.session.user in sessionApiMapper) {
-		console.log("Session existed in SessionMapper");
-		req.api = sessionApiMapper[req.session.user];
-		next();
-	} else if (req.session.user) {
-		// Server was restarted, session still exists in mongo, but the users api is gone
-		// Get user from database, get his access token, create a new spotify api instance, save it
-		User.findOne({ username: req.session.user }, "access_token refresh_token updated_at")
-			.then(user => {
-				const userApi = new SpotifyAPI();
-				userApi.setUpdatedAt(user.updated_at);
-				userApi.setAccessToken(user.access_token);
-				userApi.setRefreshToken(user.refresh_token);
-				sessionApiMapper[req.session.user] = userApi;
-				req.api = userApi;
-				console.log("User existed, added a new api to the map");
-				next();
-			})
-			.catch(err => {
-				console.log("Couldn't find user, error: " + err);
-				next(err);
-			});
-	} else {
-		console.log("User is not logged in. Session did not exist.");
-		res.redirect("/");
+const sessionAttach = (req, res, next) => {
+	if (req.session.user && req.session.user in userMap) {
+		req.api = userMap[req.session.user].api;
+		return next();
+	} else if (!req.session.user) {
+		return next(new Error("User session didn't exist"));
 	}
+	pino.info(`Session for ${req.session.user} wasn't in UserMap. Adding it.`);
+	User.findOne({ username: req.session.user }, "access_token refresh_token updated_at")
+		.then(user => {
+			const userApi = new UserSpotifyAPI(user.access_token, user.refresh_token);
+			userApi.lastRefresh = user.updated_at;
+			req.api = (userMap[req.session.user] = { api: userApi }).api;
+			return next();
+		})
+		.catch(err => {
+			pino.error("Couldn't find user, error: " + err);
+			return next(err);
+		});
 };
 
 /**
  * Checks if the Spotify API is expired and needs to be refreshed.
  */
-exports.checkRefresh = (req, res, next) => {
-	const api = req.api;
+const checkRefresh = (req, res, next) => {
+	const api = userMap[req.session.user].api;
 	if (api.needsToRefresh()) {
-		console.log("Refresh is needed");
-		api.refreshAccessToken().then(
-			data => {
+		pino.info(`Access token refresh for user '${req.user.session}' is needed. refreshing...`);
+		api.refreshAccessToken()
+			.then(data => {
 				// Save the access token so that it's used in future calls
 				api.setAccessToken(data.body["access_token"]);
-				const newUpdateTime = Date.now();
-				api.setUpdatedAt(newUpdateTime);
-				User.refreshUpdate(req.session.user, data.body["access_token"], newUpdateTime)
-					.then(pino.log)
-					.catch(pino.error);
+				let update_time = api.setUpdatedAtToNow();
+				User.refreshUpdate(req.session.user, data.body["access_token"], update_time)
+					.then(res => pino.info(`Success: ${res}`))
+					.catch(err => pino.error(`Error: ${err}`));
 				next();
-			},
-			err => {
-				console.log("Could not refresh access token", err);
+			})
+			.catch(err => {
+				pino.error("Could not refresh access token", err);
 				res.redirect("/");
-			}
-		);
+			});
 	} else {
-		console.log("Access token is still valid!");
+		pino.info("Access token is still valid!");
 		next();
 	}
+};
+
+module.exports = {
+	sessionAttach,
+	checkRefresh,
 };

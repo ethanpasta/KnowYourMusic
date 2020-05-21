@@ -1,12 +1,13 @@
 const express = require("express");
 const apiController = require("../controllers/SpotifyApi");
 const middleware = require("./apiMiddleware");
-const router = express.Router();
+const api = express.Router();
 
-router.use(middleware.sessionAttach);
-router.use(middleware.checkRefresh);
+api.use(middleware.sessionAttach);
+api.use(middleware.checkRefresh);
 
-router.get("/me", apiController.getMe);
-router.get("/songs", apiController.getSongs);
+api.get("/me", apiController.getMe);
+api.get("/songs", apiController.getSongs);
+//api.get("/game", apiController.getGame);
 
-module.exports = router;
+module.exports = api;

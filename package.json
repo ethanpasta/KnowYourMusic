@@ -40,6 +40,7 @@
 		"express-session": "^1.17.1",
 		"genius-lyrics-api": "^2.0.3",
 		"mongoose": "^5.9.13",
+		"mongoose-unique-validator": "^2.0.3",
 		"node-fetch": "^2.6.0",
 		"query-string": "^6.12.1",
 		"spotify-web-api-node": "^4.0.0"

@@ -1,15 +1,16 @@
-const { pino } = require("../utils/logger");
+const { pino } = require("../utils");
 
 // Function returns Spotify account information
 function getMe(req, res) {
 	req.api
 		.getMe()
-		.then(data => res.send(data.body))
+		.then(data => res.send(data))
 		.catch(err => {
 			pino.error("Something went wrong!" + err);
 			res.send({ err: true });
 		});
 }
+
 // Function returns all songs found in the users library
 function getSongs(req, res) {
 	req.api
@@ -21,7 +22,19 @@ function getSongs(req, res) {
 		});
 }
 
+// Function gets all data for game play
+/* function getGame(req, res) {
+	gameManager
+		.init(req.api)
+		.then(data => res.send({ data }))
+		.catch(err => {
+			pino.error(err);
+			res.send({ err: true });
+		});
+} */
+
 module.exports = {
 	getMe,
 	getSongs,
+	/* getGame, */
 };

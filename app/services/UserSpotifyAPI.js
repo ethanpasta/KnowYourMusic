@@ -1,6 +1,6 @@
 const SpotifyWebApi = require("spotify-web-api-node");
 const { credentials } = require("../utils/constants");
-const { sanitizeSongTitle } = require("../utils/sanitizer");
+const { sanitizeSongTitle } = require("../utils");
 
 /**
  * --- Spotify API Service ---
@@ -35,7 +35,7 @@ class UserSpotifyAPI {
 			let allSongs = extractSongs(response);
 			// Create a list of promises: each promise is an api request fetching 50 songs with an offset (length of list = number of total songs / 50)
 			let songRequests = [...Array(Math.ceil((response.total - 50) / 50)).keys()].map(val =>
-				this.getMySavedTracks({ limit: 50, offset: (val + 1) * 50 })
+				this.api.getMySavedTracks({ limit: 50, offset: (val + 1) * 50 })
 			);
 			let finishedPromises = await Promise.all(songRequests);
 			finishedPromises.map(item => {
@@ -44,15 +44,21 @@ class UserSpotifyAPI {
 			});
 			return allSongs;
 		} catch (error) {
-			return new Error("Error while fetching songs: " + error);
+			throw new Error("Error while fetching songs: " + error);
 		}
+	}
+	getMe() {
+		return this.api.getMe().then(res => {
+			this.profile = res.body;
+			return res.body;
+		});
 	}
 }
 
 // Function extracts the relevant track information from the response body
 const extractSongs = apiResponse =>
 	apiResponse.items.map(item => ({
-		id: item.track.id,
+		_id: item.track.id,
 		title: sanitizeSongTitle(item.track.name),
 		artist: item.track.artists[0].name,
 	}));

@@ -25,6 +25,14 @@ class Database {
 					/* db.collection("sessions").deleteMany({}, function (err) {
 						if (err) console.log(err);
 						else console.log("Removed all sessions");
+					});
+					db.collection("users").deleteMany({}, function (err) {
+						if (err) console.log(err);
+						else console.log("Removed all users");
+					});
+					db.collection("songs").deleteMany({}, function (err) {
+						if (err) console.log(err);
+						else console.log("Removed all songs");
 					}); */
 				}
 			}
