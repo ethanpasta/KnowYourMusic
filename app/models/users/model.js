@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const helpers = require("./userHelpers");
+const helpers = require("./helpers");
 const uniqueValidator = require("mongoose-unique-validator");
 
 /**

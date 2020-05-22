@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const helpers = require("./songHelpers");
+const helpers = require("./helpers");
 
 /**
  * Mongoose schema for the songs collection
