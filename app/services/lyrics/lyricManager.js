@@ -1,10 +1,10 @@
-const { Song } = require("../models");
-const { pino } = require("../utils");
+const { Song } = require("../../models");
+const { pino } = require("../../utils");
 
 /**
  * LyricManager - class manages all interactions with lyrics:
  * - add lyrics of a song ID to the DB
- * - find lyrics of a song ID from the DB
+ * - find lyrics of a song ID in the DB
  * - get lyrics for a song by its ID, title and artist:
  *     1. return lyrics if found in DB,
  *     2. if not find lyrics from scrapers and add them to DB,
@@ -13,7 +13,7 @@ const { pino } = require("../utils");
 
 class LyricManager {
 	constructor() {
-		this.lyricsScraper = require("./lyrics");
+		this.scrapers = require("./scrapers");
 	}
 
 	// Finding lyrics (if exists) of a song from DB
@@ -32,14 +32,14 @@ class LyricManager {
 	}
 
 	// Find lyrics for a song
-	async getLyrics(id, title, artist) {
-		pino.info(`>>> Searching for lyrics for song '${title}' in DB`);
+	async getLyricsAndHandle(id, title, artist) {
+		pino.info(`>>> Searching lyrics for '${title}' in DB`);
 		let lyrics = await this.findSongInDB(id);
 		if (lyrics) {
 			return lyrics;
 		}
-		pino.info(`>>> Searching for lyrics for song '${title}' in scrapers`);
-		lyrics = await this.lyricScraper.findLyrics(title, artist);
+		pino.info(`>>> Searching lyrics for '${title}' in scrapers`);
+		lyrics = await this.scrapers.findLyrics(title, artist);
 		if (!lyrics) {
 			this.updateSongAsBroken(id);
 			throw new Error(`No lyrics for '${title}' - '${artist}'`);

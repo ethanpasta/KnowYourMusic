@@ -1,10 +1,10 @@
-const { sanitizeLyrics } = require("../../utils");
+const { sanitizeLyrics } = require("../../../utils");
 
 class LyricScraper {
 	constructor() {
 		this.scrapers = {
 			genius: require("./genius"),
-			cana: require("./rld"),
+			cana: require("../rld"),
 		};
 		this.preference = ["cana", "genius"];
 	}
