@@ -3,7 +3,13 @@ const userMap = require("./userMap");
 const { User, Song } = require("../models");
 const { pino } = require("../utils");
 
-class UserHandler {
+/**
+ * Class handles user after he logs in with Spotify. Handles two possibilites:
+ *  - User is new, and we add him to the system
+ *  - User exists and is logging in from a new device (therefore his session doesn't exist), we retrieve his existing
+ * information.
+ */
+class UserAuthHandler {
 	constructor(access_token, refresh_token, expires_in) {
 		this.access_token = access_token;
 		this.refresh_token = refresh_token;
@@ -16,6 +22,8 @@ class UserHandler {
 		const username = user["id"];
 		this.username = username;
 		this.display_name = user["display_name"];
+
+		// Add users' Spotify api to the map
 		userMap[username] = { api: this.api };
 
 		// Check if this user already exists
@@ -28,6 +36,7 @@ class UserHandler {
 		return username;
 	}
 
+	// Method to initialize a new user
 	async initNew() {
 		pino.info(`>>> Adding new user ${this.username} to DB`);
 		await this.addUserToDB(
@@ -75,4 +84,4 @@ class UserHandler {
 	}
 }
 
-module.exports = UserHandler;
+module.exports = UserAuthHandler;

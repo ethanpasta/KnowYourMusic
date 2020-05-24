@@ -45,9 +45,29 @@ function addSongsToUser(songs, username) {
 	});
 }
 
+function getRandomUserSongs(username, limit, exclude = []) {
+	return this.aggregate([
+		{ $match: { username: { $eq: username } } }, // Match user to 'username'
+		{ $project: { _id: 0, songs: 1 } }, // Get only the song array
+		{ $unwind: { path: "$songs" } }, // Expand the array
+		{ $match: { songs: { $nin: exclude } } }, // Match only the id's that aren't in the array 'exclude'
+		{ $sample: { size: limit } }, // Return a random set (the size of 'limit') from the matched id's
+		{
+			$lookup: {
+				from: "songs",
+				localField: "songs",
+				foreignField: "_id",
+				as: "randSongs",
+			},
+		},
+		{ $project: { _id: 0, song: { $arrayElemAt: ["$randSongs", 0] } } },
+	]);
+}
+
 module.exports = {
 	refreshUpdate,
 	needsSongsUpdate,
 	getUserByAccessToken,
 	addSongsToUser,
+	getRandomUserSongs,
 };

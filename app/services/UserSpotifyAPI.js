@@ -1,6 +1,6 @@
 const SpotifyWebApi = require("spotify-web-api-node");
 const { credentials } = require("../utils/constants");
-const { sanitizeSongTitle } = require("../utils");
+const { sanitizeSongTitle, checkIfMostlyEnglish } = require("../utils");
 
 /**
  * --- Spotify API Service ---
@@ -18,15 +18,12 @@ class UserSpotifyAPI {
 	updateRefreshTime() {
 		return (this.lastRefresh = Date.now());
 	}
-	getUpdatedAt() {
-		return this.lastRefresh;
-	}
 	setExpiresIn(timeSeconds) {
 		this.expiresIn = timeSeconds * 1000;
 	}
 	// Check if the access token is still valid (true if valid, false otherwise)
 	needsToRefresh() {
-		return Date.now() - this.updatedAt > this.expiresIn;
+		return Date.now() - this.lastRefresh >= this.expiresIn;
 	}
 	// Get all of the users saved songs
 	async getAllSongs() {
@@ -38,16 +35,16 @@ class UserSpotifyAPI {
 				this.api.getMySavedTracks({ limit: 50, offset: (val + 1) * 50 })
 			);
 			let finishedPromises = await Promise.all(songRequests);
-			finishedPromises.map(item => {
-				// Add songs from each object to the total list of songs
-				allSongs = allSongs.concat(extractSongs(item.body));
-			});
+			allSongs = finishedPromises.reduce((songs, curr) => {
+				return songs.concat(extractSongs(curr.body));
+			}, allSongs);
 			return allSongs;
 		} catch (error) {
 			throw new Error("Error while fetching songs: " + error);
 		}
 	}
 	getMe() {
+		if (this.profile) return Promise.resolve(this.profile);
 		return this.api.getMe().then(res => {
 			if (!this.profile) {
 				this.profile = res.body;
@@ -55,14 +52,30 @@ class UserSpotifyAPI {
 			return res.body;
 		});
 	}
+	setAccessToken(access_token) {
+		this.api.setAccessToken(access_token);
+	}
+	refreshAccessToken() {
+		return this.api.refreshAccessToken();
+	}
 }
 
 // Function extracts the relevant track information from the response body
-const extractSongs = apiResponse =>
-	apiResponse.items.map(item => ({
-		_id: item.track.id,
-		title: sanitizeSongTitle(item.track.name),
-		artist: item.track.artists[0].name,
-	}));
+const extractSongs = apiResponse => {
+	return apiResponse.items.reduce((songs, curr) => {
+		// Only extract songs in English (for now)
+		if (checkIfMostlyEnglish(curr.track.name)) {
+			const song = {
+				_id: curr.track.id,
+				title: sanitizeSongTitle(curr.track.name),
+				artist: curr.track.artists[0].name,
+			};
+			songs.push(song);
+		} else {
+			console.log(`Skipping: ${curr.track.name} 😫`);
+		}
+		return songs;
+	}, []);
+};
 
 module.exports = UserSpotifyAPI;

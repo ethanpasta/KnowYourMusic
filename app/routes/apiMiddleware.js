@@ -16,10 +16,10 @@ const sessionAttach = (req, res, next) => {
 		return next(new Error("User session didn't exist"));
 	}
 	pino.info(`Session for ${req.session.user} wasn't in UserMap. Adding it.`);
-	User.findOne({ username: req.session.user }, "access_token refresh_token updated_at")
+	User.findOne({ username: req.session.user }, "access_token refresh_token last_refresh_update")
 		.then(user => {
 			const userApi = new UserSpotifyAPI(user.access_token, user.refresh_token);
-			userApi.lastRefresh = user.updated_at;
+			userApi.lastRefresh = user.last_refresh_update;
 			req.api = (userMap[req.session.user] = { api: userApi }).api;
 			return next();
 		})
@@ -33,20 +33,21 @@ const sessionAttach = (req, res, next) => {
  * Checks if the Spotify API is expired and needs to be refreshed.
  */
 const checkRefresh = (req, res, next) => {
-	const api = userMap[req.session.user].api;
+	const api = req.api;
 	if (api.needsToRefresh()) {
-		pino.info(`Access token refresh for user '${req.user.session}' is needed. refreshing...`);
+		pino.info(`Access token refresh for user '${req.session.user}' is needed. refreshing...`);
 		api.refreshAccessToken()
 			.then(data => {
 				// Save the access token so that it's used in future calls
 				api.setAccessToken(data.body["access_token"]);
-				let update_time = api.setUpdatedAtToNow();
+				let update_time = api.updateRefreshTime();
 				User.refreshUpdate(req.session.user, data.body["access_token"], update_time)
 					.then(res => pino.info(`Success: ${res}`))
 					.catch(err => pino.error(`Error: ${err}`));
 				next();
 			})
 			.catch(err => {
+				console.log(err);
 				pino.error("Could not refresh access token", err);
 				res.redirect("/");
 			});

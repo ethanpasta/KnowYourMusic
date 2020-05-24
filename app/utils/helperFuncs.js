@@ -10,9 +10,21 @@ function sanitizeSongTitle(title) {
 	return finalTitle.join(" ").trim();
 }
 
-function sanitizeLyrics(lyrics) {
-	let cleanLyrics = lyrics.replace(/\[(.*?)\]/g, "");
-	return cleanLyrics.replace(/^\s*\n/gm, "");
+function sanitizeLyrics(lyrics, title) {
+	if (!lyrics || !title) return;
+	const regex = /(^\s*$|\[(.*?)\])/gm;
+	const cleanLines = lyrics.split("\n").filter(line => {
+		const words = line.split(" ");
+		if (
+			regex.test(line) ||
+			words.length < 3 ||
+			line.toLowerCase().includes(title.toLowerCase())
+		) {
+			return false;
+		}
+		return true;
+	});
+	return [...new Set(cleanLines)].join("\n");
 }
 
 // Generates a random string used for the state in the Spotify authorization process
@@ -25,8 +37,15 @@ function generateRandomString(length) {
 	return text;
 }
 
+function checkIfMostlyEnglish(str) {
+	const asciiChars = /[\x01-\x7F]/g;
+	const cleanStr = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") || "";
+	return (cleanStr.match(asciiChars) || []).length / cleanStr.length >= 0.8;
+}
+
 module.exports = {
 	sanitizeLyrics,
 	sanitizeSongTitle,
 	generateRandomString,
+	checkIfMostlyEnglish,
 };

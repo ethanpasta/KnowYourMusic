@@ -10,9 +10,10 @@ class geniusAPI {
 		};
 	}
 
-	getSongLyrics(title, artist) {
+	async getSongLyrics(title, artist) {
 		pino.info(`Getting lyrics from Genius for ${title} - ${artist}`);
-		return getLyrics({ ...this.options, title, artist });
+		const lyrics = await getLyrics({ ...this.options, title, artist });
+		return lyrics;
 	}
 }
 

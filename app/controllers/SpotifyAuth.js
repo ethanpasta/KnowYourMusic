@@ -1,6 +1,6 @@
 const querystring = require("query-string");
 const userMap = require("../services/userMap");
-const UserHandler = require("../services/userHandler");
+const UserAuthHandler = require("../services/userAuthHandler");
 const { pino, credentials, scopes, myApi, generateRandomString } = require("../utils");
 
 const login = (_, res) => {
@@ -51,7 +51,7 @@ const callback = async (req, res) => {
 			refresh_token = data.body["refresh_token"];
 
 		pino.info(">>> Prepping user..");
-		const user = new UserHandler(access_token, refresh_token, data.body["expires_in"]);
+		const user = new UserAuthHandler(access_token, refresh_token, data.body["expires_in"]);
 		req.session.user = await user.recognizeAndInitialize();
 		res.clearCookie("spotify_auth_state").redirect("/");
 	} catch (error) {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Game from "./Game";
 
 const accountInfoStyle = {
 	textAlign: "center",
@@ -24,8 +25,9 @@ const ExistingUser = () => {
 			) : (
 				<div style={accountInfoStyle}>
 					<h1>Hi, {accountInfo.display_name}</h1>
-					<h2>You&apos;re gay!</h2>
+					<h2>You LOVE cock!</h2>
 					<img src={accountInfo.imageUrl}></img>
+					<Game />
 					<br />
 					<a href="/auth/logout">Logout</a>
 				</div>

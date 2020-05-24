@@ -4,16 +4,16 @@ class LyricScraper {
 	constructor() {
 		this.scrapers = {
 			genius: require("./genius"),
-			cana: require("../rld"),
+			cana: require("./rld"),
 		};
 		this.preference = ["cana", "genius"];
 	}
 
 	async findLyrics(title, artist) {
-		this.preference.forEach(async scraper => {
+		for (const scraper of this.preference) {
 			const lyrics = await this.scrapers[scraper].getSongLyrics(title, artist);
-			if (lyrics) return sanitizeLyrics(lyrics);
-		});
+			if (lyrics) return sanitizeLyrics(lyrics, title);
+		}
 	}
 }
 

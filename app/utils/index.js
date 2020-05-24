@@ -1,5 +1,10 @@
 const { pino, expressPino } = require("./logger");
-const { sanitizeLyrics, sanitizeSongTitle, generateRandomString } = require("./helperFuncs");
+const {
+	sanitizeLyrics,
+	sanitizeSongTitle,
+	generateRandomString,
+	checkIfMostlyEnglish,
+} = require("./helperFuncs");
 const { credentials, scopes, myApi } = require("./constants");
 
 module.exports = {
@@ -8,6 +13,7 @@ module.exports = {
 	sanitizeLyrics,
 	sanitizeSongTitle,
 	generateRandomString,
+	checkIfMostlyEnglish,
 	credentials,
 	scopes,
 	myApi,

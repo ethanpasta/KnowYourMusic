@@ -21,6 +21,12 @@ const songSchema = new mongoose.Schema({
 // Attach all helper methods to the static model methods
 Object.keys(helpers).forEach(func => songSchema.static(func, helpers[func]));
 
+songSchema.virtual("games", {
+	ref: "Game",
+	localField: "_id",
+	foreignField: "player",
+});
+
 const Song = mongoose.model("Song", songSchema);
 
 module.exports = Song;
