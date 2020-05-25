@@ -52,11 +52,12 @@ function addSongsToUser(songs, username) {
  * @param {List} exclude List of song ids to exclude from the search
  */
 function getRandomUserSongs(username, limit, exclude = []) {
+	exclude = exclude.map(song => song._id);
 	return this.aggregate([
 		{ $match: { username: { $eq: username } } }, // Match user to 'username'
-		{ $project: { _id: 0, songs: 1 } }, // Get only the song array
-		{ $unwind: { path: "$songs" } }, // Expand the array
-		{ $match: { songs: { $nin: exclude } } }, // Match only the id's that aren't in the array 'exclude'
+		{ $project: { _id: 0, song: "$songs" } }, // Get only the song array
+		{ $unwind: { path: "$song" } }, // Expand the array
+		{ $match: { song: { $nin: exclude } } }, // Match only the id's that aren't in the array 'exclude'
 		{ $sample: { size: limit } }, // Return a random set from the matched id's
 	]);
 }

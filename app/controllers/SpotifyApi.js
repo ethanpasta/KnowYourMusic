@@ -1,5 +1,5 @@
 const { pino } = require("../utils");
-const gameManager = require("../services/userGame");
+const gameManager = require("../services/game");
 
 // Function returns Spotify account information
 function getMe(req, res) {
@@ -27,7 +27,7 @@ function getSongs(req, res) {
 function getGame(req, res) {
 	const newGame = new gameManager(req.session.user);
 	newGame
-		.prepGame()
+		.getClientData()
 		.then(data => res.send(data))
 		.catch(err => {
 			pino.error(`Failed trying to retrieve game data: ${err}`);

@@ -1,5 +1,4 @@
 const { getLyrics } = require("genius-lyrics-api");
-const { pino } = require("../../../utils");
 require("dotenv").config();
 
 class geniusAPI {
@@ -11,7 +10,6 @@ class geniusAPI {
 	}
 
 	async getSongLyrics(title, artist) {
-		pino.info(`Getting lyrics from Genius for ${title} - ${artist}`);
 		const lyrics = await getLyrics({ ...this.options, title, artist });
 		return lyrics;
 	}

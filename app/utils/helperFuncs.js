@@ -44,9 +44,15 @@ function checkIfMostlyEnglish(str) {
 	return (cleanStr.match(asciiChars) || []).length / cleanStr.length >= 0.8;
 }
 
+function listRange(start, end) {
+	if (end == undefined) [end, start] = [start, 0];
+	return [...Array(end - start).keys()].map(i => i + start);
+}
+
 module.exports = {
 	sanitizeLyrics,
 	sanitizeSongTitle,
 	generateRandomString,
 	checkIfMostlyEnglish,
+	listRange,
 };

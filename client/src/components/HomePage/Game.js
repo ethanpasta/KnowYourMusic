@@ -12,7 +12,7 @@ const buttonStyle = {
 };
 
 const Game = () => {
-	const [gameData, setGameData] = useState();
+	const [gameData, setGameData] = useState({});
 	const handleButtonClick = e => {
 		fetch("/api/gameData")
 			.then(res => res.json())
@@ -25,12 +25,7 @@ const Game = () => {
 			<button style={buttonStyle} onClick={handleButtonClick}>
 				Start Game
 			</button>
-			{gameData != undefined &&
-				gameData.map((lyrics, i) => (
-					<div key={i}>
-						<p>{lyrics}</p>
-					</div>
-				))}
+			{Object.keys(gameData).length != 0 && <p>{JSON.stringify(gameData)}</p>}
 		</div>
 	);
 };

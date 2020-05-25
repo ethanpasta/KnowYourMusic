@@ -1,5 +1,5 @@
 const SpotifyWebApi = require("spotify-web-api-node");
-const { credentials } = require("../utils/constants");
+const { CREDENTIALS } = require("../utils/constants");
 const { sanitizeSongTitle, checkIfMostlyEnglish } = require("../utils");
 
 /**
@@ -8,7 +8,7 @@ const { sanitizeSongTitle, checkIfMostlyEnglish } = require("../utils");
  */
 class UserSpotifyAPI {
 	constructor(access_token, refresh_token, expires_in = 3600) {
-		const api = new SpotifyWebApi(credentials);
+		const api = new SpotifyWebApi(CREDENTIALS);
 		api.setAccessToken(access_token);
 		api.setRefreshToken(refresh_token);
 		this.api = api;

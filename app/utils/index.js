@@ -4,8 +4,9 @@ const {
 	sanitizeSongTitle,
 	generateRandomString,
 	checkIfMostlyEnglish,
+	listRange,
 } = require("./helperFuncs");
-const { credentials, scopes, myApi } = require("./constants");
+const { CREDENTIALS, SCOPES, MY_API, NUM_OF_LEVELS, OPTIONS_PER_LEVEL } = require("./constants");
 
 module.exports = {
 	pino,
@@ -14,7 +15,10 @@ module.exports = {
 	sanitizeSongTitle,
 	generateRandomString,
 	checkIfMostlyEnglish,
-	credentials,
-	scopes,
-	myApi,
+	CREDENTIALS,
+	SCOPES,
+	MY_API,
+	listRange,
+	NUM_OF_LEVELS,
+	OPTIONS_PER_LEVEL,
 };

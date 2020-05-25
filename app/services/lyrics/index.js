@@ -33,19 +33,19 @@ class LyricManager {
 
 	// Find lyrics for a song
 	async getLyricsAndHandle({ _id, title, artist }) {
-		pino.info(`>>> Searching lyrics for '${title}' in DB`);
 		let lyrics = await LyricManager.findLyricsInDB(_id);
 		if (lyrics) {
+			pino.info(`Found lyrics in DB for ${title} - ${artist}`);
 			return lyrics;
 		}
-		pino.info(`>>> Searching lyrics for '${title}' in scrapers`);
 		lyrics = await this.scrapers.findLyrics(title, artist);
 		if (!lyrics) {
+			pino.warn(`No lyrics for ${title} - ${artist}. Updating song as broken in DB`);
 			await LyricManager.updateSongAsBroken(_id);
-			pino.error(`No lyrics for '${title}' - '${artist}'`);
 			return;
 		}
 		await LyricManager.addLyricsToDB(_id, lyrics);
+		pino.info(`Found lyrics in scrapers for ${title} - ${artist}`);
 		return lyrics;
 	}
 }

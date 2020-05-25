@@ -28,9 +28,17 @@ function updateNoLyrics(songId) {
  * @param {Boolean} withLyrics If true, returned documents "broken" field have to be false (song.broken == false)
  */
 function getSongsByIds(songIds, withLyrics) {
-	const query = this.find({ _id: { $in: songIds } });
-	if (withLyrics) query.where("broken").equals(false);
-	return query.execute();
+	songIds = songIds.map(item => item.song);
+	if (withLyrics) {
+		return this.find({
+			_id: { $in: songIds },
+			broken: false,
+		});
+	} else {
+		return this.find({
+			_id: { $in: songIds },
+		}).select({ lyrics: 0 });
+	}
 }
 
 module.exports = {

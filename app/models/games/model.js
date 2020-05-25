@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const helpers = require("./helpers");
 
 /**
  * Mongoose schema for the songs collection
@@ -11,7 +10,7 @@ const gameSchema = new mongoose.Schema({
 });
 
 // Attach all helper methods to the static model methods
-Object.keys(helpers).forEach(func => gameSchema.static(func, helpers[func]));
+// Object.keys(helpers).forEach(func => gameSchema.static(func, helpers[func]));
 
 const Game = mongoose.model("Game", gameSchema);
 

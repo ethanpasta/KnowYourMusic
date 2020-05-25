@@ -1,17 +1,17 @@
 const querystring = require("query-string");
 const userMap = require("../services/userMap");
 const UserAuthHandler = require("../services/userAuthHandler");
-const { pino, credentials, scopes, myApi, generateRandomString } = require("../utils");
+const { pino, CREDENTIALS, SCOPES, MY_API, generateRandomString } = require("../utils");
 
 const login = (_, res) => {
 	const state = generateRandomString(16);
 	const authURL = querystring.stringifyUrl({
 		url: "https://accounts.spotify.com/authorize",
 		query: {
-			client_id: credentials.clientId,
+			client_id: CREDENTIALS.clientId,
 			response_type: "code",
-			redirect_uri: credentials.redirectUri,
-			scope: scopes.join(", "),
+			redirect_uri: CREDENTIALS.redirectUri,
+			scope: SCOPES.join(", "),
 			state,
 		},
 	});
@@ -46,7 +46,7 @@ const callback = async (req, res) => {
 		return;
 	}
 	try {
-		const data = await myApi.authorizationCodeGrant(code);
+		const data = await MY_API.authorizationCodeGrant(code);
 		const access_token = data.body["access_token"],
 			refresh_token = data.body["refresh_token"];
 
