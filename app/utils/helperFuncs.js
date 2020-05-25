@@ -3,7 +3,7 @@ function sanitizeSongTitle(title) {
 	const titleWords = title.split(" ");
 	const regex = /^[)([\]-]/;
 	for (let i = 0; i < titleWords.length; i++) {
-		if (regex.test(titleWords[i])) break;
+		if (regex.test(titleWords[i]) || titleWords[i].toLowerCase().includes("feat")) break;
 		finalTitle.push(titleWords[i]);
 	}
 
@@ -38,6 +38,7 @@ function generateRandomString(length) {
 }
 
 function checkIfMostlyEnglish(str) {
+	// eslint-disable-next-line
 	const asciiChars = /[\x01-\x7F]/g;
 	const cleanStr = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") || "";
 	return (cleanStr.match(asciiChars) || []).length / cleanStr.length >= 0.8;

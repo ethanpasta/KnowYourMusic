@@ -22,9 +22,21 @@ function updateNoLyrics(songId) {
 	return this.findByIdAndUpdate(songId, { broken: true });
 }
 
+/**
+ * Function fetches and returns a set of song documents
+ * @param {List} songIds A list of songs ids to find
+ * @param {Boolean} withLyrics If true, returned documents "broken" field have to be false (song.broken == false)
+ */
+function getSongsByIds(songIds, withLyrics) {
+	const query = this.find({ _id: { $in: songIds } });
+	if (withLyrics) query.where("broken").equals(false);
+	return query.execute();
+}
+
 module.exports = {
 	findLyricsIfExists,
 	addLyricsToSong,
 	addManySongs,
 	updateNoLyrics,
+	getSongsByIds,
 };

@@ -72,7 +72,7 @@ const extractSongs = apiResponse => {
 			};
 			songs.push(song);
 		} else {
-			console.log(`Skipping: ${curr.track.name} 😫`);
+			console.log(`Skipping song '${curr.track.name}' ಠ_ಠ`);
 		}
 		return songs;
 	}, []);
