@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Level from "./Level";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:5000/";
 
 const buttonStyle = {
 	width: "100px",
@@ -13,42 +16,25 @@ const buttonStyle = {
 
 const Game = () => {
 	const [gameData, setGameData] = useState({});
-	const handleButtonClick = e => {
+	const handleButtonClick = () => {
 		fetch("/api/gameData")
 			.then(res => res.json())
 			.then(data => setGameData(data))
 			.catch(console.error);
 	};
-	console.log(gameData);
+	useEffect(() => {
+		const socket = socketIOClient.connect("http://localhost:5000/game");
+		socket.emit("hi");
+	}, []);
 	return (
 		<div>
 			<button style={buttonStyle} onClick={handleButtonClick}>
 				Start Game
 			</button>
 			{Object.keys(gameData).length != 0 &&
-				Object.keys(gameData).map(level => {
-					return (
-						<div key={level}>
-							<h1>{gameData[level].line}</h1>
-							<button>
-								{gameData[level].options["0"].title} -{" "}
-								{gameData[level].options["0"].artist}
-							</button>
-							<button>
-								{gameData[level].options["1"].title} -{" "}
-								{gameData[level].options["1"].artist}
-							</button>
-							<button>
-								{gameData[level].options["2"].title} -{" "}
-								{gameData[level].options["2"].artist}
-							</button>
-							<button>
-								{gameData[level].options["3"].title} -{" "}
-								{gameData[level].options["3"].artist}
-							</button>
-						</div>
-					);
-				})}
+				Object.keys(gameData).map(level => (
+					<Level key={level} level={level} gameData={gameData} />
+				))}
 		</div>
 	);
 };

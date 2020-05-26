@@ -1,7 +1,7 @@
 const userMap = require("../services/userMap");
 const UserSpotifyAPI = require("../services/UserSpotifyAPI");
 const { User } = require("../models");
-const { pino } = require("../utils");
+const { pino } = require("../utils").logger;
 
 /**
  * Add the spotifyApi instance to the request object.

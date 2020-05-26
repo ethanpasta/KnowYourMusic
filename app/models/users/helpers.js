@@ -1,4 +1,4 @@
-const { pino } = require("../../utils");
+const { pino } = require("../../utils").logger;
 
 /**
  * Users' access token was expired - a refresh happened and the user needs an update

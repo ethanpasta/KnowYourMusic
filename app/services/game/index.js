@@ -1,5 +1,5 @@
 const GameData = require("./gameData");
-const { pino } = require("../../utils");
+const { pino } = require("../../utils").logger;
 
 class UserGame {
 	constructor(username) {

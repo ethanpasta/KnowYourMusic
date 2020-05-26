@@ -1,4 +1,4 @@
-const { sanitizeLyrics } = require("../../../utils");
+const { sanitizeLyrics } = require("../../../utils").helperFuncs;
 
 class LyricScraper {
 	constructor() {

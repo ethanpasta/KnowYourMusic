@@ -1,5 +1,5 @@
 const { Song } = require("../../models");
-const { pino } = require("../../utils");
+const { pino } = require("../../utils").logger;
 
 /**
  * LyricManager - class manages all interactions with lyrics:

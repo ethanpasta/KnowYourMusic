@@ -1,7 +1,5 @@
 const express = require("express");
 const authController = require("../controllers/SpotifyAuth");
-require("dotenv").config();
-
 const auth = express.Router();
 
 auth.get("/", authController.login);

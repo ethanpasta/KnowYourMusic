@@ -1,6 +1,8 @@
 const { User, Song } = require("../../models");
 const lyricManager = require("../lyrics");
-const { listRange, OPTIONS_PER_LEVEL, NUM_OF_LEVELS, pino } = require("../../utils");
+const { pino } = require("../../utils").logger;
+const { OPTIONS_PER_LEVEL, NUM_OF_LEVELS } = require("../../utils").constants;
+const { listRange } = require("../../utils").helperFuncs;
 
 class GameData {
 	constructor(username) {

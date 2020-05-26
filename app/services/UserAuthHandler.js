@@ -1,7 +1,7 @@
 const UserSpotifyAPI = require("./UserSpotifyAPI");
 const userMap = require("./userMap");
 const { User, Song } = require("../models");
-const { pino } = require("../utils");
+const { pino } = require("../utils").logger;
 
 /**
  * Class handles user after he logs in with Spotify. Handles two possibilites:
