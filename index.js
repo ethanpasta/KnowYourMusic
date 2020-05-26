@@ -1,4 +1,4 @@
-const { expressPino } = require("./app/utils");
+const { expressPino } = require("./app/utils").logger;
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const { authRouter, apiRouter } = require("./app/routes");

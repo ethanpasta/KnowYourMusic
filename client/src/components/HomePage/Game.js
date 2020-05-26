@@ -25,7 +25,30 @@ const Game = () => {
 			<button style={buttonStyle} onClick={handleButtonClick}>
 				Start Game
 			</button>
-			{Object.keys(gameData).length != 0 && <p>{JSON.stringify(gameData)}</p>}
+			{Object.keys(gameData).length != 0 &&
+				Object.keys(gameData).map(level => {
+					return (
+						<div key={level}>
+							<h1>{gameData[level].line}</h1>
+							<button>
+								{gameData[level].options["0"].title} -{" "}
+								{gameData[level].options["0"].artist}
+							</button>
+							<button>
+								{gameData[level].options["1"].title} -{" "}
+								{gameData[level].options["1"].artist}
+							</button>
+							<button>
+								{gameData[level].options["2"].title} -{" "}
+								{gameData[level].options["2"].artist}
+							</button>
+							<button>
+								{gameData[level].options["3"].title} -{" "}
+								{gameData[level].options["3"].artist}
+							</button>
+						</div>
+					);
+				})}
 		</div>
 	);
 };

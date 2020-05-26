@@ -1,7 +1,9 @@
 const querystring = require("query-string");
 const userMap = require("../services/userMap");
 const UserAuthHandler = require("../services/userAuthHandler");
-const { pino, CREDENTIALS, SCOPES, MY_API, generateRandomString } = require("../utils");
+const { pino } = require("../utils").logger;
+const { generateRandomString } = require("../utils").helperFuncs;
+const { CREDENTIALS, SCOPES, MY_API } = require("../utils").constants;
 
 const login = (_, res) => {
 	const state = generateRandomString(16);

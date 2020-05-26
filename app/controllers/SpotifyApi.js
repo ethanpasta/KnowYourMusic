@@ -1,4 +1,4 @@
-const { pino } = require("../utils");
+const { pino } = require("../utils").logger;
 const gameManager = require("../services/game");
 
 // Function returns Spotify account information

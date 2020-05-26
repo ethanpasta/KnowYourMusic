@@ -1,3 +1,14 @@
+/**
+ * Function cleans the title of a song. It iterates over the words of the title,
+ * until it finds a word that contains one of the characters '()[]-', or the word "feat".
+ * Then it returns all the words before the matching one.
+ * For example:
+ *
+ *  - Reaching (feat. Alex) => Reaching
+ *  - All For Us - from the ... => All For Us
+ *
+ * @param {String} title
+ */
 function sanitizeSongTitle(title) {
 	let finalTitle = [];
 	const titleWords = title.split(" ");
@@ -6,13 +17,21 @@ function sanitizeSongTitle(title) {
 		if (regex.test(titleWords[i]) || titleWords[i].toLowerCase().includes("feat")) break;
 		finalTitle.push(titleWords[i]);
 	}
-
 	return finalTitle.join(" ").trim();
 }
 
+/**
+ * Function cleans the lyrics of a song. It splits the lyrics into lines, and then removes all lines
+ * that don't pass certain criteria:
+ *  - REGEX: the line is only whitespace OR the line starts and ends with '[]' or '()'
+ *  - There's less than 3 words in the line
+ *  - the line includes the title of the song
+ * @param {String} lyrics
+ * @param {String} title
+ */
 function sanitizeLyrics(lyrics, title) {
 	if (!lyrics || !title) return;
-	const regex = /(^\s*$|\[(.*?)\])/gm;
+	const regex = /(^\s*$|\[(.*?)\]|\(.*?\))/gm;
 	const cleanLines = lyrics.split("\n").filter(line => {
 		const words = line.split(" ");
 		if (
