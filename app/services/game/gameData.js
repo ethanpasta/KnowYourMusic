@@ -47,7 +47,7 @@ class GameData {
 				1
 			);
 			this.clientData[level] = {
-				line: randomLine(swithl[level - 1].lyrics),
+				line: randomLine(swithl[level - 1] ? swithl[level - 1].lyrics : []),
 				options: {},
 			};
 			// Set correct option for this level in game data

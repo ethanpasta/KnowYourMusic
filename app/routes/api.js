@@ -8,6 +8,6 @@ api.use(middleware.checkRefresh);
 
 api.get("/me", apiController.getMe);
 api.get("/songs", apiController.getSongs);
-api.get("/gameData", apiController.getGame);
+api.get("/start-game", apiController.startGame);
 
 module.exports = api;

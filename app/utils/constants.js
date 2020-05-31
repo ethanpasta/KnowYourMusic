@@ -8,7 +8,7 @@ const CREDENTIALS = {
 };
 const SCOPES = ["user-library-read", "user-read-email", "user-read-currently-playing"];
 
-const NUM_OF_LEVELS = 10;
+const NUM_OF_LEVELS = 5;
 const OPTIONS_PER_LEVEL = 4;
 
 module.exports = {

@@ -2,10 +2,12 @@ const userMap = require("./services/userMap");
 
 module.exports = function (sio) {
 	sio.on("connection", socket => {
-		console.log(`User connected. Socket: ${socket.id}`);
 		const user = socket.request.session && socket.request.session.user;
-		if (user in userMap && !userMap[user].socketId) {
-			userMap[user].socketId = socket.id;
+		console.log("checking..." + user in userMap && userMap[user].socket);
+		if (user in userMap && !userMap[user].socket) {
+			console.log("user in usermap");
+			userMap[user].socket = socket;
+			console.log(userMap[user]);
 		}
 		socket.on("disconnect", () => console.log("Someone disconnected"));
 	});

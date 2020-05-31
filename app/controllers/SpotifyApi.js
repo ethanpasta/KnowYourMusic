@@ -24,19 +24,13 @@ function getSongs(req, res) {
 }
 
 // Function gets all data for game play
-function getGame(req, res) {
+function startGame(req) {
 	const newGame = new gameManager(req.session.user);
-	newGame
-		.getClientData()
-		.then(data => res.send(data))
-		.catch(err => {
-			pino.error(`Failed trying to retrieve game data: ${err}`);
-			res.send(new Error("Failed :("));
-		});
+	newGame.start();
 }
 
 module.exports = {
 	getMe,
 	getSongs,
-	getGame,
+	startGame,
 };
