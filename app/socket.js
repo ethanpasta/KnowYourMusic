@@ -1,14 +1,18 @@
 const userMap = require("./services/userMap");
+const { pino } = require("./utils").logger;
 
-module.exports = function (sio) {
+function socketInit(sio) {
 	sio.on("connection", socket => {
 		const user = socket.request.session && socket.request.session.user;
-		console.log("checking..." + user in userMap && userMap[user].socket);
-		if (user in userMap && !userMap[user].socket) {
-			console.log("user in usermap");
+		if (user in userMap && userMap[user].socket === undefined) {
+			pino.info(`Connecting socket '${socket.id}' for user '${user}'`);
 			userMap[user].socket = socket;
-			console.log(userMap[user]);
 		}
-		socket.on("disconnect", () => console.log("Someone disconnected"));
+		socket.on("disconnect", () => {
+			pino.info(`Socket #${socket.id} disconnected for user ${user}`);
+			userMap[user] && delete userMap[user].socket;
+		});
 	});
-};
+}
+
+module.exports = socketInit;

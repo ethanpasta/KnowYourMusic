@@ -25,10 +25,9 @@ class UserGame {
 		this.socket.on("submit", data => {
 			const level = data.level;
 			const chosenOption = data.chosen;
-			if (this.gameData.answers[level] == chosenOption) {
-				console.log("Correct answer");
-				this.socket.emit("corret");
-			}
+			const correctOption = this.gameData.answers[level] == chosenOption;
+			pino.info(`>> Level #${level} - ${correctOption ? "correct" : "wrong"} answer!`);
+			this.socket.emit("response", correctOption);
 		});
 	}
 }

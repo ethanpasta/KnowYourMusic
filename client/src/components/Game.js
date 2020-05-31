@@ -3,7 +3,8 @@ import Level from "./Level";
 
 const Game = ({ socket }) => {
 	const [gameData, setGameData] = useState({});
-	const [level, setLevel] = useState(1);
+	const [level, setLevel] = useState(0);
+	const [correct, setCorrect] = useState();
 
 	const handleOptionClick = e => {
 		const buttonId = e.target.id;
@@ -13,14 +14,11 @@ const Game = ({ socket }) => {
 		});
 	};
 	useEffect(() => {
-		console.log(socket);
-		if (socket) {
-			socket.on("gameReady", data => {
-				setGameData(data);
-			});
-		}
+		socket.on("game_ready", data => setGameData(data));
+		socket.on("response", correctAnswer => setCorrect(correctAnswer));
 	}, []);
 	useEffect(() => {
+		console.log("This happened now");
 		const interval = setInterval(() => setLevel(level + 1), 10000);
 		return () => {
 			clearInterval(interval);
@@ -28,9 +26,14 @@ const Game = ({ socket }) => {
 	}, [gameData]);
 	return (
 		<div>
-			{Object.keys(gameData).length == 0 && <h1>Loading...</h1>}
-			{Object.keys(gameData).length != 0 && (
-				<Level data={gameData[level]} onOptionClick={handleOptionClick} />
+			{Object.keys(gameData).length == 0 ? (
+				<h1>Loading...</h1>
+			) : (
+				<Level
+					data={gameData[level]}
+					onOptionClick={handleOptionClick}
+					levelPassed={correct}
+				/>
 			)}
 		</div>
 	);

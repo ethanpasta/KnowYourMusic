@@ -6,10 +6,6 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 
 module.exports = function middlewareSetup(app, sio) {
-	app.use((req, res, next) => {
-		req.io = app.io;
-		next();
-	});
 	app.use(expressPino);
 	app.use(cookieParser());
 	app.use(bodyParser.urlencoded({ extended: true }));
