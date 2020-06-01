@@ -4,7 +4,7 @@
 	"description": "![Image Logo](old_version/public/images/logo.png)",
 	"main": "index.js",
 	"scripts": {
-		"dev:client": "cd client && node server.js",
+		"dev:client": "cd client && NODE_ENV=development node server.js",
 		"dev:server": "nodemon index.js | pino-colada",
 		"dev": "concurrently --kill-others \"npm run dev:client\" \"npm run dev:server\"",
 		"test": "echo \"Error: no test specified\" && exit 1"
