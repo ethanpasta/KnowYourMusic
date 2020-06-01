@@ -16,7 +16,7 @@ app.use(
 	})
 );
 
-const bundler = new Bundler("./src/index.html");
+const bundler = new Bundler("./app/index.html");
 app.use(bundler.middleware());
 
 app.listen(Number(process.env.PORT || 1234));
