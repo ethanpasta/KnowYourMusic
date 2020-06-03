@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./home/Home";
 import Game from "./components/Game";
 import { default as Navbar } from "./navbar/NavbarContainer";
+import Footer from "./Footer";
 import Theme from "./theme";
 import "./style.css";
 
@@ -16,6 +17,7 @@ const App = () => {
 					<Route path="/game" component={Game} />
 					<Route path="/results/:id" component={null} />
 				</Switch>
+				<Footer />
 			</Router>
 		</Theme>
 	);

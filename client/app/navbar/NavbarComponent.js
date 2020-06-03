@@ -1,12 +1,25 @@
 import React, { useState } from "react";
-import Logo from "../../assets/imgs/logo.png";
 import { Link as RouterLink } from "react-router-dom";
-import { Box, Flex, Link, Image, Icon, Text, Avatar, PseudoBox } from "@chakra-ui/core";
+import { Box, Flex, Link, Icon, Text, Avatar, PseudoBox } from "@chakra-ui/core";
+import "./style.css";
 
 const HamburgerMenu = ({ toggle }) => (
 	<Box display={{ sm: "block", md: "none" }} onClick={toggle}>
 		<Icon name="hamburger" color="black" size="20px" />
 	</Box>
+);
+
+const NavRegLink = ({ text, href }) => (
+	<Link
+		as={RouterLink}
+		to={href}
+		color={blueTextColor}
+		_hover={{ textDecoration: "none", fontWeight: "bold" }}
+	>
+		<Text fontSize="lg" letterSpacing={3}>
+			{text}
+		</Text>
+	</Link>
 );
 
 const blueTextColor = "#568BB3";
@@ -15,12 +28,16 @@ const NavbarComponent = props => {
 	const [show, setShow] = useState(false);
 	const handleMenuToggle = () => setShow(!show);
 	return (
-		<Flex align="center" justify="space-between" pt={5}>
-			<Box className="leftSide">
-				<Link to="/">
-					<Image src={Logo} alt="logo" height="30px" objectFit="contain" ml={5} />
-				</Link>
-			</Box>
+		<Box className="nav-flex">
+			<Link to="/">
+				<Text className="logoText" fontFamily="Spartan, sans-serif">
+					know
+					<br />
+					your
+					<br />
+					music.
+				</Text>
+			</Link>
 			<Box className="rightSide" flexBasis={{ sm: "10%", md: "40%" }}>
 				<Box
 					display={{ sm: "block", md: "none" }}
@@ -29,19 +46,13 @@ const NavbarComponent = props => {
 				>
 					<HamburgerMenu toggle={handleMenuToggle} />
 				</Box>
-				<Box d={{ sm: "none", md: "flex" }} justifyContent="space-evenly" align="center">
-					<Box>
-						<Link
-							as={RouterLink}
-							to="/"
-							color={blueTextColor}
-							_hover={{ textDecoration: "none", fontWeight: "bold" }}
-						>
-							<Text fontSize="xl" letterSpacing={4}>
-								LEADER-BOARD
-							</Text>
-						</Link>
-					</Box>
+				<Box
+					d={{ sm: "none", md: "flex" }}
+					justifyContent="space-around"
+					alignItems="center"
+				>
+					<NavRegLink text="ABOUT" href="/" />
+					<NavRegLink text="LEADERBOARD" href="/" />
 					<PseudoBox
 						as={RouterLink}
 						to="/"
@@ -50,7 +61,6 @@ const NavbarComponent = props => {
 						borderColor="gray.300"
 						rounded="lg"
 						_hover={{ borderColor: "#1B346C" }}
-						h="80%"
 					>
 						<Flex
 							color="#1B346C"
@@ -59,7 +69,7 @@ const NavbarComponent = props => {
 							h="100%"
 							px={1}
 						>
-							<Avatar src="https://bit.ly/sage-adebayo" />
+							<Avatar />
 							<Box ml="3">
 								<Text color="gray.800">ETHAN MAYER</Text>
 							</Box>
@@ -67,7 +77,7 @@ const NavbarComponent = props => {
 					</PseudoBox>
 				</Box>
 			</Box>
-		</Flex>
+		</Box>
 	);
 };
 
