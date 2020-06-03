@@ -12,6 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "cross-fetch": "^3.0.4",
+    "emotion-theming": "^10.0.27",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",

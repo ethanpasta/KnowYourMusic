@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import socketIOClient from "socket.io-client";
-import Game from "./Game";
+import Game from "../components/Game";
 const ENDPOINT = "http://localhost:5000/game";
 
 const accountInfoStyle = {

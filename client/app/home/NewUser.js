@@ -16,7 +16,7 @@ const button_style = {
 
 const NewUser = () => {
 	return (
-		<div style={app_style}>
+		<div style={app_style} height="100%">
 			<a href="/auth">
 				<div style={button_style}></div>
 			</a>
