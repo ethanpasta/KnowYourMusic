@@ -1,12 +1,12 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import App from "./App";
-import reducer from "./reducers";
+import rootReducer from "./state/reducers";
+import { fetchUserAccount, fetchPlaylistInfo } from "./state/initSlice";
 
-const middlewares = [thunk];
+const middlewares = [...getDefaultMiddleware()];
 
 // Add logger to middleware if in development mode
 if (process.env.NODE_ENV === `development`) {
@@ -14,8 +14,14 @@ if (process.env.NODE_ENV === `development`) {
 	middlewares.push(logger);
 }
 
-const middleware = applyMiddleware(...middlewares);
-const store = createStore(reducer, middleware);
+const store = configureStore({
+	reducer: rootReducer,
+	middlewares,
+	devTools: process.env.NODE_ENV !== "production",
+});
+
+store.dispatch(fetchUserAccount());
+store.dispatch(fetchPlaylistInfo());
 
 render(
 	<Provider store={store}>

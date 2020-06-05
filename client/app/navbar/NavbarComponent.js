@@ -22,6 +22,18 @@ const WaveSVG = () => (
 	</Box>
 );
 
+const Logo = () => (
+	<Link to="/">
+		<Text className="logoText" fontFamily="Spartan, sans-serif">
+			know
+			<br />
+			your
+			<br />
+			music.
+		</Text>
+	</Link>
+);
+
 const HamburgerMenu = ({ toggle }) => (
 	<Box display={{ sm: "block", md: "none" }} onClick={toggle}>
 		<Icon name="hamburger" color="black" size="20px" />
@@ -32,7 +44,7 @@ const NavRegLink = ({ text, href }) => (
 	<Link
 		as={RouterLink}
 		to={href}
-		color={blueTextColor}
+		color="#568BB3"
 		_hover={{ textDecoration: "none", fontWeight: "bold" }}
 	>
 		<Text fontSize="lg" letterSpacing={3}>
@@ -41,25 +53,40 @@ const NavRegLink = ({ text, href }) => (
 	</Link>
 );
 
-const blueTextColor = "#568BB3";
+const ProfileLink = ({ loading, loggedIn, user }) => {
+	if (loading) {
+		return <h2>Loading..</h2>;
+	} else if (loggedIn) {
+		return (
+			<PseudoBox
+				as={RouterLink}
+				to="/"
+				textDecoration="none"
+				border="1px"
+				borderColor="gray.300"
+				rounded="lg"
+				_hover={{ borderColor: "#1B346C" }}
+			>
+				<Flex color="#1B346C" align="center" justify="space-between" h="100%" px={1}>
+					<Avatar />
+					<Box ml="3">
+						<Text color="gray.800">{user.display_name}</Text>
+					</Box>
+				</Flex>
+			</PseudoBox>
+		);
+	} else {
+		return <h2>New User</h2>;
+	}
+};
 
-const NavbarComponent = props => {
+const NavbarComponent = ({ loading, loggedIn, user }) => {
 	const [show, setShow] = useState(false);
 	const handleMenuToggle = () => setShow(!show);
 	return (
 		<Box className="nav-flex">
-			<Link to="/">
-				<Text className="logoText" fontFamily="Spartan, sans-serif">
-					know
-					<br />
-					your
-					<br />
-					music.
-				</Text>
-			</Link>
+			<Logo />
 			<Box className="rightSide" flexBasis={{ sm: "10%", md: "40%" }} zIndex="1">
-				{/* 				<WaveSVG />
-				 */}{" "}
 				<Box
 					display={{ sm: "block", md: "none" }}
 					alignSelf="flex-end"
@@ -74,28 +101,7 @@ const NavbarComponent = props => {
 				>
 					<NavRegLink text="ABOUT" href="/" />
 					<NavRegLink text="LEADERBOARD" href="/" />
-					<PseudoBox
-						as={RouterLink}
-						to="/"
-						textDecoration="none"
-						border="1px"
-						borderColor="gray.300"
-						rounded="lg"
-						_hover={{ borderColor: "#1B346C" }}
-					>
-						<Flex
-							color="#1B346C"
-							align="center"
-							justify="space-between"
-							h="100%"
-							px={1}
-						>
-							<Avatar />
-							<Box ml="3">
-								<Text color="gray.800">ETHAN MAYER</Text>
-							</Box>
-						</Flex>
-					</PseudoBox>
+					<ProfileLink loading={loading} loggedIn={loggedIn} user={user} />
 				</Box>
 			</Box>
 		</Box>

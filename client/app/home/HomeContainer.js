@@ -1,24 +1,14 @@
 import { connect } from "react-redux";
 import HomeComponent from "./HomeComponent";
 
-import { getAccountInfo } from "./duck";
-
 const mapStateToProps = state => {
-	const { fetchingAccount, data, error } = state.account;
+	const { user, playlists } = state;
 	return {
-		fetchingAccount,
-		data,
-		error,
+		user,
+		playlists,
 	};
 };
 
-const mapDispatchToProps = dispatch => {
-	const fetchAccountInfo = () => {
-		dispatch(getAccountInfo());
-	};
-	return { fetchAccountInfo };
-};
+const HomeContainer = connect(mapStateToProps, null)(HomeComponent);
 
-const NavbarContainer = connect(mapStateToProps, mapDispatchToProps)(NavbarComponent);
-
-export default NavbarContainer;
+export default HomeContainer;
