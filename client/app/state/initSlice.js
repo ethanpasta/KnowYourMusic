@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, combineReducers } from "@reduxjs/toolkit";
 
-export const fetchUserAccount = createAsyncThunk("api/me", async () => {
+export const fetchUserAccount = createAsyncThunk("user/fetchAccount", async () => {
 	try {
 		const response = await fetch("/api/me");
 		return await response.json();
@@ -31,19 +31,13 @@ const userSlice = createSlice({
 		[fetchUserAccount.pending]: state => ({ ...state, loading: state.loading || true }),
 		[fetchUserAccount.fulfilled]: (state, action) => {
 			if (state.loading) {
-				return {
-					loggedIn: action.payload.loggedIn,
-					user: action.payload.user,
-					error: action.payload.error,
-				};
+				const { user, loggedIn, error } = action.payload;
+				return { ...state, loading: false, loggedIn, user, error };
 			}
 		},
 		[fetchUserAccount.rejected]: (state, action) => {
 			if (state.loading) {
-				return {
-					...state,
-					error: action.error,
-				};
+				return { ...state, loading: false, error: action.error };
 			}
 		},
 	},

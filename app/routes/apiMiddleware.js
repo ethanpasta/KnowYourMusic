@@ -4,16 +4,30 @@ const { User } = require("../models");
 const { pino } = require("../utils").logger;
 
 /**
+ * Check is session exists before continuing to other middlewares
+ */
+const checkSession = (req, res, next) => {
+	if (req.session.user === undefined) {
+		console.log("User session doesn't exist");
+		res.send({
+			loggedIn: false,
+			user: null,
+			err: null,
+		});
+		return;
+	}
+	next();
+};
+
+/**
  * Add the spotifyApi instance to the request object.
  * If session is found in the local memory mapper, it's attached to the req object
  * Otherwise, new API is created, saved, and attached to the req object
  */
 const sessionAttach = (req, res, next) => {
-	if (req.session.user && req.session.user in userMap) {
+	if (req.session.user in userMap) {
 		req.api = userMap[req.session.user].api;
 		return next();
-	} else if (!req.session.user) {
-		return next(new Error("User session didn't exist"));
 	}
 	pino.info(`Session for ${req.session.user} wasn't in UserMap. Adding it.`);
 	User.findOne({ username: req.session.user }, "access_token refresh_token last_refresh_update")
@@ -21,11 +35,11 @@ const sessionAttach = (req, res, next) => {
 			const userApi = new UserSpotifyAPI(user.access_token, user.refresh_token);
 			userApi.lastRefresh = user.last_refresh_update;
 			req.api = (userMap[req.session.user] = { api: userApi }).api;
-			return next();
+			next();
 		})
 		.catch(err => {
 			pino.error("Couldn't find user, error: " + err);
-			return next(err);
+			next(err);
 		});
 };
 
@@ -60,4 +74,5 @@ const checkRefresh = (req, res, next) => {
 module.exports = {
 	sessionAttach,
 	checkRefresh,
+	checkSession,
 };

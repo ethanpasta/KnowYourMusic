@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@800&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@500;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,700;1,900&display=swap");
 .nav-flex {
 	flex-grow: 0;
 	flex-shrink: 1;
@@ -11,55 +11,48 @@
 }
 
 .logoText {
+	position: absolute;
 	font-size: 70px;
-	letter-spacing: -5px;
+	font-weight: 800;
+	letter-spacing: -1px;
 	line-height: 0.95;
 	position: absolute;
-	text-shadow: 4px 4px #c655f7;
+	transition: -webkit-text-stroke 1s ease-in-out;
+	-webkit-text-stroke: 3px #c655f7;
+	-webkit-text-fill-color: rgba(0, 0, 0, 0);
 	top: 0.2em;
 	left: 0.2em;
-	color: black;
-	animation: textShadow 5s linear infinite;
+	color: #f4f6ff;
+	animation: textBorder 10s linear infinite;
 	animation-direction: alternate;
-	transition: ease-in-out 0.2s;
 }
 
 .logoText:hover {
-	color: rgba(0, 0, 0, 0);
+	-webkit-text-fill-color: rgba(255, 255, 255, 0.5);
+	-webkit-text-stroke: 0px rgba(0, 0, 0, 0);
+	animation: none;
 }
 
-@keyframes textShadow {
+@keyframes textBorder {
 	0% {
-		text-shadow: 4px 4px #e81d1d;
+		-webkit-text-stroke: 3px #e81d1d;
 	}
 	16% {
-		text-shadow: 4px 4px #e8b71d;
+		-webkit-text-stroke: 3px #e8b71d;
 	}
 	33% {
-		text-shadow: 4px 4px #e3e81d;
+		-webkit-text-stroke: 3px #e3e81d;
 	}
 	49% {
-		text-shadow: 4px 4px #1de840;
+		-webkit-text-stroke: 3px #1de840;
 	}
 	65% {
-		text-shadow: 4px 4px #1ddde8;
+		-webkit-text-stroke: 3px #1ddde8;
 	}
 	82% {
-		text-shadow: 4px 4px #2b1de8;
+		-webkit-text-stroke: 3px #2b1de8;
 	}
 	100% {
-		text-shadow: 4px 4px #dd00f3;
-	}
-}
-
-@keyframes rainbow {
-	0% {
-		background-position: 0% 82%;
-	}
-	50% {
-		background-position: 100% 19%;
-	}
-	100% {
-		background-position: 0% 82%;
+		-webkit-text-stroke: 3px #dd00f3;
 	}
 }

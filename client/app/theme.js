@@ -41,6 +41,13 @@ const customTheme = {
 			viewBox: "0 0 20 20",
 		},
 	},
+	shadows: {
+		...theme.shadows,
+		smwhite: "0 1px 3px 0 rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(255, 255, 255, 0.06)",
+		mdwhite: "0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.1)",
+		lgwhite:
+			"0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.1)",
+	},
 };
 
 const Theme = ({ children }) => <ThemeProvider theme={customTheme}>{children}</ThemeProvider>;

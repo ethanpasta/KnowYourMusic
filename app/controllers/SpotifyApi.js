@@ -3,24 +3,16 @@ const gameManager = require("../services/game");
 
 // Function returns Spotify account information
 async function getMe(req, res) {
-	if (req.session.user) {
-		try {
-			const me = await req.api.getMe();
-			res.send({
-				loggedIn: true,
-				user: me,
-				err: null,
-			});
-		} catch (e) {
-			pino.error("Something went wrong with user info: " + e);
-			res.send({ user: null, err: e, loggedIn: false });
-		}
-	} else {
+	try {
+		const me = await req.api.getMe();
 		res.send({
-			loggedIn: false,
-			user: null,
+			loggedIn: true,
+			user: me,
 			err: null,
 		});
+	} catch (e) {
+		pino.error("Something went wrong with user info: " + e);
+		res.send({ user: null, err: e, loggedIn: false });
 	}
 }
 

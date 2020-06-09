@@ -3,6 +3,7 @@ const apiController = require("../controllers/SpotifyApi");
 const middleware = require("./apiMiddleware");
 const api = express.Router();
 
+api.use(middleware.checkSession);
 api.use(middleware.sessionAttach);
 api.use(middleware.checkRefresh);
 
