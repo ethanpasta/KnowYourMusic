@@ -1,0 +1,52 @@
+$shadow: 0.3rem 0.3rem;
+
+.logoText {
+	position: absolute;
+	top: 0.2em;
+	left: 0.2em;
+	color: #db85fa;
+	text-shadow: $shadow #e8b71d;
+	animation: textBorder 10s linear infinite;
+	animation-direction: alternate;
+	cursor: pointer;
+	transition: all 0.15s ease-in;
+	-webkit-transition: all 0.15s ease-in;
+}
+
+.logoText:hover {
+	color: white;
+	text-shadow: $shadow rgba(255, 255, 255, 0.5);
+	animation: 0;
+	transition: all 0.15s ease-in;
+}
+
+@keyframes textBorder {
+	0% {
+		color: #f60000;
+		text-shadow: $shadow #ffee00;
+	}
+	16% {
+		color: #ff8c00;
+		text-shadow: $shadow #4de94c;
+	}
+	33% {
+		color: #ffee00;
+		text-shadow: $shadow #3783ff;
+	}
+	49% {
+		color: #4de94c;
+		text-shadow: $shadow #4815aa;
+	}
+	65% {
+		color: #3783ff;
+		text-shadow: $shadow #9400d3;
+	}
+	82% {
+		color: #4815aa;
+		text-shadow: $shadow #f60000;
+	}
+	100% {
+		color: #9400d3;
+		text-shadow: $shadow #ff8c00;
+	}
+}

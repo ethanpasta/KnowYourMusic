@@ -1,12 +1,12 @@
 import React from "react";
 import { Text } from "@chakra-ui/core";
-import "./style.css";
+import "./style.scss";
 
 const Logo = () => (
 	<Text
 		className="logoText"
 		fontFamily="Spartan, sans-serif"
-		fontSize={{ sm: "40px", md: "60px", lg: "70px" }}
+		fontSize={{ base: "35px", md: "50px", lg: "60px", xl: "70px" }}
 		fontWeight="800"
 		letterSpacing="-1px"
 		lineHeight="0.95"

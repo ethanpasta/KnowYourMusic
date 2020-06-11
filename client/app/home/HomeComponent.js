@@ -36,7 +36,7 @@ const SpotifyLogin = ({ loading, loggedIn, user, error }) => {
 							</Button>
 						</>
 					) : (
-						<SpotifyButton size="lg" />
+						<SpotifyButton />
 					)}
 				</PseudoBox>
 			</Flex>
@@ -53,19 +53,24 @@ const Description = ({ name }) => {
 				fontFamily="'Lato', sans-serif"
 				fontWeight="700"
 				letterSpacing="0.5px"
+				px={5}
 			>
-				<Text fontSize="6xl">{name ? `Hey ${name}, i` : "I"}t&apos;s simple.</Text>
-				<Text fontSize="2xl">
+				<Text fontSize={{ md: "6xl", base: "3xl" }} pb={{ sm: 2 }}>
+					{name ? `Hey ${name}, i` : "I"}t&apos;s simple.
+				</Text>
+				<Text fontSize={{ md: "2xl", base: "lg" }}>
 					You want to memorize more song lyrics. <i>We all do.</i>
 				</Text>
-				<Text fontSize="2xl">You have 2 options...</Text>
-				<Text fontSize="xl">
+				<Text fontSize={{ md: "2xl", base: "lg" }} pb={{ sm: 4 }}>
+					You have 2 options...
+				</Text>
+				<Text fontSize={{ md: "xl", base: "md" }}>
 					Read song lyrics over and over and probably forget them the day after
 				</Text>
-				<Text fontSize="md" pt={1}>
+				<Text fontSize={{ md: "md", base: "sm" }} pt={1}>
 					<i>— OR —</i>
 				</Text>
-				<Text fontSize="2xl" pt={2} color="#db85fa" fontWeight="700">
+				<Text fontSize={{ md: "2xl", base: "lg" }} pt={2} color="#db85fa" fontWeight="700">
 					PLAY THIS GAME
 				</Text>
 			</Box>
@@ -116,7 +121,11 @@ const HomeContainer = ({ user, playlists }) => {
 		>
 			<Description
 				name={
-					user.loading || (user.loggedIn ? user.user.display_name.split(" ")[0] : false)
+					user.loading
+						? false
+						: user.loggedIn
+						? user.user.display_name.split(" ")[0]
+						: false
 				}
 			/>
 			{/* <SpotifyLogin {...user} />
