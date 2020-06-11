@@ -32,6 +32,7 @@ const customTheme = {
 		darkBlue: "#3a0ca3",
 		blue: "#4361ee",
 		lightBlue: "#4cc9f0",
+		textWhite: "#f4f6ff",
 	},
 	icons: {
 		...theme.icons,

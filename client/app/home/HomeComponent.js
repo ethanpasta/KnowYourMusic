@@ -1,42 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Box, Flex, PseudoBox, Image, Text, Button, Skeleton } from "@chakra-ui/core";
-
-const PlayListGrid = ({ loading, data }) => {
-	return (
-		<Flex
-			align="center"
-			flexBasis={{ lg: "40%", md: "50%" }}
-			wrap="wrap"
-			justify="center"
-			zIndex="1"
-		>
-			{Object.keys(data || []).map(i => (
-				<PseudoBox
-					key={i}
-					cursor="pointer"
-					flexBasis="40%"
-					d="flex"
-					justifyContent={{
-						lg: i % 2 == 0 ? "flex-end" : "flex-start",
-						sm: "center",
-					}}
-					mx={5}
-					my={3}
-				>
-					{/* <Skeleton isLoaded={!loading}> */}
-					<Image
-						src={data[i]}
-						objectFit="contain"
-						w={{ lg: "70%", md: "90%" }}
-						rounded="lg"
-						shadow="lg"
-					></Image>
-					{/* </Skeleton> */}
-				</PseudoBox>
-			))}
-		</Flex>
-	);
-};
+import { Box, Flex, PseudoBox, Text, Button, Skeleton, Heading, Icon } from "@chakra-ui/core";
+import PlayListGrid from "./Playlists";
+import SpotifyButton from "../shared/SpotifyButton";
+import "./style.css";
 
 const SpotifyLogin = ({ loading, loggedIn, user, error }) => {
 	return (
@@ -70,24 +36,71 @@ const SpotifyLogin = ({ loading, loggedIn, user, error }) => {
 							</Button>
 						</>
 					) : (
-						<>
-							<Text fontSize="3xl">Login with Spotify</Text>
-							<PseudoBox cursor="pointer">
-								<Button
-									w="100px"
-									h="60px"
-									as="a"
-									href="/auth"
-									bgImage="url('https://www.scdn.co/i/_global/open-graph-default.png')"
-									bgSize="cover"
-									bgPos="center"
-								></Button>
-							</PseudoBox>
-						</>
+						<SpotifyButton size="lg" />
 					)}
 				</PseudoBox>
 			</Flex>
 		</Skeleton>
+	);
+};
+
+const Description = ({ name }) => {
+	return (
+		<Flex direction="column" justify="space-around" align="center" height="70%">
+			<Box
+				color="#f4f6ff"
+				textAlign="center"
+				fontFamily="'Lato', sans-serif"
+				fontWeight="700"
+				letterSpacing="0.5px"
+			>
+				<Text fontSize="6xl">{name ? `Hey ${name}, i` : "I"}t&apos;s simple.</Text>
+				<Text fontSize="2xl">
+					You want to memorize more song lyrics. <i>We all do.</i>
+				</Text>
+				<Text fontSize="2xl">You have 2 options...</Text>
+				<Text fontSize="xl">
+					Read song lyrics over and over and probably forget them the day after
+				</Text>
+				<Text fontSize="md" pt={1}>
+					<i>— OR —</i>
+				</Text>
+				<Text fontSize="2xl" pt={2} color="#db85fa" fontWeight="700">
+					PLAY THIS GAME
+				</Text>
+			</Box>
+			<Box
+				color="gray.200"
+				textAlign="center"
+				fontFamily="'Lato', sans-serif"
+				fontWeight="400"
+				letterSpacing="0.5px"
+			>
+				{/* <Icon name="chevron-down" size="40px" color="white" /> */}
+				<Box className="section1">
+					<Text
+						fontFamily="'Lato', sans-serif"
+						fontWeight="700"
+						as="a"
+						href="#section1"
+						textDecoration="none"
+						color="gray.200"
+						fontSize="xl"
+					>
+						scroll down<span></span>
+						<span></span>
+						<span></span>
+					</Text>
+				</Box>
+			</Box>
+
+			{/* <Text fontSize="2xl">
+					Either log in with your Spotify account, and play with your personalized
+					library. <br />
+					Or, play with one of the public Spotify playlists.
+				</Text>
+				<Text fontSize="2xl">It&apos;s up to you.</Text> */}
+		</Flex>
 	);
 };
 
@@ -97,12 +110,17 @@ const HomeContainer = ({ user, playlists }) => {
 			flexGrow="1"
 			flexShrink="1"
 			d="flex"
-			pt="4%"
 			alignItems="center"
-			justifyContent="space-evenly"
+			justifyContent="center"
+			flexWrap="wrap"
 		>
-			<SpotifyLogin {...user} />
-			<PlayListGrid {...playlists} />
+			<Description
+				name={
+					user.loading || (user.loggedIn ? user.user.display_name.split(" ")[0] : false)
+				}
+			/>
+			{/* <SpotifyLogin {...user} />
+			<PlayListGrid {...playlists} /> */}
 		</Box>
 	);
 };
