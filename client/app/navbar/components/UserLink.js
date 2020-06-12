@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { PseudoBox, Skeleton } from "@chakra-ui/core";
+import { Box, Skeleton } from "@chakra-ui/core";
 import SpotifyButton from "../../shared/SpotifyButton";
 import DropDownMenu from "../components/userProfile/DropDownMenu";
 import UserNav from "./userProfile/UserNav";
@@ -19,7 +19,7 @@ const UserProfile = ({ mobile, userRoutes, ...props }) => {
 		};
 	}, [dropDownRef]);
 	return (
-		<PseudoBox
+		<Box
 			{...(mobile ? { w: "100%" } : { position: "relative", role: "group" })}
 			ref={dropDownRef}
 		>
@@ -34,7 +34,7 @@ const UserProfile = ({ mobile, userRoutes, ...props }) => {
 				isDown={userDrop}
 				{...(mobile ? {} : { position: "absolute", top: 50, rounded: "md" })}
 			/>
-		</PseudoBox>
+		</Box>
 	);
 };
 

@@ -76,8 +76,7 @@ const NavbarComponent = props => {
 				d="flex"
 				flexGrow="0"
 				flexShrink="1"
-				pt={5}
-				pb={2}
+				flexBasis="12%"
 				alignItems="center"
 				justifyContent="flex-end"
 			>
