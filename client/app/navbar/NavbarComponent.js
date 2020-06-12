@@ -66,7 +66,10 @@ const MobileNav = ({ isOpen, onClose, ...props }) => {
 
 const NavbarComponent = props => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-
+	const userRoutes = {
+		logout: "/auth/logout",
+		"my stats": "#",
+	};
 	return (
 		<>
 			<Box
@@ -80,7 +83,7 @@ const NavbarComponent = props => {
 			>
 				<Logo />
 				<HamburgerMenu open={onOpen} />
-				<MobileNav isOpen={isOpen} onClose={onClose} {...props} />
+				<MobileNav isOpen={isOpen} onClose={onClose} userRoutes={userRoutes} {...props} />
 				<Box
 					flexBasis={{ md: "60%", lg: "50%", xl: "40%" }}
 					d={{ base: "none", md: "flex" }}
@@ -88,7 +91,7 @@ const NavbarComponent = props => {
 					alignItems="center"
 				>
 					<NavLinks />
-					<UserLink {...props} />
+					<UserLink userRoutes={userRoutes} {...props} />
 				</Box>
 			</Box>
 		</>
