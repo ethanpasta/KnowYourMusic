@@ -71,8 +71,4 @@ const checkRefresh = (req, res, next) => {
 	}
 };
 
-module.exports = {
-	sessionAttach,
-	checkRefresh,
-	checkSession,
-};
+module.exports = [checkSession, sessionAttach, checkRefresh];

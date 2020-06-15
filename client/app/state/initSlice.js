@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, combineReducers } from "@reduxjs/toolkit
 
 export const fetchUserAccount = createAsyncThunk("user/fetchAccount", async () => {
 	try {
-		const response = await fetch("/api/me");
+		const response = await fetch("/api/user/me");
 		return await response.json();
 	} catch (e) {
 		return Promise.reject(e);
