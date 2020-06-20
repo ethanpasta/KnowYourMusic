@@ -1,14 +1,19 @@
-$shadow: 0.3rem 0.3rem;
+$shadow: 0.05em 0.05em;
 
 .logoText {
 	position: absolute;
 	top: 0.2em;
 	left: 0.2em;
+	cursor: pointer;
+	color: white;
+	text-shadow: $shadow rgba(255, 255, 255, 0.5);
+}
+
+.animate {
 	color: #db85fa;
 	text-shadow: $shadow #e8b71d;
 	animation: textBorder 10s linear infinite;
 	animation-direction: alternate;
-	cursor: pointer;
 	transition: all 0.15s ease-in;
 	-webkit-transition: all 0.15s ease-in;
 }

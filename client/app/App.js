@@ -4,6 +4,7 @@ import HomeContainer from "./home/HomeContainer";
 import Game from "./components/Game";
 import NavbarContainer from "./navbar/NavbarContainer";
 import Theme from "./theme";
+
 import "./style.css";
 
 const App = () => {

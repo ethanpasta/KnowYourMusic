@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Box,
 	Icon,
@@ -66,34 +66,48 @@ const MobileNav = ({ isOpen, onClose, ...props }) => {
 
 const NavbarComponent = props => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [scrolled, setScrolled] = useState(false);
+	const getScrollPercent = () => {
+		var h = document.documentElement,
+			b = document.body,
+			st = "scrollTop",
+			sh = "scrollHeight";
+		return ((h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight)) * 100;
+	};
+	const handleScroll = () => {
+		setScrolled(getScrollPercent() > 18);
+	};
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+	}, []);
 	const userRoutes = {
 		logout: "/auth/logout",
 		"my stats": "#",
 	};
 	return (
-		<>
+		<Box
+			position="sticky"
+			top="0"
+			d="flex"
+			zIndex="999"
+			height={{ base: "7vh", xl: "8vh" }}
+			alignItems="center"
+			justifyContent="flex-end"
+			transition="background-color 0.5s ease"
+		>
+			<Logo scrolled={scrolled} />
+			<HamburgerMenu open={onOpen} />
+			<MobileNav isOpen={isOpen} onClose={onClose} userRoutes={userRoutes} {...props} />
 			<Box
-				d="flex"
-				flexGrow="0"
-				flexShrink="1"
-				flexBasis="12%"
+				flexBasis={{ md: "60%", lg: "50%", xl: "40%" }}
+				d={{ base: "none", md: "flex" }}
+				justifyContent="space-evenly"
 				alignItems="center"
-				justifyContent="flex-end"
 			>
-				<Logo />
-				<HamburgerMenu open={onOpen} />
-				<MobileNav isOpen={isOpen} onClose={onClose} userRoutes={userRoutes} {...props} />
-				<Box
-					flexBasis={{ md: "60%", lg: "50%", xl: "40%" }}
-					d={{ base: "none", md: "flex" }}
-					justifyContent="space-evenly"
-					alignItems="center"
-				>
-					<NavLinks />
-					<UserLink userRoutes={userRoutes} {...props} />
-				</Box>
+				<NavLinks />
+				<UserLink userRoutes={userRoutes} {...props} />
 			</Box>
-		</>
+		</Box>
 	);
 };
 

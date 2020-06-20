@@ -17,20 +17,15 @@ async function getMe(req, res) {
 }
 
 function getPlaylists(req, res) {
-	const playlists = [
-		"https://66.media.tumblr.com/486d3bad2798e90c93463f35aab125d9/tumblr_pqn0951d9u1u4k328o1_400.jpg",
-		"https://data.whicdn.com/images/295426049/original.jpg",
-		"https://images.squarespace-cdn.com/content/v1/5a4518c618b27d634a12e374/1525450645042-XIBMO7CPAX320UNP2ULT/ke17ZwdGBToddI8pDm48kFGVtuGS9Igc_JmFJFuCkf57gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmJdLpeZW_ttQnjXwTxihzWGOSK126mPv9r-SyoyB9KdwWXnfJ1qM3rss4H2p_MN9s/Sunny+Days+Playlist+Cover.jpg",
-		"https://i.pinimg.com/originals/1e/c9/f6/1ec9f61d87ea36e3cd2ef15f571a7eaf.jpg",
-		"https://data.whicdn.com/images/339688701/original.jpg",
-		"https://i.pinimg.com/originals/be/14/88/be148863c1b38268192e240be7dd3428.jpg",
-	];
-	res.send(
-		playlists.reduce((acc, curr, i) => {
-			acc[i] = curr;
-			return acc;
-		}, {})
-	);
+	const playlists = {
+		"Wake Up Gently": "https://i.scdn.co/image/ab67706f0000000286de24710c7230fcb6e08c13",
+		Rise: "https://i.scdn.co/image/ab67706f000000022db541a3493ce312d4abc9dd",
+		"#ThrowbackThursday": "https://i.scdn.co/image/ab67706f0000000297caa0117cf5c17830e83354",
+		"Mellow Morning": "https://i.scdn.co/image/ab67706f0000000294d851cc78e04406e373f156",
+		"Country Rock Classics": "https://i.scdn.co/image/ab67706f0000000246edbf0e750d9bab7073d801",
+		"Peace Of Mind": "https://i.scdn.co/image/ab67706f00000002dc724966dfa4ccf0863fb04a",
+	};
+	res.send(playlists);
 }
 
 // Function returns all songs found in the users library

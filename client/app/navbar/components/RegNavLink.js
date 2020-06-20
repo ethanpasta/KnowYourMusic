@@ -15,6 +15,7 @@ const NavLinkBig = ({ text, href }) => (
 		bg="rgba(255, 255, 255, 0.3)"
 		shadow="lgwhite"
 		textDecoration="none"
+		transition="border 0.15s ease"
 	>
 		<Text
 			fontSize="lg"
