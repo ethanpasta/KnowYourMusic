@@ -20,7 +20,9 @@ $shadow: 0.05em 0.05em;
 
 .logoText:hover {
 	color: white;
-	text-shadow: $shadow rgba(255, 255, 255, 0.5);
+	text-shadow: $shadow #db85fa;
+	/* 	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: black; */
 	animation: 0;
 	transition: all 0.15s ease-in;
 }

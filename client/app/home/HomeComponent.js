@@ -45,30 +45,9 @@ const SpotifyLogin = ({ loading, loggedIn, user, error }) => {
 	);
 };
 
-const HomeContainer = ({ user, playlists }) => {
-	const [scrolled, setScrolled] = useState(false);
-	const handleScroll = () => {
-		setScrolled(window.pageYOffset > 200);
-	};
-	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
-	}, []);
+const HomeContainer = ({ user, playlists, ...props }) => {
 	const firstName = user.loading || (user.loggedIn && user.user.display_name.split(" ")[0]);
-	return user.loading ? (
-		<Flex h="80vh" w="full" d="flex" justify="center" align="center">
-			<Spinner
-				thickness="4px"
-				speed="0.65s"
-				emptyColor="gray.200"
-				color="blue.500"
-				size="xl"
-			/>
-		</Flex>
-	) : user.loggedIn ? (
-		<Box>h</Box>
-	) : (
-		<NewUser playlists={playlists} />
-	);
+	return <NewUser loading={user.loading} playlists={playlists} {...props} />;
 };
 
 export default HomeContainer;

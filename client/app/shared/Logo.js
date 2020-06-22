@@ -11,6 +11,9 @@ const transform = "scale(0.5)";
 
 const Logo = ({ scrolled }) => (
 	<Box
+		position="fixed"
+		top="1rem"
+		left="1rem"
 		className={`logoText ${scrolled ? "" : "animate"}`}
 		fontFamily="Spartan, sans-serif"
 		fontSize={{ base: "2.5rem", md: "3.5rem", lg: "3.5rem", xl: "4rem" }}

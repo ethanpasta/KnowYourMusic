@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text, Flex, Heading } from "@chakra-ui/core";
-import Description from "../Description";
-import SpotifyButton from "../../../shared/SpotifyButton";
+import SpotifyLogin from "./SpotifyLogin";
 import PlayListGrid from "../playlists/Playlists";
+import Intro from "../Intro";
 
 const ScrollDown = ({ scrolled }) => {
 	return (
@@ -28,64 +28,27 @@ const ScrollDown = ({ scrolled }) => {
 	);
 };
 
-const Login = () => {
-	return (
-		<Box
-			alignSelf="center"
-			w={{ base: "80%", md: "30%" }}
-			textAlign="center"
-			bg={{ base: "rgba(255, 255, 255, 0.9)", md: "transparent" }}
-			rounded={{ base: "lg", md: "none" }}
-			shadow={{ base: "lg", md: "none" }}
-			py={{ base: 1, md: "0" }}
-		>
-			<Heading
-				my={0}
-				pt={1}
-				pb={3}
-				fontSize="2em"
-				fontWeight="900"
-				color={{ base: "#2e3b4c", md: "#1DB954" }}
-				textTransform="uppercase"
-			>
-				Play with your Spotify library
-			</Heading>
-			<Text
-				fontSize={{ base: "lg", md: "xl" }}
-				color={{ base: "#2e3b4c", md: "textWhite" }}
-				pb={5}
-				m={{ base: "0 auto" }}
-				w={{ base: "80%", md: "100%" }}
-			>
-				If you log in with your Spotify account, the game will be personalized and you can
-				play with your own songs! <br />
-				Also, all of your previous game history will be stored.
-			</Text>
-			<SpotifyButton giant={true} m="0 auto" />
-		</Box>
-	);
-};
-
-const NewUser = ({ playlists }) => (
-	<Box
-		flexGrow="2"
-		d="flex"
-		flexDirection="column"
-		height={{ md: "85vh" }}
-		mt={{ base: "30%", md: "0" }}
-		alignItems="center"
-		justifyContent="center"
-	>
-		<Description pb={{ base: "15%", md: "0" }} mt="auto" />
-		<Box
-			mt="auto"
+const NewUser = ({ playlists, scrolled, handleScrollEvent }) => (
+	<Box flexGrow="2" d="flex" flexDirection="column" alignItems="center">
+		<Intro
+			h={{ base: "73vh", md: "72vh" }}
 			d="flex"
-			flexDirection={{ base: "column", md: "row" }}
+			flexDirection="column"
+			justifyContent="center"
+			handleScrollEvent={handleScrollEvent}
+		/>
+		<Box
+			d="flex"
+			mt={{ base: "10vh", lg: "5vh" }}
+			mb={{ base: "10vh", lg: "10vh" }}
+			flexDirection={{ base: "column", lg: "row" }}
 			justifyContent="space-around"
 			w="100%"
+			opacity={scrolled ? "1" : "0"}
+			transition="opacity 0.5s ease"
 		>
-			<Login />
-			<PlayListGrid {...playlists} mb="2em" />
+			<SpotifyLogin />
+			<PlayListGrid {...playlists} />
 		</Box>
 	</Box>
 );

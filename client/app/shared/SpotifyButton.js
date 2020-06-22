@@ -17,7 +17,7 @@ const SpotifyButton = ({ giant, ...props }) => (
 		px={4}
 		borderRadius={giant ? "2rem" : "1.5rem"}
 		w="fit-content"
-		shadow={giant ? "mdWhite" : "none"}
+		shadow={giant ? "mdWhite" : "xl"}
 		transition="transform 0.2s ease"
 		_hover={{ transform: "scaleX(0.95)" }}
 		{...props}
@@ -25,7 +25,7 @@ const SpotifyButton = ({ giant, ...props }) => (
 		<Text
 			fontSize={{ base: giant ? "2xl" : "lg", md: giant ? "2xl" : "xl" }}
 			fontWeight={{ md: "500" }}
-			color={giant ? "black" : "#ffffff"}
+			color={giant ? "black" : "ghostWhite"}
 			pr={2}
 			letterSpacing={1}
 			fontFamily="'Lato', sans-serif"

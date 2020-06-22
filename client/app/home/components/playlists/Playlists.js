@@ -69,13 +69,18 @@ const PlaylistGrid = ({ loading, data, ...props }) => {
 			</SimpleGrid>
 		);
 	return (
-		<Box alignSelf="flex-end" flexBasis="30%" {...props}>
+		<Box
+			alignSelf="flex-end"
+			w={["90%", "70%", null, "30%"]}
+			mx={{ base: "auto", lg: "0" }}
+			{...props}
+		>
 			<Box mb={8}>
 				<Heading
 					textAlign="center"
 					fontSize="2em"
 					fontWeight="900"
-					color={{ base: "#2e3b4c", md: "purple.200" }}
+					color="purple.200"
 					textTransform="uppercase"
 					mb={1}
 				>

@@ -7,8 +7,12 @@ const DropDownMenu = ({ userRoutes, isDown, ...props }) => (
 		maxH={isDown ? "250px" : "0px"}
 		transition="max-height .2s ease-out"
 		w="full"
-		backgroundColor="rgba(93, 230, 222, 0.5)"
-		backgroundImage="linear-gradient(315deg, rgba(181, 142, 204, 0.5) 0%, rgba(93, 230, 222, 0.5) 74%)"
+		bg={{ base: "rgba(93, 230, 222, 0.5)", md: "rgba(0, 0, 0, 0.2)" }}
+		backgroundImage={{
+			base:
+				"linear-gradient(315deg, rgba(181, 142, 204, 0.5) 0%, rgba(93, 230, 222, 0.5) 74%)",
+			md: "none",
+		}}
 		{...props}
 	>
 		{Object.keys(userRoutes).map(route => (

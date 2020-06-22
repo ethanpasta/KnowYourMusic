@@ -11,15 +11,15 @@ const UserLargeButton = ({ user, isOpen, ...props }) => (
 		borderBottomRightRadius="lg"
 		minWidth="140px"
 		h="40px"
-		shadow="mdwhite"
+		shadow="lg"
 		transition="all 0.15s ease-out"
 		cursor="pointer"
 		d="flex"
-		border="2px solid rgba(0, 0, 0, 0)"
+		border="2px solid transparent"
 		alignItems="center"
 		justifyContent="flex-end"
 		position="relative"
-		_hover={{ border: isOpen ? "2px solid rgba(0, 0, 0, 0)" : "2px solid #db85fa" }}
+		_hover={{ border: isOpen ? "2px solid transparent" : "2px solid #db85fa" }}
 		{...props}
 	>
 		<Avatar src={user.images[0].url} position="absolute" left="-10px" />
@@ -28,7 +28,7 @@ const UserLargeButton = ({ user, isOpen, ...props }) => (
 				(word, i) =>
 					i != user.display_name.length - 1 && (
 						<Text
-							color="textWhite"
+							color="textBlack"
 							textAlign="center"
 							key={i}
 							fontFamily="'Lato', sans-serif"
@@ -68,7 +68,7 @@ const UserSmallButton = ({ user, isOpen, ...props }) => (
 		{...props}
 	>
 		<Avatar src={user.images[0].url} />
-		<Text fontFamily="'Lato', sans-serif" letterSpacing="1px" color="black">
+		<Text fontFamily="'Lato', sans-serif" letterSpacing="1px" color="textBlack">
 			{user.display_name}
 		</Text>
 		<Icon name={isOpen ? "triangle-up" : "triangle-down"} size="15px" color="#db85fa" />

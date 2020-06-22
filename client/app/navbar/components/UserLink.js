@@ -39,10 +39,9 @@ const UserProfile = ({ mobile, userRoutes, ...props }) => {
 };
 
 const UserLink = ({ loading, loggedIn, user, mobile, ...props }) => {
-	if (loading) {
-		return <Skeleton w={40} h={10} rounded="lg" textAlign="center"></Skeleton>;
-	}
-	return loggedIn ? (
+	return loading ? (
+		<Skeleton w={40} h={10} rounded="lg" textAlign="center"></Skeleton>
+	) : loggedIn ? (
 		<UserProfile mobile={mobile} user={user} {...props} />
 	) : (
 		<SpotifyButton {...props} />
