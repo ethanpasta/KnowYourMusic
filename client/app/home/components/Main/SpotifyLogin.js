@@ -12,7 +12,6 @@ const SpotifyLogin = () => {
 			rounded={{ base: "lg", md: "none" }}
 			shadow={{ base: "lg", md: "none" }}
 			py={{ base: 1, md: "0" }}
-			mb={{ base: 32, lg: "0" }}
 		>
 			<Heading
 				my={0}

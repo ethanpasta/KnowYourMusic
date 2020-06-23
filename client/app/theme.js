@@ -35,6 +35,7 @@ const customTheme = {
 		textWhite: "#f4f6ff",
 		textBlack: "#23272a",
 		ghostWhite: "#F8F8FF",
+		cream: "#eaecc6",
 	},
 	icons: {
 		...theme.icons,

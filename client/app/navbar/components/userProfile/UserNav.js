@@ -1,9 +1,8 @@
 import React from "react";
 import { Box, Icon, Text, Avatar, PseudoBox } from "@chakra-ui/core";
 
-const UserLargeButton = ({ user, isOpen, ...props }) => (
+const UserLargeButton = ({ user, isOpen, scrolled, ...props }) => (
 	<PseudoBox
-		bg="rgba(255, 255, 255, 0.3)"
 		role="group"
 		borderTopLeftRadius="25px"
 		borderBottomLeftRadius="25px"
@@ -11,7 +10,7 @@ const UserLargeButton = ({ user, isOpen, ...props }) => (
 		borderBottomRightRadius="lg"
 		minWidth="140px"
 		h="40px"
-		shadow="lg"
+		shadow={scrolled ? "none" : "xl"}
 		transition="all 0.15s ease-out"
 		cursor="pointer"
 		d="flex"

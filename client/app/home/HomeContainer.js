@@ -4,7 +4,7 @@ import HomeComponent from "./HomeComponent";
 const mapStateToProps = state => {
 	const { user, playlists } = state;
 	return {
-		user,
+		userName: user.loading ? false : user.loggedIn && user.user.display_name.split(" ")[0],
 		playlists,
 	};
 };

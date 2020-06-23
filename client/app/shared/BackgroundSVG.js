@@ -55,16 +55,18 @@ const BackgroundSVG = () => {
 			padding="0"
 			zIndex="-1"
 		>
-			<svg
-				viewBox={`0 0 800 ${svgHeight}`}
-				className="svg"
-				gradientTransform="rotate(62)"
-				preserveAspectRatio="none"
-			>
+			<svg viewBox={`0 0 800 ${svgHeight}`} className="svg" preserveAspectRatio="none">
 				<defs>
-					<linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-						<stop offset="0%" stopColor="#8EC5FC" />
-						<stop offset="100%" stopColor="#E0C3FC" />
+					<linearGradient
+						id="gradient"
+						x1="0%"
+						y1="0%"
+						x2="100%"
+						y2="0%"
+						gradientTransform="rotate(320)"
+					>
+						<stop offset="0%" stopColor="rgb(106,188,184)" />
+						<stop offset="74%" stopColor="rgb(184,177,222)" />
 					</linearGradient>
 				</defs>
 				<path

@@ -1,34 +1,36 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Text, Box } from "@chakra-ui/core";
 import "./style.scss";
+import useScrollPosition from "./useScrollPosition";
 
-const spanStyle = {
-	display: "block",
-	transition: "transform 0.5s ease",
-};
-
-const transform = "scale(0.5)";
-
-const Logo = ({ scrolled }) => (
-	<Box
-		position="fixed"
-		top="1rem"
-		left="1rem"
-		className={`logoText ${scrolled ? "" : "animate"}`}
-		fontFamily="Spartan, sans-serif"
-		fontSize={{ base: "2.5rem", md: "3.5rem", lg: "3.5rem", xl: "4rem" }}
-		fontWeight="800"
-		letterSpacing="-1px"
-		lineHeight="0.95"
-	>
-		<Box style={spanStyle} transform={scrolled ? transform : "none"} transformOrigin="top left">
+const Logo = () => {
+	const [scrolled, setScrolled] = useState(false);
+	useScrollPosition(({ currPos }) => {
+		setScrolled(currPos.y > 10);
+	}, true);
+	return (
+		<Box
+			zIndex="2"
+			position="fixed"
+			top={scrolled ? ".5rem" : "1rem"}
+			left="1rem"
+			className={`logoText${scrolled ? "" : " animate"}`}
+			fontFamily="Spartan, sans-serif"
+			fontSize={{ base: "2.5rem", md: "3.5rem", lg: "3.5rem", xl: "4rem" }}
+			fontWeight="800"
+			letterSpacing="-1px"
+			lineHeight="0.95"
+			transition="transform .5s ease"
+			transform={scrolled ? "scale(0.3)" : "none"}
+			transformOrigin="top left"
+		>
 			know
 			<br />
 			your
 			<br />
 			music.
 		</Box>
-	</Box>
-);
+	);
+};
 
 export default Logo;

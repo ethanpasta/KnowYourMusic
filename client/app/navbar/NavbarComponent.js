@@ -1,41 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { Box, Icon, useDisclosure } from "@chakra-ui/core";
-import Logo from "../shared/Logo";
+import React, { useState } from "react";
+import { Box, useDisclosure } from "@chakra-ui/core";
 import UserLink from "./components/UserLink";
 import MobileNavbar from "./components/MobileNavbar";
 import NavbarLinks from "./components/NavbarLinks";
 import HamburgerMenu from "./components/HamburgerMenu";
+import useScrollPosition from "../shared/useScrollPosition";
 
-const NavbarComponent = ({ scrolled, ...props }) => {
+const NavbarComponent = ({ navRoutes, userRoutes, ...props }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const navRoutes = {
-		about: "/",
-		leaderboard: "/",
-	};
-	const userRoutes = {
-		logout: "/auth/logout",
-		"my stats": "#",
-	};
+	const [scrolled, setScrolled] = useState(false);
+	useScrollPosition(({ currPos }) => setScrolled(currPos.y > 10), true, [], false, false, 300);
 	return (
 		<Box
-			position={{ base: "sticky", md: "initial" }}
+			zIndex="1"
+			position="sticky"
 			top="0"
 			d="flex"
-			zIndex="999"
 			height={{ base: "7vh", xl: "8vh" }}
+			shadow={scrolled ? "lg" : "none"}
 			alignItems="center"
 			justifyContent="flex-end"
-			bg={{ base: scrolled ? "ghostWhite" : "none", md: "transparent" }}
-			shadow={{ base: scrolled ? "xl" : "none", md: "none" }}
-			transition="background-color 0.5s ease"
+			bg={scrolled ? "rgba(255, 255, 255, 0.15)" : "none"}
+			style={{
+				backdropFilter: "blur(15px)",
+			}}
+			transition="all 0.2s ease"
 		>
-			<Logo scrolled={scrolled} />
-			<HamburgerMenu open={onOpen} color={scrolled ? "textBlack" : "ghostWhite"} />
+			<HamburgerMenu open={onOpen} color="ghostWhite" />
 			<MobileNavbar
 				isOpen={isOpen}
 				onClose={onClose}
 				userRoutes={userRoutes}
 				routes={navRoutes}
+				scrolled={scrolled}
 				{...props}
 			/>
 			<Box
@@ -44,8 +41,8 @@ const NavbarComponent = ({ scrolled, ...props }) => {
 				justifyContent="space-evenly"
 				alignItems="center"
 			>
-				<NavbarLinks routes={navRoutes} />
-				<UserLink userRoutes={userRoutes} {...props} />
+				<NavbarLinks routes={navRoutes} scrolled={scrolled} />
+				<UserLink userRoutes={userRoutes} {...props} scrolled={scrolled} />
 			</Box>
 		</Box>
 	);

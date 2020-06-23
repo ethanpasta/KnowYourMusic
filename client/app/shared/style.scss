@@ -1,28 +1,21 @@
 $shadow: 0.05em 0.05em;
 
 .logoText {
-	position: absolute;
-	top: 0.2em;
-	left: 0.2em;
 	cursor: pointer;
 	color: white;
 	text-shadow: $shadow rgba(255, 255, 255, 0.5);
+	transition: all 0.4s ease-in;
 }
 
 .animate {
-	color: #db85fa;
 	text-shadow: $shadow #e8b71d;
 	animation: textBorder 10s linear infinite;
 	animation-direction: alternate;
-	transition: all 0.15s ease-in;
-	-webkit-transition: all 0.15s ease-in;
+	transition: all 0.4s ease-in;
 }
 
 .logoText:hover {
-	color: white;
-	text-shadow: $shadow #db85fa;
-	/* 	-webkit-text-stroke-width: 2px;
-	-webkit-text-stroke-color: black; */
+	text-shadow: $shadow black;
 	animation: 0;
 	transition: all 0.15s ease-in;
 }
@@ -55,5 +48,62 @@ $shadow: 0.05em 0.05em;
 	100% {
 		color: #9400d3;
 		text-shadow: $shadow #ff8c00;
+	}
+}
+
+.section1 {
+	position: relative;
+	padding-top: 80px;
+}
+
+.section1 a div {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 24px;
+	height: 24px;
+	margin-left: -12px;
+
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	-webkit-animation: sdb07 2s infinite;
+	animation: sdb07 2s infinite;
+	opacity: 0;
+	box-sizing: border-box;
+}
+.section1 a div:nth-of-type(1) {
+	-webkit-animation-delay: 0s;
+	animation-delay: 0s;
+}
+.section1 a div:nth-of-type(2) {
+	top: 16px;
+	-webkit-animation-delay: 0.15s;
+	animation-delay: 0.15s;
+}
+.section1 a div:nth-of-type(3) {
+	top: 32px;
+	-webkit-animation-delay: 0.3s;
+	animation-delay: 0.3s;
+}
+@-webkit-keyframes sdb07 {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes sdb07 {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
 	}
 }
