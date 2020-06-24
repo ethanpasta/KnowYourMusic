@@ -21,7 +21,7 @@ const NavbarLink = ({ text, href, mobile, scrolled }) => (
 		letterSpacing={3}
 		fontSize="lg"
 		width={mobile ? "100%" : "auto"}
-		_hover={!mobile && { borderWidth: "2px", borderColor: "rgba(255, 255, 255, 0.3)" }}
+		_hover={!mobile && { borderWidth: "2px", borderColor: "rgba(0, 0, 0, 0.1)" }}
 		rounded="md"
 		shadow={!mobile && !scrolled ? "lg" : "none"}
 		px={mobile ? "0" : 2}

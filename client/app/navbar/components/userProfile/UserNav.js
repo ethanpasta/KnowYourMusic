@@ -18,7 +18,7 @@ const UserLargeButton = ({ user, isOpen, scrolled, ...props }) => (
 		alignItems="center"
 		justifyContent="flex-end"
 		position="relative"
-		_hover={{ border: isOpen ? "2px solid transparent" : "2px solid #db85fa" }}
+		_hover={{ border: isOpen ? "2px solid transparent" : "2px solid rgba(0, 0, 0, 0.1)" }}
 		{...props}
 	>
 		<Avatar src={user.images[0].url} position="absolute" left="-10px" />
