@@ -1,5 +1,46 @@
-.start-text {
-	font-size: 2em;
-	font-weight: 900;
-	color: white;
+$colors: #00ff9f, #00b8ff, #001eff, #bd00ff, #d600ff;
+
+$max: length($colors);
+$dash: 70;
+$dash-gap: 10;
+$dash-space: $dash * ($max - 1) + $dash-gap * $max;
+$time: 6s;
+$time-step: $time/$max;
+
+.text {
+	fill: none;
+	stroke-width: 5;
+	stroke-linejoin: round;
+	stroke-dasharray: $dash $dash-space;
+	stroke-dashoffset: 0;
+	-webkit-animation: stroke $time infinite linear;
+	animation: stroke $time infinite linear;
+
+	@for $item from 1 through $max {
+		&:nth-child(#{$max}n + #{$item}) {
+			$color: nth($colors, $item);
+			stroke: $color;
+			-webkit-animation-delay: -($time-step * $item);
+			animation-delay: -($time-step * $item);
+		}
+	}
+}
+
+@-webkit-keyframes stroke {
+	100% {
+		stroke-dashoffset: -($dash + $dash-gap) * $max;
+	}
+}
+
+@keyframes stroke {
+	100% {
+		stroke-dashoffset: -($dash + $dash-gap) * $max;
+	}
+}
+
+svg.startgame-text {
+	width: 100%;
+	height: 100%;
+	font-family: "Open Sans", sans-serif;
+	font-weight: 800;
 }

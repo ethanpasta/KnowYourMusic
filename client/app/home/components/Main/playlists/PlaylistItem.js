@@ -1,5 +1,5 @@
 import React from "react";
-import { PseudoBox, Image, Text, Skeleton } from "@chakra-ui/core";
+import { PseudoBox, Image, Skeleton } from "@chakra-ui/core";
 
 const PlaylistItem = ({ loading, title, image }) => {
 	return loading ? (
@@ -10,11 +10,12 @@ const PlaylistItem = ({ loading, title, image }) => {
 			cursor="pointer"
 			pos="relative"
 			_hover={{
-				transform: "scale(1.2)",
+				transform: "scale(1.15)",
 				transformOrigin: "center center",
 				zIndex: "999",
 			}}
 			transition="all 0.3s ease"
+			className="playlist"
 		>
 			<PseudoBox
 				as={Image}
@@ -46,19 +47,32 @@ const PlaylistItem = ({ loading, title, image }) => {
 				opacity="0"
 			>
 				<PseudoBox
-					as={Text}
-					mb="4em"
 					className="start-text"
+					fontSize={["8rem", "8rem", "4rem", "8rem"]}
+					letterSpacing="wider"
+					textAlign="center"
+					lineHeight="1"
+					opacity="0"
+					transition="all 0.15s ease"
 					_groupHover={{
-						marginBottom: "0",
+						opacity: 1,
 					}}
-					transition="all 0.3s ease"
-					color="#db85fa"
-					fontSize={{ base: "1em", md: "1.5em", xl: "2em" }}
-					fontWeight="800"
-					fontFamily="Spartan, sans-serif"
 				>
-					PLAY
+					<svg className="startgame-text" viewBox="0 0 600 300">
+						<symbol id="s-text">
+							<text textAnchor="middle" x="50%" y="50%" dy="0">
+								<tspan x="50%">START</tspan>
+								<tspan x="50%" dy="1em">
+									GAME
+								</tspan>
+							</text>
+						</symbol>
+						<use className="text" xlinkHref="#s-text"></use>
+						<use className="text" xlinkHref="#s-text"></use>
+						<use className="text" xlinkHref="#s-text"></use>
+						<use className="text" xlinkHref="#s-text"></use>
+						<use className="text" xlinkHref="#s-text"></use>
+					</svg>
 				</PseudoBox>
 			</PseudoBox>
 		</PseudoBox>

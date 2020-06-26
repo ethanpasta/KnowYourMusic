@@ -4,7 +4,7 @@ import IntroContent from "./IntroContent";
 
 const Intro = ({ name, ...props }) => {
 	return (
-		<Box pos="relative" w={{ base: "80%", md: "70%", lg: "55%", xl: "38%" }} {...props}>
+		<Box pos="relative" w={{ base: "80%", md: "70%", lg: "55%", xl: "40%" }} {...props}>
 			<IntroContent name={name} />
 		</Box>
 	);

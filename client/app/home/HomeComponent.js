@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/core";
 import Intro from "./components/Intro";
 import MainContent from "./components/Main";
 
-const HomeComponent = ({ userName, playlists }) => {
+const HomeComponent = ({ user, playlists }) => {
 	return (
 		<Box flexGrow="2" d="flex" flexDirection="column" alignItems="center">
 			<Intro
@@ -11,9 +11,9 @@ const HomeComponent = ({ userName, playlists }) => {
 				d="flex"
 				flexDirection="column"
 				justifyContent="center"
-				name={userName}
+				name={user.name}
 			/>
-			<MainContent playlists={playlists} />
+			<MainContent user={user} playlists={playlists} />
 		</Box>
 	);
 };

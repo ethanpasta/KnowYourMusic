@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Icon, Text, Avatar, PseudoBox } from "@chakra-ui/core";
 
-const UserLargeButton = ({ user, isOpen, scrolled, ...props }) => (
+const UserLargeButton = ({ user, isOpen, ...props }) => (
 	<PseudoBox
 		role="group"
 		borderTopLeftRadius="25px"
@@ -10,7 +10,7 @@ const UserLargeButton = ({ user, isOpen, scrolled, ...props }) => (
 		borderBottomRightRadius="lg"
 		minWidth="140px"
 		h="40px"
-		shadow={scrolled ? "none" : "xl"}
+		shadow="lg"
 		transition="all 0.15s ease-out"
 		cursor="pointer"
 		d="flex"
@@ -18,7 +18,7 @@ const UserLargeButton = ({ user, isOpen, scrolled, ...props }) => (
 		alignItems="center"
 		justifyContent="flex-end"
 		position="relative"
-		_hover={{ border: isOpen ? "2px solid transparent" : "2px solid rgba(0, 0, 0, 0.1)" }}
+		_hover={!isOpen && { transform: "translateY(-.1em)", shadow: "xl" }}
 		{...props}
 	>
 		<Avatar src={user.images[0].url} position="absolute" left="-10px" />
@@ -31,10 +31,9 @@ const UserLargeButton = ({ user, isOpen, scrolled, ...props }) => (
 							textAlign="center"
 							key={i}
 							fontFamily="'Lato', sans-serif"
-							fontWeight="700"
-							fontStyle="italic"
-							letterSpacing="1px"
-							lineHeight="1"
+							textTransform="uppercase"
+							letterSpacing="wider"
+							fontSize="md"
 						>
 							{word}
 						</Text>
@@ -46,7 +45,7 @@ const UserLargeButton = ({ user, isOpen, scrolled, ...props }) => (
 			name={isOpen ? "triangle-up" : "triangle-down"}
 			size="10px"
 			color="white"
-			ml={4}
+			ml={3}
 			mr={3}
 			transition="all 0.15s ease-out"
 			_groupHover={{

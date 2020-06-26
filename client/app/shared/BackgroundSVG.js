@@ -5,7 +5,8 @@ import "./style.scss";
 
 const BackgroundSVG = () => {
 	const pathRef = useRef(null);
-	let { height, width } = useWindowDimensions(),
+	let { width } = useWindowDimensions(),
+		height = width <= 480 ? window.screen.height : window.innerHeight,
 		ratio = width / height,
 		svgHeight = 800 / ratio,
 		svgCurveHeight = svgHeight * (svgHeight < 800 ? 0.75 : 0.8),

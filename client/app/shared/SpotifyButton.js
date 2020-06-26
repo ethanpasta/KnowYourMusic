@@ -17,7 +17,7 @@ const SpotifyButton = ({ giant, ...props }) => (
 		px={4}
 		borderRadius={giant ? "2rem" : "1.5rem"}
 		w="fit-content"
-		shadow={giant ? "mdWhite" : "xl"}
+		shadow="lg"
 		transition="transform 0.2s ease"
 		_hover={{ transform: "scaleX(0.95)" }}
 		{...props}

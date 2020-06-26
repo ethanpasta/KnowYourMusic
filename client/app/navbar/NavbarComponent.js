@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, useDisclosure } from "@chakra-ui/core";
 import UserLink from "./components/UserLink";
 import MobileNavbar from "./components/MobileNavbar";
 import NavbarLinks from "./components/NavbarLinks";
 import HamburgerMenu from "./components/HamburgerMenu";
-import useScrollPosition from "../shared/useScrollPosition";
 
 const NavbarComponent = ({ navRoutes, userRoutes, ...props }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [scrolled, setScrolled] = useState(false);
-	useScrollPosition(({ currPos }) => setScrolled(currPos.y > 10), true, [], false, false, 300);
+
 	return (
 		<Box
 			zIndex="1"
@@ -23,6 +22,7 @@ const NavbarComponent = ({ navRoutes, userRoutes, ...props }) => {
 			bg={scrolled ? "rgba(255, 255, 255, 0.15)" : "none"}
 			style={{
 				backdropFilter: "blur(15px)",
+				transitionDelay: "400",
 			}}
 			transition="all 0.2s ease"
 		>
@@ -36,7 +36,7 @@ const NavbarComponent = ({ navRoutes, userRoutes, ...props }) => {
 				{...props}
 			/>
 			<Box
-				flexBasis={{ md: "60%", lg: "50%", xl: "40%" }}
+				flexBasis={{ md: "70%", lg: "60%", xl: "42%" }}
 				d={{ base: "none", md: "flex" }}
 				justifyContent="space-evenly"
 				alignItems="center"

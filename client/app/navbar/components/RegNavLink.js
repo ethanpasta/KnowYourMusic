@@ -6,10 +6,10 @@ const desktopLinkStyle = {
 	rounded: "md",
 	border: "2px solid transparent",
 	transform: "skew(-10deg)",
-	transition: "border 0.15s ease",
+	transition: "all 0.15s ease",
 };
 
-const NavbarLink = ({ text, href, mobile, scrolled }) => (
+const NavbarLink = ({ text, href, mobile }) => (
 	<PseudoBox
 		as={RouterLink}
 		to={href}
@@ -21,9 +21,9 @@ const NavbarLink = ({ text, href, mobile, scrolled }) => (
 		letterSpacing={3}
 		fontSize="lg"
 		width={mobile ? "100%" : "auto"}
-		_hover={!mobile && { borderWidth: "2px", borderColor: "rgba(0, 0, 0, 0.1)" }}
+		_hover={!mobile && { transform: "translateY(-.1em) skew(-10deg)", shadow: "xl" }}
 		rounded="md"
-		shadow={!mobile && !scrolled ? "lg" : "none"}
+		shadow={!mobile ? "lg" : "none"}
 		px={mobile ? "0" : 2}
 		py={mobile ? 5 : 1}
 		{...(mobile ? {} : desktopLinkStyle)}

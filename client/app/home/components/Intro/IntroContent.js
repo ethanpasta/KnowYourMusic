@@ -8,7 +8,7 @@ import "./style.css";
 
 const ScrollDown = () => {
 	const [showScrollIcon, setShowScrollIcon] = useState(true);
-	useScrollPosition(({ currPos }) => setShowScrollIcon(currPos.y < 5), true);
+	useScrollPosition(({ currPos }) => setShowScrollIcon(currPos.y < 10), true);
 
 	return (
 		<Box
@@ -38,6 +38,7 @@ const IntroContent = ({ name }) => (
 			color="textBlack"
 			fontWeight="700"
 			fontFamily="system-ui, sans-serif"
+			w="full"
 		>
 			Hey{name && " "}
 			{name && (
