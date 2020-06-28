@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { Box, Image } from "@chakra-ui/core";
-import PersonalLibrary from "./PersonalLibrary";
+import PersonalLibrary from "./personalLibrary";
 import PlayListGrid from "./playlists";
 import VisibilitySensor from "react-visibility-sensor";
 import Arrow from "../../../../assets/imgs/arrow.png";
 
-const MainContent = ({ playlists, user }) => {
+const MainContent = ({ playlists, user, game, startGame }) => {
 	const [show, setShow] = useState(false);
 	const domRef = useRef();
 
@@ -30,7 +30,11 @@ const MainContent = ({ playlists, user }) => {
 		>
 			<VisibilitySensor onChange={onVisibilityChange} offset={{ top: 100 }}>
 				<>
-					<PersonalLibrary loading={user.loading} loggedIn={user.loggedIn} />
+					<PersonalLibrary
+						loading={user.loading}
+						loggedIn={user.loggedIn}
+						startGame={startGame}
+					/>
 					<Image src={Arrow} w="40%" d={{ base: "block", lg: "none" }} py="1em" />
 					<PlayListGrid loggedIn={user.loggedIn} {...playlists} />
 				</>

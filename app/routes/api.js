@@ -5,7 +5,7 @@ const api = express.Router();
 
 api.get("/user/me", middleware, apiController.getMe);
 api.get("/user/songs", middleware, apiController.getSongs);
-api.get("/user/start-game", middleware, apiController.startGame);
+api.get("/user/start", middleware, apiController.startGame);
 api.get("/playlists", apiController.getPlaylists);
 
 module.exports = api;

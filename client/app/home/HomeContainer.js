@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
+import { startGameAction } from "./homeState";
 import HomeComponent from "./HomeComponent";
 
 const mapStateToProps = state => {
-	const { user, playlists } = state;
+	const { user, playlists, game } = state;
 	return {
 		user: {
 			loading: user.loading,
@@ -14,9 +15,14 @@ const mapStateToProps = state => {
 				: false,
 		},
 		playlists,
+		game,
 	};
 };
 
-const HomeContainer = connect(mapStateToProps, null)(HomeComponent);
+const mapDispatchToProps = {
+	startGame: startGameAction,
+};
+
+const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);
 
 export default HomeContainer;

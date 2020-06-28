@@ -4,19 +4,18 @@ const { User } = require("../models");
 const { pino } = require("../utils").logger;
 
 /**
- * Check is session exists before continuing to other middlewares
+ * Check if session exists before continuing to other middlewares
  */
 const checkSession = (req, res, next) => {
 	if (req.session.user === undefined) {
-		console.log("User session doesn't exist");
+		pino.info("User session doesn't exist");
 		res.send({
 			loggedIn: false,
 			user: null,
 			err: null,
 		});
-		return;
 	}
-	next();
+	return next();
 };
 
 /**
@@ -25,6 +24,11 @@ const checkSession = (req, res, next) => {
  * Otherwise, new API is created, saved, and attached to the req object
  */
 const sessionAttach = (req, res, next) => {
+	// If this middleware was already called and the req object has an api attached
+	if (req.api && req.api instanceof UserSpotifyAPI) {
+		console.log("API already exists in session");
+		return next();
+	}
 	if (req.session.user in userMap) {
 		req.api = userMap[req.session.user].api;
 		return next();
@@ -35,11 +39,11 @@ const sessionAttach = (req, res, next) => {
 			const userApi = new UserSpotifyAPI(user.access_token, user.refresh_token);
 			userApi.lastRefresh = user.last_refresh_update;
 			req.api = (userMap[req.session.user] = { api: userApi }).api;
-			next();
+			return next();
 		})
 		.catch(err => {
 			pino.error("Couldn't find user, error: " + err);
-			next(err);
+			return next(err);
 		});
 };
 
@@ -47,6 +51,8 @@ const sessionAttach = (req, res, next) => {
  * Checks if the Spotify API is expired and needs to be refreshed.
  */
 const checkRefresh = (req, res, next) => {
+	// If this middleware function was already called
+	if (req.checked_refresh) return next();
 	const api = req.api;
 	if (api.needsToRefresh()) {
 		pino.info(`Access token refresh for user '${req.session.user}' is needed. refreshing...`);
@@ -69,6 +75,7 @@ const checkRefresh = (req, res, next) => {
 		pino.info("Access token is still valid!");
 		next();
 	}
+	req.checked_refresh = true;
 };
 
 module.exports = [checkSession, sessionAttach, checkRefresh];

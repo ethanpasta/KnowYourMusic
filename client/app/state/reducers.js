@@ -1,3 +1,12 @@
-import initReducer from "./initSlice";
+import { combineReducers } from "@reduxjs/toolkit";
+import userReducer from "./userSlice";
+import playlistsReducer from "./playlistsSlice";
+import gameReducer from "../home/homeState";
 
-export default initReducer;
+const rootReducer = combineReducers({
+	user: userReducer,
+	playlists: playlistsReducer,
+	game: gameReducer,
+});
+
+export default rootReducer;

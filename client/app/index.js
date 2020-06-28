@@ -4,7 +4,8 @@ import { Provider } from "react-redux";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import App from "./App";
 import rootReducer from "./state/reducers";
-import { fetchUserAccount, fetchPlaylistInfo } from "./state/initSlice";
+import { fetchUserAccount } from "./state/userSlice";
+import { fetchPlaylistInfo } from "./state/playlistsSlice";
 
 const middlewares = [...getDefaultMiddleware()];
 

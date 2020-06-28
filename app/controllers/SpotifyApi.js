@@ -40,9 +40,16 @@ function getSongs(req, res) {
 }
 
 // Function gets all data for game play
-function startGame(req) {
-	const newGame = new gameManager(req.session.user);
-	newGame.start();
+function startGame(req, res) {
+	console.log("game is startingggg");
+	try {
+		const newGame = new gameManager(req.session.user);
+		newGame.start();
+		res.send({ success: true });
+	} catch (error) {
+		console.log("HELLO");
+		res.send({ success: false, error: error });
+	}
 }
 
 module.exports = {
