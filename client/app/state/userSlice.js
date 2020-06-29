@@ -14,16 +14,14 @@ const userSlice = createSlice({
 	initialState: {
 		loading: true,
 		loggedIn: false,
-		user: null,
-		error: null,
 	},
 	reducers: {},
 	extraReducers: {
 		[fetchUserAccount.pending]: state => ({ ...state, loading: state.loading || true }),
 		[fetchUserAccount.fulfilled]: (state, action) => {
 			if (state.loading) {
-				const { user, loggedIn, error } = action.payload;
-				return { ...state, loading: false, loggedIn, user, error };
+				const { profile, loggedIn, error } = action.payload;
+				return { ...state, loading: false, loggedIn, profile, error };
 			}
 		},
 		[fetchUserAccount.rejected]: (state, action) => {

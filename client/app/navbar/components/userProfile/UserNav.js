@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Icon, Text, Avatar, PseudoBox } from "@chakra-ui/core";
 
-const UserLargeButton = ({ user, isOpen, ...props }) => (
+const UserLargeButton = ({ profile, isOpen, ...props }) => (
 	<PseudoBox
 		role="group"
 		borderTopLeftRadius="25px"
@@ -21,11 +21,11 @@ const UserLargeButton = ({ user, isOpen, ...props }) => (
 		_hover={!isOpen && { transform: "translateY(-.1em)", shadow: "xl" }}
 		{...props}
 	>
-		<Avatar src={user.images[0].url} position="absolute" left="-10px" />
+		<Avatar src={profile.images[0].url} position="absolute" left="-10px" />
 		<Box>
-			{user.display_name.split(" ").map(
+			{profile.display_name.split(" ").map(
 				(word, i) =>
-					i != user.display_name.length - 1 && (
+					i != profile.display_name.length - 1 && (
 						<Text
 							color="textBlack"
 							textAlign="center"
@@ -57,7 +57,7 @@ const UserLargeButton = ({ user, isOpen, ...props }) => (
 	</PseudoBox>
 );
 
-const UserSmallButton = ({ user, isOpen, ...props }) => (
+const UserSmallButton = ({ profile, isOpen, ...props }) => (
 	<PseudoBox
 		cursor="pointer"
 		d="flex"
@@ -65,9 +65,9 @@ const UserSmallButton = ({ user, isOpen, ...props }) => (
 		justifyContent="space-evenly"
 		{...props}
 	>
-		<Avatar src={user.images[0].url} />
+		<Avatar src={profile.images[0].url} />
 		<Text fontFamily="'Lato', sans-serif" letterSpacing="1px" color="textBlack">
-			{user.display_name}
+			{profile.display_name}
 		</Text>
 		<Icon name={isOpen ? "triangle-up" : "triangle-down"} size="15px" color="#db85fa" />
 	</PseudoBox>

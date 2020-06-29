@@ -3,7 +3,7 @@ import { Icon, Button, Drawer, DrawerBody, DrawerOverlay, DrawerContent } from "
 import UserLink from "./UserLink";
 import NavbarLinks from "./NavbarLinks";
 
-const MobileNav = ({ isOpen, onClose, routes, userRoutes, scrolled, ...props }) => {
+const MobileNav = ({ isOpen, onClose, routes, userRoutes, scrolled, user }) => {
 	const closeButton = useRef();
 	return (
 		<Drawer
@@ -38,7 +38,7 @@ const MobileNav = ({ isOpen, onClose, routes, userRoutes, scrolled, ...props }) 
 						userRoutes={userRoutes}
 						mobile={true}
 						mb={5}
-						{...props}
+						user={user}
 						scrolled={scrolled}
 					/>
 					<NavbarLinks routes={routes} mobile={true} scrolled={scrolled} />

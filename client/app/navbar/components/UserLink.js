@@ -4,7 +4,7 @@ import SpotifyButton from "../../shared/SpotifyButton";
 import DropDownMenu from "../components/userProfile/DropDownMenu";
 import UserNav from "./userProfile/UserNav";
 
-const UserProfile = ({ mobile, userRoutes, ...props }) => {
+const UserProfile = ({ mobile, userRoutes, profile }) => {
 	const [userDrop, setUserDrop] = useState(false);
 	const handleClick = () => setUserDrop(!userDrop);
 	const dropDownRef = useRef(null);
@@ -27,7 +27,7 @@ const UserProfile = ({ mobile, userRoutes, ...props }) => {
 				size={mobile ? "sm" : "lg"}
 				onClick={handleClick}
 				isOpen={userDrop}
-				{...props}
+				profile={profile}
 			/>
 			<DropDownMenu
 				userRoutes={userRoutes}
@@ -38,11 +38,11 @@ const UserProfile = ({ mobile, userRoutes, ...props }) => {
 	);
 };
 
-const UserLink = ({ loading, loggedIn, user, mobile, ...props }) => {
-	return loading ? (
+const UserLink = ({ user, mobile, ...props }) => {
+	return user.loading ? (
 		<Skeleton w={40} h={10} rounded="lg" textAlign="center"></Skeleton>
-	) : loggedIn ? (
-		<UserProfile mobile={mobile} user={user} {...props} />
+	) : user.loggedIn ? (
+		<UserProfile mobile={mobile} profile={user.profile} {...props} />
 	) : (
 		<SpotifyButton {...props} />
 	);

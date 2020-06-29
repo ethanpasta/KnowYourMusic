@@ -7,7 +7,7 @@ async function getMe(req, res) {
 		const me = await req.api.getMe();
 		res.send({
 			loggedIn: true,
-			user: me,
+			profile: me,
 			err: null,
 		});
 	} catch (e) {
