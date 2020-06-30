@@ -4,7 +4,7 @@ import SpotifyLogin from "./SpotifyLogin";
 import StartGame from "./StartGame";
 import "./style.scss";
 
-const PersonalLibrary = ({ loggedIn, loading, startGame }) => (
+const PersonalLibrary = ({ loggedIn, loading }) => (
 	<Box
 		alignSelf="center"
 		w={["90%", "80%", "80%", "35%"]}
@@ -27,9 +27,7 @@ const PersonalLibrary = ({ loggedIn, loading, startGame }) => (
 		>
 			<Box px={4}>Play with your Spotify library</Box>
 		</Heading>
-		<Skeleton isLoaded={!loading}>
-			{loggedIn ? <StartGame action={startGame} /> : <SpotifyLogin />}
-		</Skeleton>
+		<Skeleton isLoaded={!loading}>{loggedIn ? <StartGame /> : <SpotifyLogin />}</Skeleton>
 	</Box>
 );
 

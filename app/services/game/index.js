@@ -1,18 +1,18 @@
 const GameData = require("./gameData");
-const userMap = require("../userMap");
 const { pino } = require("../../utils").logger;
 
-class UserGame {
-	constructor(username) {
-		this.username = username;
-		this.gameData = new GameData(username);
-		this.socket = userMap[username].socket;
+class GameManager {
+	constructor(user, socket) {
+		this.gameData = new GameData(user);
+		this.socket = socket;
+		pino.info("Now were supposed to prep game data and start!");
+		/* this.start(); */
 	}
 
 	async start() {
-		pino.info("Prepping game..");
+		pino.info(">> Prepping game data..");
 		await this.gameData.prepAndGetData();
-		pino.info(`Informing ${this.username} that game is ready`);
+		pino.info(">> Emitting game ready event");
 		this.emitStart();
 		this.listen();
 	}
@@ -30,6 +30,11 @@ class UserGame {
 			this.socket.emit("response", correctOption);
 		});
 	}
+
+	deleteSocket() {
+		this.socket.disconnect();
+		this.socket = undefined;
+	}
 }
 
-module.exports = UserGame;
+module.exports = GameManager;

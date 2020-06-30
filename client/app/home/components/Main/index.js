@@ -5,7 +5,7 @@ import PlayListGrid from "./playlists";
 import VisibilitySensor from "react-visibility-sensor";
 import Arrow from "../../../../assets/imgs/arrow.png";
 
-const MainContent = ({ playlists, user, game, startGame }) => {
+const MainContent = ({ playlists, user, gameLoading }) => {
 	const [show, setShow] = useState(false);
 	const domRef = useRef();
 
@@ -33,7 +33,7 @@ const MainContent = ({ playlists, user, game, startGame }) => {
 					<PersonalLibrary
 						loading={user.loading}
 						loggedIn={user.loggedIn}
-						startGame={startGame}
+						gameLoading={gameLoading}
 					/>
 					<Image src={Arrow} w="40%" d={{ base: "block", lg: "none" }} py="1em" />
 					<PlayListGrid loggedIn={user.loggedIn} {...playlists} />

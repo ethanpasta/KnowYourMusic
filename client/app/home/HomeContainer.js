@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import { startGameAction } from "./homeState";
 import HomeComponent from "./HomeComponent";
+import { listenForData, connectSocket, disconnectSocket } from "../game/gameSlice";
 
 const mapStateToProps = state => {
 	const { user, playlists, game } = state;
@@ -11,16 +11,18 @@ const mapStateToProps = state => {
 			name: user.loading
 				? undefined
 				: user.loggedIn
-				? user.user.display_name.split(" ")[0]
+				? user.profile.display_name.split(" ")[0]
 				: false,
 		},
 		playlists,
-		game,
+		gameLoading: game.loading,
 	};
 };
 
 const mapDispatchToProps = {
-	startGame: startGameAction,
+	connectSocket,
+	disconnectSocket,
+	listenForData,
 };
 
 const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);

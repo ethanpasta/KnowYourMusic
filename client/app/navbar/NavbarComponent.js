@@ -5,7 +5,7 @@ import MobileNavbar from "./components/MobileNavbar";
 import NavbarLinks from "./components/NavbarLinks";
 import HamburgerMenu from "./components/HamburgerMenu";
 
-const NavbarComponent = ({ navRoutes, userRoutes, ...props }) => {
+const NavbarComponent = ({ navRoutes, userRoutes, user }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [scrolled, setScrolled] = useState(false);
 
@@ -33,7 +33,7 @@ const NavbarComponent = ({ navRoutes, userRoutes, ...props }) => {
 				userRoutes={userRoutes}
 				routes={navRoutes}
 				scrolled={scrolled}
-				{...props}
+				user={user}
 			/>
 			<Box
 				flexBasis={{ md: "70%", lg: "60%", xl: "42%" }}
@@ -42,7 +42,7 @@ const NavbarComponent = ({ navRoutes, userRoutes, ...props }) => {
 				alignItems="center"
 			>
 				<NavbarLinks routes={navRoutes} scrolled={scrolled} />
-				<UserLink userRoutes={userRoutes} {...props} scrolled={scrolled} />
+				<UserLink userRoutes={userRoutes} user={user} scrolled={scrolled} />
 			</Box>
 		</Box>
 	);

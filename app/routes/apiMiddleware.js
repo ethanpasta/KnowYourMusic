@@ -36,6 +36,7 @@ const sessionAttach = (req, res, next) => {
 	pino.info(`Session for ${req.session.user} wasn't in UserMap. Adding it.`);
 	User.findOne({ username: req.session.user }, "access_token refresh_token last_refresh_update")
 		.then(user => {
+			if (!user) return next(new Error("Couldn't find user"));
 			const userApi = new UserSpotifyAPI(user.access_token, user.refresh_token);
 			userApi.lastRefresh = user.last_refresh_update;
 			req.api = (userMap[req.session.user] = { api: userApi }).api;

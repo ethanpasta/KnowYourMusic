@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeContainer from "./home/HomeContainer";
-import Game from "./components/Game";
+import Game from "./game/GameContainer";
 import NavbarContainer from "./navbar/NavbarContainer";
 import Theme from "./theme";
 import Logo from "./shared/Logo";

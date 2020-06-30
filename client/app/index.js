@@ -6,19 +6,22 @@ import App from "./App";
 import rootReducer from "./state/reducers";
 import { fetchUserAccount } from "./state/userSlice";
 import { fetchPlaylistInfo } from "./state/playlistsSlice";
+import socketClient from "./socket/socketClient";
+import socketMiddleware from "./socket/socketMiddleware";
 
-const middlewares = [...getDefaultMiddleware()];
+const middleware = [socketMiddleware(socketClient), ...getDefaultMiddleware()];
 
 // Add logger to middleware if in development mode
-if (process.env.NODE_ENV === `development`) {
+if (process.env.NODE_ENV.trim() == "development") {
+	console.log("hi");
 	const { logger } = require("redux-logger");
-	middlewares.push(logger);
+	middleware.push(logger);
 }
 
 const store = configureStore({
 	reducer: rootReducer,
-	middlewares,
-	devTools: process.env.NODE_ENV !== "production",
+	middleware,
+	devTools: process.env.NODE_ENV.trim() == "development",
 });
 
 store.dispatch(fetchUserAccount());
