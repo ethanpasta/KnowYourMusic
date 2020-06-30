@@ -82,14 +82,14 @@ class GameData {
 			return totalLyrics.slice(0, NUM_OF_LEVELS);
 		}
 		pino.info(`>>> Found ${totalLyrics.length} songs with lyrics so far. Searching for more.`);
-		return this.getAllLyrics(numSongs / 2, totalLyrics, exclude.concat(songs));
+		return this.getAllLyrics(numSongs - 1, totalLyrics, exclude.concat(songs));
 	}
 
 	/**
 	 * Function associates between 'User' model helper function "getRandomUserSongs" which returns
 	 * a list of song ids, and 'Song' model helper function "getSongsByIds" which accepts a list of ids
 	 * and returns song documents.
-	 * Returns a list of full song documents.
+	 * Returns a list of song documents.
 	 * @param {Number} numSongs Number of songs to get
 	 * @param {List} exclude Which songs to exclude
 	 * @param {Boolean} withLyrics If songs should contain lyrics
