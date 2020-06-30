@@ -9,7 +9,7 @@ const { pino } = require("../utils").logger;
 const checkSession = (req, res, next) => {
 	if (req.session.user === undefined) {
 		pino.info("User session doesn't exist");
-		res.send({
+		return res.send({
 			loggedIn: false,
 			user: null,
 			err: null,
