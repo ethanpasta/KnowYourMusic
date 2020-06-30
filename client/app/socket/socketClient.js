@@ -1,6 +1,5 @@
 import io from "socket.io-client";
-
-const host = "http://localhost:5000/game";
+import { SOCKET_HOST as host } from "../constants";
 
 class socketAPI {
 	constructor() {
