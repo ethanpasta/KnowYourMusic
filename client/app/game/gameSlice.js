@@ -52,12 +52,14 @@ export default function reducer(state = { loading: true }, action = {}) {
 		case CONNECT_FAIL: {
 			return {
 				...state,
+				loading: false,
 				error: action.error,
 			};
 		}
 		case DISCONNECT_FAIL: {
 			return {
 				...state,
+				loading: false,
 				error: action.error,
 			};
 		}
@@ -65,7 +67,7 @@ export default function reducer(state = { loading: true }, action = {}) {
 			return {
 				...state,
 				loading: false,
-				gameData: action.result,
+				gameData: action.payload,
 			};
 		}
 		default: {

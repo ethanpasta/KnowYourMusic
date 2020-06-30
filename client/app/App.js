@@ -7,7 +7,6 @@ import Theme from "./theme";
 import Logo from "./shared/Logo";
 
 import "./style.css";
-import BackgroundSVG from "./shared/BackgroundSVG";
 
 const navRoutes = {
 	about: "/",
@@ -23,8 +22,6 @@ const App = () => {
 		<Theme>
 			<Router>
 				<Logo />
-
-				<BackgroundSVG />
 				<NavbarContainer navRoutes={navRoutes} userRoutes={userRoutes} />
 				<Switch>
 					<Route path="/" component={HomeContainer} exact />

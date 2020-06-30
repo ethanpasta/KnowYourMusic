@@ -5,8 +5,7 @@ class GameManager {
 	constructor(user, socket) {
 		this.gameData = new GameData(user);
 		this.socket = socket;
-		pino.info("Now were supposed to prep game data and start!");
-		/* this.start(); */
+		this.start();
 	}
 
 	async start() {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Heading, Skeleton } from "@chakra-ui/core";
 import SpotifyLogin from "./SpotifyLogin";
-import StartGame from "./StartGame";
+import StartGame from "./startGame";
 import "./style.scss";
 
 const PersonalLibrary = ({ loggedIn, loading }) => (

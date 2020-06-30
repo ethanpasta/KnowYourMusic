@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Text, Button, PseudoBox, Spinner } from "@chakra-ui/core";
 import { Redirect } from "react-router-dom";
 
-const StartGame = ({ gameLoading }) => {
-	const [loading, setLoading] = useState();
+const StartGame = ({ stillLoading, listenForData }) => {
 	const [ready, setReady] = useState(false);
+	const [clicked, setClicked] = useState(false);
+	useEffect(() => {
+		if (clicked && !stillLoading) {
+			setReady(true);
+		}
+	}, [stillLoading]);
 	const handleClick = () => {
-		setReady(!loading);
+		setClicked(true);
+		listenForData();
 	};
-	useEffect(() => setLoading(gameLoading), [gameLoading]);
-	return ready ? (
+
+	return ready && clicked ? (
 		<Redirect to="/game" />
 	) : (
 		<PseudoBox
@@ -26,7 +32,7 @@ const StartGame = ({ gameLoading }) => {
 			cursor="pointer"
 			onClick={handleClick}
 		>
-			{loading ? (
+			{clicked ? (
 				<Spinner />
 			) : (
 				<Text

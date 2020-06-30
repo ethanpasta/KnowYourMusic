@@ -15,7 +15,7 @@ const middleware = [socketMiddleware(socketClient), ...getDefaultMiddleware()];
 if (process.env.NODE_ENV.trim() == "development") {
 	console.log("hi");
 	const { logger } = require("redux-logger");
-	middleware.push(logger);
+	/* middleware.push(logger); */
 }
 
 const store = configureStore({

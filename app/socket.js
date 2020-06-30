@@ -11,7 +11,7 @@ function socketInit(sio) {
 		}
 		socket.on("disconnect", () => {
 			pino.info(`Disconnecting socket #${socket.id} for user ${user}`);
-			userMap[user] && userMap[user].GameManager.deleteSocket();
+			userMap[user] && userMap[user].gameManager.deleteSocket();
 		});
 	});
 }
