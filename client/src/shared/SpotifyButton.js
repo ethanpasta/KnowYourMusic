@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, PseudoBox, Button, Image } from "@chakra-ui/core";
-import SpotifyIcon from "../../assets/imgs/spotifyIcon.png";
-import SpotifyIconBlack from "../../assets/imgs/spotifyIconBlack.png";
+import SpotifyIcon from "../assets/imgs/spotifyIcon.png";
+import SpotifyIconBlack from "../assets/imgs/spotifyIconBlack.png";
 
 const SpotifyButton = ({ giant, ...props }) => (
 	<PseudoBox

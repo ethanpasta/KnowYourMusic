@@ -5,7 +5,7 @@ import Game from "./game/GameContainer";
 import NavbarContainer from "./navbar/NavbarContainer";
 import Theme from "./theme";
 import Logo from "./shared/Logo";
-import { NAV_ROUTES, USER_NAV_ROUTES } from "./constants";
+import { NAV_ROUTES, USER_NAV_ROUTES } from "./utils/constants";
 
 import "./style.css";
 

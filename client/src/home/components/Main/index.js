@@ -3,7 +3,7 @@ import { Box, Image } from "@chakra-ui/core";
 import PersonalLibrary from "./personalLibrary";
 import PlayListGrid from "./playlists";
 import VisibilitySensor from "react-visibility-sensor";
-import Arrow from "../../../../assets/imgs/arrow.png";
+import Arrow from "../../../assets/imgs/arrow.png";
 
 const MainContent = ({ playlists, user, gameLoading }) => {
 	const [show, setShow] = useState(false);
