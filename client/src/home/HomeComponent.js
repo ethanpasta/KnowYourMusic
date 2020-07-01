@@ -4,13 +4,17 @@ import Intro from "./components/Intro";
 import MainContent from "./components/Main";
 import BackgroundSVG from "../shared/BackgroundSVG";
 
-const HomeComponent = ({ user, playlists, gameLoading, connectSocket, listenForData }) => {
+const HomeComponent = ({ state, actions }) => {
 	useEffect(() => {
-		if (!user.loading && user.loggedIn == true) {
-			connectSocket();
+		actions.fetchUserAccount();
+		actions.fetchPlaylistsData();
+	}, []);
+	useEffect(() => {
+		if (!state.user.loading && state.user.loggedIn == true) {
+			actions.connectSocket();
 			/* listenForData(); */
 		}
-	}, [user.loggedIn]);
+	}, [state.user.loggedIn]);
 	return (
 		<>
 			<BackgroundSVG />
@@ -20,9 +24,13 @@ const HomeComponent = ({ user, playlists, gameLoading, connectSocket, listenForD
 					d="flex"
 					flexDirection="column"
 					justifyContent="center"
-					name={user.name}
+					name={state.user.name}
 				/>
-				<MainContent user={user} playlists={playlists} gameLoading={gameLoading} />
+				<MainContent
+					user={state.user}
+					playlists={state.playlists}
+					gameLoading={state.gameLoading}
+				/>
 			</Box>
 		</>
 	);

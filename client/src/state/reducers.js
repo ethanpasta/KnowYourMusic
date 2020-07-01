@@ -1,11 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import userReducer from "./userSlice";
-import playlistsReducer from "./playlistsSlice";
+import home from "../home/homeSlice";
 import gameReducer from "../game/gameSlice";
 
 const rootReducer = combineReducers({
-	user: userReducer,
-	playlists: playlistsReducer,
+	user: home.userReducer,
+	playlists: home.playlistsReducer,
 	game: gameReducer,
 });
 
