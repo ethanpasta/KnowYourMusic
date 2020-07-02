@@ -54,7 +54,6 @@ const BackgroundSVG = () => {
 			right="0"
 			margin="0"
 			padding="0"
-			zIndex="-1"
 		>
 			<svg viewBox={`0 0 800 ${svgHeight}`} className="svg" preserveAspectRatio="none">
 				<defs>

@@ -26,7 +26,8 @@ const playlistsSlice = createSlice({
 		},
 		[fetchPlaylistsData.rejected]: (state, action) => {
 			if (state.loading) {
-				return { ...state, loading: false, error: action.error };
+				// TODO: Error handling
+				return { ...state, loading: true, error: action.error };
 			}
 		},
 	},
