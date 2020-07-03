@@ -1,6 +1,6 @@
 const SpotifyWebApi = require("spotify-web-api-node");
-const { CREDENTIALS } = require("../utils/constants");
-const { sanitizeSongTitle, checkIfMostlyEnglish } = require("../utils").helperFuncs;
+const { CREDENTIALS } = require("../../utils/constants");
+const { sanitizeSongTitle, checkIfMostlyEnglish } = require("../../utils").helperFuncs;
 
 /**
  * --- Spotify API Service ---

@@ -1,6 +1,5 @@
 const querystring = require("query-string");
-const userMap = require("../services/userMap");
-const UserAuthHandler = require("../services/userAuthHandler");
+const { userSessionMap, UserAuthHandler } = require("../services/userService");
 const { pino } = require("../utils").logger;
 const { generateRandomString } = require("../utils").helperFuncs;
 const { CREDENTIALS, SCOPES, MY_API } = require("../utils").constants;
@@ -21,7 +20,7 @@ const login = (_, res) => {
 };
 
 const logout = (req, res) => {
-	userMap.deleteUser(req.session.user);
+	userSessionMap.deleteUser(req.session.user);
 	req.session.destroy(err => {
 		if (err) {
 			pino.error("Logout failed: " + err);

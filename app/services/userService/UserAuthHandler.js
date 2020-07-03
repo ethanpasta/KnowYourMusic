@@ -1,7 +1,7 @@
 const UserSpotifyAPI = require("./UserSpotifyAPI");
-const userMap = require("./userMap");
-const { User, Song } = require("../models");
-const { pino } = require("../utils").logger;
+const sessionManager = require("./sessionMap/userSessionManager");
+const { User, Song } = require("../../models");
+const { pino } = require("../../utils").logger;
 
 /**
  * Class handles user after he logs in with Spotify. Handles two possibilites:
@@ -24,7 +24,7 @@ class UserAuthHandler {
 		this.display_name = user["display_name"];
 
 		// Add user and spotify api to userMap
-		userMap.addUser(username, this.api);
+		sessionManager.addUser(username, this.api);
 
 		// Check if this user already exists
 

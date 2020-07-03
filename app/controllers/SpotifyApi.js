@@ -1,5 +1,5 @@
 const { pino } = require("../utils").logger;
-const gameManager = require("../services/game");
+const gameManager = require("../services/gameService");
 
 // Function returns Spotify account information
 async function getMe(req, res) {

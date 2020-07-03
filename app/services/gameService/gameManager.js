@@ -14,7 +14,6 @@ class GameManager {
 		Object.keys(this.gameData.clientData).length === 0 &&
 			(await this.gameData.prepAndGetData());
 		pino.info(">> Emitting game ready event");
-		console.log(this.socket);
 		this.emitStart();
 		this.listen();
 	}

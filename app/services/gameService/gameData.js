@@ -1,5 +1,5 @@
 const { User, Song } = require("../../models");
-const lyricManager = require("../lyrics");
+const lyricManager = require("../lyricsService");
 const { pino } = require("../../utils").logger;
 const { OPTIONS_PER_LEVEL, NUM_OF_LEVELS } = require("../../utils").constants;
 const { listRange } = require("../../utils").helperFuncs;
