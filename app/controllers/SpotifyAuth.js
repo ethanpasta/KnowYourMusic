@@ -21,7 +21,7 @@ const login = (_, res) => {
 };
 
 const logout = (req, res) => {
-	delete userMap[req.session.user];
+	userMap.deleteUser(req.session.user);
 	req.session.destroy(err => {
 		if (err) {
 			pino.error("Logout failed: " + err);

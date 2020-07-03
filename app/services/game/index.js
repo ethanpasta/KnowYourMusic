@@ -9,9 +9,12 @@ class GameManager {
 	}
 
 	async start() {
-		pino.info(">> Prepping game data..");
-		await this.gameData.prepAndGetData();
+		pino.info(">> Starting game..");
+		// Only prep data if new game
+		Object.keys(this.gameData.clientData).length === 0 &&
+			(await this.gameData.prepAndGetData());
 		pino.info(">> Emitting game ready event");
+		console.log(this.socket);
 		this.emitStart();
 		this.listen();
 	}
@@ -28,11 +31,6 @@ class GameManager {
 			pino.info(`>> Level #${level} - ${correctOption ? "correct" : "wrong"} answer!`);
 			this.socket.emit("response", correctOption);
 		});
-	}
-
-	deleteSocket() {
-		this.socket.disconnect();
-		this.socket = undefined;
 	}
 }
 

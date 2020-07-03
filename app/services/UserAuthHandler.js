@@ -23,8 +23,8 @@ class UserAuthHandler {
 		this.username = username;
 		this.display_name = user["display_name"];
 
-		// Add users' Spotify api to the map
-		userMap[username] = { api: this.api };
+		// Add user and spotify api to userMap
+		userMap.addUser(username, this.api);
 
 		// Check if this user already exists
 
