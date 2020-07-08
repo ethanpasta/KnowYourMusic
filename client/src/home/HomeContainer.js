@@ -4,7 +4,7 @@ import { listenForData, connectSocket, disconnectSocket } from "../game/gameSlic
 import { fetchPlaylistsData, fetchUserAccount } from "./homeSlice";
 
 const mapStateToProps = state => {
-	const { user, playlists, game } = state;
+	const { user, playlists } = state;
 	return {
 		state: {
 			user: {
@@ -13,7 +13,6 @@ const mapStateToProps = state => {
 				name: user.loggedIn ? user.profile.display_name.split(" ")[0] : undefined,
 			},
 			playlists,
-			gameLoading: game.loading,
 		},
 	};
 };

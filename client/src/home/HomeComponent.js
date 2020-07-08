@@ -13,7 +13,7 @@ const HomeComponent = ({ state, ...actions }) => {
 	useEffect(() => {
 		if (!state.user.loading && state.user.loggedIn == true) {
 			actions.connectSocket();
-			/* listenForData(); */
+			actions.listenForData();
 		}
 	}, [state.user.loggedIn]);
 	return (
@@ -27,11 +27,7 @@ const HomeComponent = ({ state, ...actions }) => {
 					justifyContent="center"
 					name={state.user.name}
 				/>
-				<MainContent
-					user={state.user}
-					playlists={state.playlists}
-					gameLoading={state.gameLoading}
-				/>
+				<MainContent user={state.user} playlists={state.playlists} />
 			</Box>
 		</Box>
 	);

@@ -11,6 +11,11 @@ class GameData {
 		this.answers = {};
 		// Object stores game data to send to client
 		this.clientData = {};
+		// Object stores users answers and score
+		this.userProgress = {
+			score: 0,
+			levels: {},
+		};
 	}
 
 	// Function preps and returns the game data object
@@ -43,9 +48,9 @@ class GameData {
 			restOptions = listRange(OPTIONS_PER_LEVEL);
 			// Randomize a number from number of options, and remove and return it from list
 			correctOption = restOptions.splice(
-				restOptions.indexOf(Math.floor(Math.random() * OPTIONS_PER_LEVEL) + 1),
+				restOptions.indexOf(Math.floor(Math.random() * OPTIONS_PER_LEVEL)),
 				1
-			);
+			)[0];
 			this.clientData[level] = {
 				line: randomLine(swithl[level - 1] ? swithl[level - 1].lyrics : []),
 				options: {},
@@ -105,6 +110,18 @@ class GameData {
 			title: obj.title,
 			artist: obj.artist,
 		};
+	}
+
+	handleUserChoice(level, chosenOption) {
+		console.log(`Handling level ${level}, chosen option ${chosenOption}`);
+		if (level in this.userProgress.levels) {
+			console.log("Level already existed..");
+			return;
+		}
+		const levelPassed = this.answers[level] == chosenOption;
+		this.userProgress.score += levelPassed;
+		this.userProgress.levels[level] = levelPassed;
+		return { levelPassed, ...(levelPassed ? {} : { correctOption: this.answers[level] }) };
 	}
 }
 

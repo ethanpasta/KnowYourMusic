@@ -9,12 +9,12 @@ import Logo from "../shared/Logo";
 
 const NavbarComponent = ({ navRoutes, userRoutes, user, ...props }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [gameStyle, setGameStyle] = useState(false);
+	const [regStyle, setRegStyle] = useState(false);
 	useEffect(() => {
 		if (props.location.pathname.includes("game")) {
-			setGameStyle(true);
+			setRegStyle(true);
 		} else {
-			setGameStyle(false);
+			setRegStyle(false);
 		}
 	}, [props.location.pathname]);
 	return (
@@ -32,7 +32,7 @@ const NavbarComponent = ({ navRoutes, userRoutes, user, ...props }) => {
 			}}
 			transition="all 0.2s ease"
 		>
-			<Logo />
+			<Logo small={regStyle} />
 			<HamburgerMenu open={onOpen} color="ghostWhite" />
 			<MobileNavbar
 				isOpen={isOpen}

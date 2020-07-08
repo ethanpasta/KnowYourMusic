@@ -1,14 +1,24 @@
+const { pino } = require("../../utils").logger;
+
 class GameCommunication {
-	constructor(socket, answers) {
+	constructor(socket) {
 		this.socket = socket;
 	}
 
 	signalStart(data) {
-		this.socket.emit("gameReady", data);
+		pino.info(">> Emitting game ready event");
+
+		this.socket.emit("game_ready", data);
 	}
 
-	listen() {
-		this.socket.on("submit", data => {});
+	listenForAnswers(callback) {
+		this.socket.on("submit_level", data => {
+			callback(data);
+		});
+	}
+
+	signalLevelAnswer(answer) {
+		this.socket.emit("level_response", answer);
 	}
 }
 
