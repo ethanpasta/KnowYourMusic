@@ -39,6 +39,7 @@
 		"express": "^4.17.1",
 		"express-session": "^1.17.1",
 		"genius-lyrics-api": "^2.0.3",
+		"human-readable-ids": "^1.0.4",
 		"mongoose": "^5.9.13",
 		"mongoose-unique-validator": "^2.0.3",
 		"node-fetch": "^2.6.0",
