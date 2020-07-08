@@ -1,11 +1,9 @@
 const express = require("express");
-const apiController = require("../controllers/SpotifyApi");
+const apiController = require("../controllers/apiController");
 const middleware = require("./apiMiddleware");
 const api = express.Router();
 
 api.get("/user/me", middleware, apiController.getMe);
-api.get("/user/songs", middleware, apiController.getSongs);
-api.get("/user/start", middleware, apiController.startGame);
 api.get("/playlists", apiController.getPlaylists);
 
 module.exports = api;
