@@ -15,7 +15,7 @@ const App = () => {
 				<NavbarContainer navRoutes={NAV_ROUTES} userRoutes={USER_NAV_ROUTES} />
 				<Switch>
 					<Route path="/" component={HomeContainer} exact />
-					<Route path="/game" component={Game} />
+					<Route path="/game/:id" component={Game} />
 					<Route path="/results/:id" component={null} />
 				</Switch>
 			</Router>
