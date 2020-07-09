@@ -1,10 +1,14 @@
 const UserOperations = require("./userOperations");
 
+/**
+ * Module handles mapping betweem user session and their instances
+ */
 class UserMapManager {
 	constructor() {
 		this.userMap = {};
 	}
 
+	// Function adds new user to the map (with or without api instance)
 	addUser(username, api) {
 		const user = new UserOperations(username);
 		this.userMap[username] = user;

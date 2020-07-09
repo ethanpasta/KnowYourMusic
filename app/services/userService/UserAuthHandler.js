@@ -4,7 +4,7 @@ const { User, Song } = require("../../models");
 const { pino } = require("../../utils").logger;
 
 /**
- * Class handles user after he logs in with Spotify. Handles two possibilites:
+ * Module handles user after he logs in with Spotify. Handles two possibilites:
  *  - User is new, and we add him to the system
  *  - User exists and is logging in from a new device (therefore his session doesn't exist), we retrieve his existing
  * information.
@@ -27,7 +27,6 @@ class UserAuthHandler {
 		sessionManager.addUser(username, this.api);
 
 		// Check if this user already exists
-
 		const exists = await this.checkUserExists(username);
 		if (!exists) {
 			pino.info(`New user '${username}', adding him to the system.`);

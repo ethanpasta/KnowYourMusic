@@ -2,7 +2,7 @@ const { Song } = require("../../models");
 const { pino } = require("../../utils").logger;
 
 /**
- * LyricManager - class manages all interactions with lyrics:
+ * Module manages all interactions with lyrics
  * - add lyrics of a song ID to the DB
  * - find lyrics of a song ID in the DB
  * - get lyrics for a song by its ID, title and artist:
@@ -13,7 +13,7 @@ const { pino } = require("../../utils").logger;
 
 class LyricManager {
 	constructor() {
-		this.scrapers = require("./scrapers");
+		this.scraper = require("./scrapers");
 	}
 
 	// Finding lyrics (if exists) of a song from DB
@@ -38,14 +38,14 @@ class LyricManager {
 			pino.info(`Found lyrics in DB for ${title} - ${artist}`);
 			return lyrics;
 		}
-		lyrics = await this.scrapers.findLyrics(title, artist);
+		lyrics = await this.scraper.findLyrics(title, artist);
 		if (!lyrics) {
 			pino.warn(`No lyrics for ${title} - ${artist}. Updating song as broken in DB`);
 			await LyricManager.updateSongAsBroken(_id);
 			return;
 		}
 		await LyricManager.addLyricsToDB(_id, lyrics);
-		pino.info(`Found lyrics in scrapers for ${title} - ${artist}`);
+		pino.info(`Found lyrics in scraper for ${title} - ${artist}`);
 		return lyrics;
 	}
 }

@@ -1,3 +1,6 @@
+/**
+ * Module handles single instance of a user in the session mapper
+ */
 class UserOperations {
 	constructor(id) {
 		this.id = id;

@@ -1,6 +1,6 @@
 const { pino } = require("../utils").logger;
 
-// Function returns Spotify account information
+// Function returns account information
 async function getMe(req, res) {
 	try {
 		const me = await req.api.getMe();
@@ -15,6 +15,7 @@ async function getMe(req, res) {
 	}
 }
 
+// Function gets current playlists and sends them (TODO)
 function getPlaylists(req, res) {
 	const playlists = {
 		"Wake Up Gently": "https://i.scdn.co/image/ab67706f0000000286de24710c7230fcb6e08c13",

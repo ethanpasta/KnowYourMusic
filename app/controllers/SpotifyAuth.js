@@ -4,6 +4,9 @@ const { pino } = require("../utils").logger;
 const { generateRandomString } = require("../utils").helperFuncs;
 const { CREDENTIALS, SCOPES, MY_API } = require("../utils").constants;
 
+/* Module hands user authorization with Spotify */
+
+// Function handles user login and redirects to spotify authorization
 const login = (_, res) => {
 	const state = generateRandomString(16);
 	const authURL = querystring.stringifyUrl({
@@ -19,6 +22,7 @@ const login = (_, res) => {
 	res.cookie("spotify_auth_state", state).redirect(authURL);
 };
 
+// Function handles user logout
 const logout = (req, res) => {
 	userSessionMap.deleteUser(req.session.user);
 	req.session.destroy(err => {
@@ -29,6 +33,7 @@ const logout = (req, res) => {
 	});
 };
 
+// Function handles redirection after user accepts/declines Spotify authorization
 const callback = async (req, res) => {
 	const { code, state, error } = req.query,
 		origState = req.cookies["spotify_auth_state"];
@@ -47,6 +52,7 @@ const callback = async (req, res) => {
 		return;
 	}
 	try {
+		// Get Spotify token
 		const data = await MY_API.authorizationCodeGrant(code);
 		const access_token = data.body["access_token"],
 			refresh_token = data.body["refresh_token"];
