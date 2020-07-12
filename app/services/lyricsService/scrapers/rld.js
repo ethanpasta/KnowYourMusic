@@ -1,7 +1,8 @@
-// "rld" stands for "Random Lyric Dude" - as this api was made by a random lyric dudes' api 🤓
+// "rld" stands for "Random Lyric Dude" - as this api was made by a random dude's api 🤓
 const fetch = require("node-fetch");
 const URL = require("url").URL;
 
+/** Class handles lyric scraping with api.canarado.xyz */
 class lyricsCanarado {
 	constructor() {
 		this.baseURL = "https://api.canarado.xyz/lyrics";

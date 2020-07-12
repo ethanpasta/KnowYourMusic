@@ -1,49 +1,45 @@
 const { Song } = require("../../models");
 const { pino } = require("../../utils").logger;
 
-/**
- * Module manages all interactions with lyrics
- * - add lyrics of a song ID to the DB
- * - find lyrics of a song ID in the DB
- * - get lyrics for a song by its ID, title and artist:
- *     1. return lyrics if found in DB,
- *     2. if not find lyrics from scrapers and add them to DB,
- *     3. if can't find them in scrapers update song as "no lyrics song"
- */
-
+/** Class manages all interactions with lyrics */
 class LyricManager {
+	/** Create a LyricManager instance */
 	constructor() {
 		this.scraper = require("./scrapers");
 	}
 
-	// Finding lyrics (if exists) of a song from DB
 	static findLyricsInDB(id) {
 		return Song.findLyricsIfExists(id);
 	}
 
-	// Add lyrics to an existing song in the DB
 	static addLyricsToDB(id, lyrics) {
 		return Song.addLyricsToSong(id, lyrics);
 	}
 
-	// If lyrics couln't be found anywhere for a certain song, update it in the DB
 	static updateSongAsBroken(id) {
 		return Song.updateNoLyrics(id);
 	}
 
-	// Find lyrics for a song
+	/**
+	 * Find lyrics for a song
+	 * @return {Object} lyrics if they were found, or undefinded
+	 */
 	async getLyricsAndHandle({ _id, title, artist }) {
+		// Search first in DB
 		let lyrics = await LyricManager.findLyricsInDB(_id);
 		if (lyrics) {
 			pino.info(`Found lyrics in DB for ${title} - ${artist}`);
 			return lyrics;
 		}
+		// If not found in DB, find in scrapers
 		lyrics = await this.scraper.findLyrics(title, artist);
 		if (!lyrics) {
 			pino.warn(`No lyrics for ${title} - ${artist}. Updating song as broken in DB`);
+			// If not found in scrapers, update song as broken
 			await LyricManager.updateSongAsBroken(_id);
 			return;
 		}
+		// Update song with its new lyrics
 		await LyricManager.addLyricsToDB(_id, lyrics);
 		pino.info(`Found lyrics in scraper for ${title} - ${artist}`);
 		return lyrics;

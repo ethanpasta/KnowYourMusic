@@ -1,4 +1,4 @@
-const { UserSpotifyAPI, userSessionMap } = require("../services/userService");
+const { UserSpotifyAPI, sessionMap } = require("../services/userService");
 const { User } = require("../models");
 const { pino } = require("../utils").logger;
 
@@ -29,8 +29,8 @@ const sessionAttach = (req, res, next) => {
 		return next();
 	}
 	// If user exists in userMap
-	if (userSessionMap.checkUserExists(req.session.user)) {
-		req.api = userSessionMap.getUser(req.session.user).getSpotifyAPI();
+	if (sessionMap.checkUserExists(req.session.user)) {
+		req.api = sessionMap.getUser(req.session.user).getSpotifyAPI();
 		return next();
 	}
 	pino.info(`Session for ${req.session.user} wasn't in UserMap. Adding it.`);
@@ -39,7 +39,7 @@ const sessionAttach = (req, res, next) => {
 			if (!user) return next(new Error("Couldn't find user"));
 			const userApi = new UserSpotifyAPI(user.access_token, user.refresh_token);
 			userApi.lastRefresh = user.last_refresh_update;
-			req.api = userSessionMap.addUser(req.session.user, userApi);
+			req.api = sessionMap.addUser(req.session.user, userApi);
 			return next();
 		})
 		.catch(err => {

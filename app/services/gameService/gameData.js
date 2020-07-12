@@ -4,6 +4,7 @@ const { pino } = require("../../utils").logger;
 const { OPTIONS_PER_LEVEL, NUM_OF_LEVELS } = require("../../utils").constants;
 const { listRange } = require("../../utils").helperFuncs;
 
+/** Class handles and manage all data for a single instance of a game */
 class GameData {
 	constructor(username) {
 		this.username = username;
@@ -18,7 +19,10 @@ class GameData {
 		};
 	}
 
-	// Function preps and returns the game data object
+	/**
+	 * Prepare and return the game data object
+	 * @return {Object} The game object returning to the client
+	 */
 	async prepAndGetData() {
 		// Number of options (per number of levels and options per level) that aren't correct
 		const numWrongOptions = OPTIONS_PER_LEVEL * NUM_OF_LEVELS - NUM_OF_LEVELS;
@@ -32,7 +36,7 @@ class GameData {
 	}
 
 	/**
-	 * Function builds both game data objects - one for answers and one sent to the client.
+	 * Builds both game data objects - one for answers and one sent to the client.
 	 * In order to maximize the unpredictability of the game, a random option is chosen each level
 	 * to be the "correct" answer. This way the user has no possibility of knowing which option is the correct one.
 	 * @param {List} swithl "songs with lyrics" - a list of songs with lyrics for the "correct" options
@@ -69,7 +73,9 @@ class GameData {
 		}
 	}
 
-	// A recursive function that returns a list of {numSongs} song objects with lyrics
+	/**
+	 * Builds a list of song objects with their lyrics, using a recursive approach until a maximum of {numSongs} are found
+	 */
 	async getAllLyrics(numSongs, totalLyrics = [], exclude = []) {
 		let songs = await this.getSongDocs(numSongs, exclude, true);
 		// Concurrently try to find lyrics of all the songs returned

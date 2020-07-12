@@ -1,5 +1,6 @@
 const { pino } = require("../../utils").logger;
 
+/** Class handles all communication with the client through a socket */
 class GameCommunication {
 	constructor(socket) {
 		this.socket = socket;
@@ -7,7 +8,6 @@ class GameCommunication {
 
 	signalStart(data) {
 		pino.info(">> Emitting game ready event");
-
 		this.socket.emit("game_ready", data);
 	}
 

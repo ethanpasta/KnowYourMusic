@@ -1,9 +1,9 @@
-const userSessionMap = require("./sessionMap/userSessionManager");
-const UserAuthHandler = require("./UserAuthHandler");
-const UserSpotifyAPI = require("./UserSpotifyAPI");
+const sessionMap = require("./sessionMap/sessionMap");
+const UserAuthHandler = require("./userAuthHandler");
+const UserSpotifyAPI = require("./userSpotifyApi");
 
 module.exports = {
-	userSessionMap,
+	sessionMap,
 	UserAuthHandler,
 	UserSpotifyAPI,
 };

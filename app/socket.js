@@ -1,4 +1,4 @@
-const { userSessionMap } = require("./services/userService");
+const { sessionMap } = require("./services/userService");
 const { pino } = require("./utils").logger;
 const GameManager = require("./services/gameService");
 
@@ -7,7 +7,7 @@ function socketInit(sio) {
 		let user =
 			socket.request.session &&
 			socket.request.session.user &&
-			userSessionMap.getUser(socket.request.session.user);
+			sessionMap.getUser(socket.request.session.user);
 		if (!user) {
 			pino.error(">> SOCKET_ERROR: no user session exists");
 			return;

@@ -80,10 +80,8 @@ const Level = ({ line, options, onClick }) => {
 };
 
 const Game = ({ state, ...actions }) => {
-	console.log(`progress: ${JSON.stringify(state.progress)}`);
 	const [level, setLevel] = useState();
 	const [loading, setLoading] = useState(true);
-	console.log(`loading: ${loading}, level ${level}`);
 	const handleLevelChange = level => {
 		actions.updateLevel(level);
 		setLevel(level);

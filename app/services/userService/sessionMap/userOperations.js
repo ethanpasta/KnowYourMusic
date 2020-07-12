@@ -1,7 +1,9 @@
-/**
- * Module handles single instance of a user in the session mapper
- */
+/** Class handles single instance of a user in the session mapper */
 class UserOperations {
+	/**
+	 * Create a UserOperations instance
+	 * @param {string} id - key of the session in the map
+	 */
 	constructor(id) {
 		this.id = id;
 	}
