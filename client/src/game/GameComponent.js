@@ -1,88 +1,96 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Box, Button, Heading, SimpleGrid, Spinner } from "@chakra-ui/core";
+import React, { useState, useEffect } from "react";
+import { Box, Spinner } from "@chakra-ui/core";
 import { Redirect } from "react-router-dom";
+import Level from "./components/Level";
 
-/* const data = {
-	1: {
-		line: "And she'll do anything for the limelight",
+const DATA = {
+	"1": {
+		line: "It won't be 'cause my shit ain't sellin' the same",
 		options: {
-			"0": { id: "0GxQ1A5L9xnMOytbP6eKBG", title: "What Lovers Do", artist: "Maroon 5" },
-			"1": { id: "1RG8MABX0VciDk6WYb8pBv", title: "This Afternoon", artist: "Nickelback" },
-			"2": { id: "1SfoXU9q0EZtlgSLlrYBju", title: "Chains", artist: "Nick Jonas" },
-			"3": { id: "6C7RJEIUDqKkJRZVWdkfkH", title: "Stronger", artist: "Kanye West" },
+			"0": { id: "2JvzF1RMd7lE3KmFlsyZD8", title: "MIDDLE CHILD", artist: "J. Cole" },
+			"1": { id: "007PPvZtGDYHSEhYPxqIfC", title: "Been A While", artist: "6LACK" },
+			"2": { id: "0fYVliAYKHuPmECRs1pbRf", title: "Renegades", artist: "X Ambassadors" },
+			"3": { id: "10KQrsptNFQ0rwr7rHYjeu", title: "GFY", artist: "Dennis Lloyd" },
 		},
 	},
-	2: {
-		line: "You'll always be alone",
+	"2": {
+		line: "Blessed to say, money ain't a thing",
+		options: {
+			"0": { id: "1LIAdfyn3dtGOyD30Rd5lG", title: "ocean eyes", artist: "Billie Eilish" },
+			"1": {
+				id: "1moShKo1RrxZ8PCrhSIf8Q",
+				title: "Night Running",
+				artist: "Cage The Elephant",
+			},
+			"2": { id: "3cHyrEgdyYRjgJKSOiOtcS", title: "Timber", artist: "Pitbull" },
+			"3": {
+				id: "2PC9Tl8SWVO2yhDDtJcrAi",
+				title: "Setting Fires",
+				artist: "The Chainsmokers",
+			},
+		},
+	},
+	"3": {
+		line: "And I still don't know",
 		options: {
 			"0": {
-				id: "1rqqCSm0Qe4I9rUvWncaom",
-				title: "High Hopes",
-				artist: "Panic! At The Disco",
+				id: "52ojopYMUzeNcudsoz7O9D",
+				title: "New Person, Same Old Mistakes",
+				artist: "Tame Impala",
 			},
-			"1": { id: "6XXYdF6pJR1K3wKvuxmu7n", title: "Feel Me", artist: "Selena Gomez" },
-			"2": { id: "2gQaQUhDCNGfBVXTvxAmXQ", title: "Shout", artist: "Tears For Fears" },
-			"3": { id: "3G9zeErd0kMx012kmYUrm7", title: "Lose My Cool", artist: "Amber Mark" },
+			"1": { id: "2YyvWje3cEYyqgYhNUIaBJ", title: "La Di Da", artist: "Lennon Stella" },
+			"2": { id: "3n69hLUdIsSa1WlRmjMZlW", title: "Breezeblocks", artist: "alt-J" },
+			"3": { id: "4HUqrGAZ5f0gHRor7z9BFc", title: "Black Eyes", artist: "Bradley Cooper" },
 		},
 	},
-	3: {
-		line: "Happy you were mine, it sucks that it's all ending",
+	"4": {
+		line: "Voice in my head, in my bed, filled with you instead",
 		options: {
-			"0": { id: "4AOpEhqA7zHxQjkHmRrAp7", title: "This Girl", artist: "Kungs" },
-			"1": { id: "4YK3zrLBWbsb8lVHVFy0sX", title: "Find Someone", artist: "A R I Z O N A" },
-			"2": { id: "5GoWczqfKJr4kBO93ClKa2", title: "Aura", artist: "Dennis Lloyd" },
-			"3": { id: "7HnkUNPrhRurdGEm9nRYFH", title: "Death & Taxes", artist: "Daniel Caesar" },
-		},
-	},
-	4: {
-		line: "And I can see it in your eyes, yeah",
-		options: {
-			"0": {
-				id: "5nPdMALTEd7HOjn16oNf2X",
-				title: "Don't Go Breaking My Heart",
-				artist: "Elton John",
+			"0": { id: "59QmjU5K8XQTfj9JjFNb4Z", title: "ili", artist: "TroyBoi" },
+			"1": {
+				id: "5SxkdsY1ufZzoq9iXceLw9",
+				title: "no tears left to cry",
+				artist: "Ariana Grande",
 			},
-			"1": { id: "5px6upUHM3fhOP621Edp4V", title: "Physical", artist: "Dua Lipa" },
-			"2": { id: "64pOFadkuzz5H6T6tvEPGg", title: "Using", artist: "RITUAL" },
-			"3": { id: "14BPKhtTkVVTwSfWslRJW9", title: "Gimme", artist: "BANKS" },
+			"2": { id: "5efvxYn0J1q8iuIZBqpDD7", title: "Lowlife", artist: "That Poppy" },
+			"3": { id: "6WMkilBgcSoPX8Ypt6XFUO", title: "Say It", artist: "Flume" },
 		},
 	},
-	5: {
-		line: "Ari a natus la-te adua",
+	"5": {
+		line: "Stepping in, 'bout to get it but you ever look hot",
 		options: {
 			"0": {
-				id: "66W1g0F87vJhqmgskGlw7F",
-				title: "Bitch, Don't Kill My Vibe",
-				artist: "Deluxe Trax",
+				id: "5lzp3WgXCd94gI7cQaQ9bQ",
+				title: "NEVER GONNA LIKE YOU",
+				artist: "Bea Miller",
 			},
-			"1": { id: "54CAG8n70kKVbFV6l1zF4G", title: "Adiemus", artist: "Karl Jenkins" },
-			"2": { id: "6ccXkAVQzTB4EQqGfyMM8Q", title: "Notice Me", artist: "Scotty Sire" },
-			"3": { id: "7cZbVLrtLIFDWh5YpRBS9M", title: "moodz", artist: "blackbear" },
+			"1": { id: "6y68QK2SwC38YxsbxHrA8I", title: "Mad Love", artist: "Sean Paul" },
+			"2": { id: "6VRhkROS2SZHGlp0pxndbJ", title: "Bangarang", artist: "Skrillex" },
+			"3": { id: "6mUvUHu6omMJPKwW4g5DR9", title: "B-A-B-Y", artist: "Carla Thomas" },
 		},
 	},
-}; */
-
-const Level = ({ line, options, onClick }) => {
-	return (
-		<>
-			<Heading size="xl">{line}</Heading>
-			<SimpleGrid columns={2} spacing={10}>
-				{options.map((option, i) => (
-					<Box key={i} textAlign="center">
-						<Button value={i} onClick={onClick}>
-							{option.title} - {option.artist}
-						</Button>
-					</Box>
-				))}
-			</SimpleGrid>
-		</>
-	);
 };
+
+const Loading = () => (
+	<Spinner
+		pos="absolute"
+		top="50%"
+		left="50%"
+		thickness="4px"
+		speed="0.65s"
+		emptyColor="gray.200"
+		color="blue.500"
+		size="xl"
+	/>
+);
 
 const Game = ({ state, ...actions }) => {
 	const [level, setLevel] = useState();
 	const [loading, setLoading] = useState(true);
 	const handleLevelChange = level => {
+		if (level >= Object.keys(state.data).length) {
+			level = 1;
+		}
 		actions.updateLevel(level);
 		setLevel(level);
 	};
@@ -94,48 +102,35 @@ const Game = ({ state, ...actions }) => {
 		return () => clearTimeout(time);
 	}, []);
 	useEffect(() => {
+		console.log(`USE-EFFECT: Level changing to ${level}`);
 		const interval = setInterval(() => handleLevelChange(level + 1), 10000);
 		return () => clearInterval(interval);
 	}, [level]);
-	const handleOptionClick = e => {
-		const option = e.target.value;
-		actions.signalChoice(option, level);
-		actions.listenForLevelResponse();
-	};
 	if (!state.data || (typeof state.data == "object" && Object.keys(state.data).length == 0)) {
 		console.log("Redirecintg");
 		return <Redirect to="/" />;
 	}
 	if (loading) {
-		return (
-			<Spinner
-				pos="absolute"
-				top="50%"
-				left="50%"
-				thickness="4px"
-				speed="0.65s"
-				emptyColor="gray.200"
-				color="blue.500"
-				size="xl"
-			/>
-		);
+		return <Loading />;
 	}
-	console.log(`loading: ${loading}, data: ${JSON.stringify(state.data)}`);
 	return (
 		<Box
 			className="game-body"
 			flexGrow="2"
 			d="flex"
 			flexDirection="column"
-			justifyContent="space-evenly"
 			h="full"
 			w="full"
 			alignItems="center"
 		>
 			<Level
-				onClick={handleOptionClick}
+				levelNumber={level}
 				line={state.data[level].line}
 				options={Object.values(state.data[level].options)}
+				signalChoice={actions.signalChoice}
+				listenForLevelResponse={actions.listenForLevelResponse}
+				loading={state.progress.loading}
+				passed={state.progress.gameProgress && state.progress.gameProgress[level]}
 			/>
 		</Box>
 	);
