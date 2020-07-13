@@ -1,14 +1,13 @@
-$shadow: 0.05em 0.05em;
+$shadow: 0.06em 0.06em;
 
 .logoText {
 	cursor: pointer;
-	color: white;
+	color: rgb(106, 188, 184);
 	transition: all 0.4s ease-in;
 }
 
 .animate {
-	text-shadow: $shadow #e8b71d;
-	animation: textBorder 10s linear infinite;
+	animation: textBorder 5s linear infinite;
 	animation-direction: alternate;
 	transition: all 0.4s ease-in;
 }
@@ -20,32 +19,19 @@ $shadow: 0.05em 0.05em;
 
 @keyframes textBorder {
 	0% {
-		color: #f60000;
-		text-shadow: $shadow #ffee00;
+		text-shadow: $shadow #efbbff;
 	}
-	16% {
-		color: #ff8c00;
-		text-shadow: $shadow #4de94c;
+	25% {
+		text-shadow: $shadow #d896ff;
 	}
-	33% {
-		color: #ffee00;
-		text-shadow: $shadow #3783ff;
+	50% {
+		text-shadow: $shadow #be29ec;
 	}
-	49% {
-		color: #4de94c;
-		text-shadow: $shadow #4815aa;
-	}
-	65% {
-		color: #3783ff;
-		text-shadow: $shadow #9400d3;
-	}
-	82% {
-		color: #4815aa;
-		text-shadow: $shadow #f60000;
+	75% {
+		text-shadow: $shadow #800080;
 	}
 	100% {
-		color: #9400d3;
-		text-shadow: $shadow #ff8c00;
+		text-shadow: $shadow #660066;
 	}
 }
 
