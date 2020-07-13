@@ -14,7 +14,7 @@ const Logo = ({ small }) => {
 			position="fixed"
 			top={scrolled || small ? ".5rem" : "1rem"}
 			left="1rem"
-			className={`logoText${scrolled || small ? "" : " animate"}`}
+			className={`logoText${scrolled || small ? " smaller" : ""}`}
 			fontFamily="Spartan, sans-serif"
 			fontSize={{ base: "2.5rem", md: "3.5rem", lg: "3.5rem", xl: "4rem" }}
 			fontWeight="800"

@@ -4,12 +4,15 @@ $shadow: 0.06em 0.06em;
 	cursor: pointer;
 	color: rgb(106, 188, 184);
 	transition: all 0.4s ease-in;
-}
-
-.animate {
-	animation: textBorder 5s linear infinite;
+	animation: textBorder 3s linear infinite;
 	animation-direction: alternate;
 	transition: all 0.4s ease-in;
+}
+
+.smaller {
+	color: #660066;
+	animation: none;
+	text-shadow: none;
 }
 
 .logoText:hover {
@@ -19,15 +22,9 @@ $shadow: 0.06em 0.06em;
 
 @keyframes textBorder {
 	0% {
-		text-shadow: $shadow #efbbff;
-	}
-	25% {
-		text-shadow: $shadow #d896ff;
-	}
-	50% {
 		text-shadow: $shadow #be29ec;
 	}
-	75% {
+	50% {
 		text-shadow: $shadow #800080;
 	}
 	100% {
