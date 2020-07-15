@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
 import HomeComponent from "./HomeComponent";
-import { listenForData, connectSocket, disconnectSocket } from "../game/gameSlice";
-import { fetchPlaylistsData, fetchUserAccount } from "./homeSlice";
+import { listenForData, connectSocket, disconnectSocket } from "../services/socket/socketSlice";
+import { fetchPlaylistsData } from "./homeSlice/playlists";
+import { fetchUserAccount } from "./homeSlice/user";
 
 const mapStateToProps = state => {
-	const { user, playlists } = state;
+	const { user, playlists, socket } = state;
 	return {
 		state: {
 			user: {
@@ -13,6 +14,7 @@ const mapStateToProps = state => {
 				name: user.loggedIn ? user.profile.display_name.split(" ")[0] : undefined,
 			},
 			playlists,
+			socket,
 		},
 	};
 };

@@ -59,7 +59,6 @@ export default function reducer(state = initialState, action) {
 			};
 		case RECIEVE_LEVEL_RESPONSE:
 			if (action.payload.level != state.currLevel) {
-				console.log();
 				return {
 					...state,
 					loading: false,

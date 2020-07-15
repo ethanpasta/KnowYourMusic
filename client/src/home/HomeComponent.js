@@ -11,11 +11,11 @@ const HomeComponent = ({ state, ...actions }) => {
 		actions.fetchPlaylistsData();
 	}, []);
 	useEffect(() => {
-		if (!state.user.loading && state.user.loggedIn == true) {
-			actions.connectSocket();
-			actions.listenForData();
-		}
+		if (!state.user.loading && state.user.loggedIn == true) actions.connectSocket();
 	}, [state.user.loggedIn]);
+	useEffect(() => {
+		if (state.socket.connected) actions.listenForData();
+	}, [state.socket.connected]);
 	return (
 		<Box className="home-root">
 			<BackgroundSVG />
