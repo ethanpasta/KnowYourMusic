@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import { SOCKET_HOST as host } from "../constants";
+import { SOCKET_HOST as host } from "../../utils/constants";
 
 class socketAPI {
 	constructor() {
