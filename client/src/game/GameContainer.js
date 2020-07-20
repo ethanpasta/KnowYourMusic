@@ -1,21 +1,17 @@
 import { connect } from "react-redux";
 import GameComponent from "./GameComponent";
-import { signalChoice, listenForLevelResponse, updateLevel } from "./gameSlice";
+import { sendChoiceAndListen, updateLevel } from "./gameSlice";
 
 const mapStateToProps = state => {
 	const { game } = state;
 	return {
-		state: {
-			loading: game.data.loading,
-			data: game.data.gameData,
-			progress: game.progress,
-		},
+		data: game.data.gameData,
+		gameplay: game.play,
 	};
 };
 
 const mapDispatchToProps = {
-	signalChoice,
-	listenForLevelResponse,
+	sendChoiceAndListen,
 	updateLevel,
 };
 

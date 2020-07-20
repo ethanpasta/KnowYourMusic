@@ -1,4 +1,4 @@
-export { signalChoice, listenForLevelResponse, updateLevel } from "./progress";
-import progress from "./progress";
-
-export default progress;
+export { updateLevel } from "./progress";
+export { sendChoiceAndListen } from "../../services/socket/socketSlice";
+import gameplayReducer from "./progress";
+export default gameplayReducer;

@@ -1,19 +1,23 @@
-import React, { useState } from "react";
-import { Box, Heading, Grid, Flex, Button, Text, PseudoBox, Spinner } from "@chakra-ui/core";
+import React, { useState, useEffect } from "react";
+import { Heading, Grid, Flex } from "@chakra-ui/core";
+import Option from "./Option";
 
 const Level = ({
 	levelNumber,
 	line,
 	options,
-	signalChoice,
-	listenForLevelResponse,
+	sendChoiceAndListen,
 	loading,
 	passed,
+	handleClick,
 }) => {
 	console.log(`loading: ${loading} passed: ${JSON.stringify(passed)}`);
 	const [clicked, setClicked] = useState({
 		clicked: false,
 	});
+	useEffect(() => {
+		setClicked({ clicked: false });
+	}, [levelNumber]);
 	const getBackground = i => {
 		if (loading || !clicked.clicked || !passed) return "transparent";
 		if (i == passed.correctOption) return "green.400";
@@ -21,12 +25,13 @@ const Level = ({
 		return "transparent";
 	};
 	const handleOptionClick = i => {
+		if (clicked.clicked) return;
 		setClicked({
 			clicked: true,
 			option: i,
 		});
-		signalChoice(i, levelNumber);
-		listenForLevelResponse();
+		sendChoiceAndListen({ level: levelNumber, chosenOption: i });
+		handleClick();
 	};
 	return (
 		<>
@@ -43,35 +48,15 @@ const Level = ({
 					alignItems="center"
 				>
 					{options.map((option, i) => (
-						<Flex key={i} justify="center" align="center" minW="60%" h="60%">
-							<PseudoBox
-								as={Button}
-								cursor="pointer"
-								w="100%"
-								h="100%"
-								bg={getBackground(i)}
-								value={i}
-								onClick={() => handleOptionClick(i)}
-								d="flex"
-								justifyContent="center"
-								alignItems="center"
-								shadow="xl"
-								border="none"
-								transition="all 0.15s ease"
-								_hover={{ shadow: "2xl", transform: "translateY(-.1em)" }}
-							>
-								<Box fontSize="3xl">
-									{loading && clicked.option == i ? (
-										<Spinner size="lg" />
-									) : (
-										<>
-											<Text>{option.title}</Text>
-											<Text fontSize="lg">{option.artist}</Text>
-										</>
-									)}
-								</Box>
-							</PseudoBox>
-						</Flex>
+						<Option
+							key={i}
+							id={i}
+							text={option}
+							loading={loading}
+							clicked={clicked}
+							onClick={handleOptionClick}
+							getBackground={getBackground}
+						/>
 					))}
 				</Grid>
 			</Flex>

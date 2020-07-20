@@ -1,95 +1,98 @@
-const [CONNECT, CONNECT_SUCCESS, CONNECT_FAIL] = [
-	"socket/connect",
-	"socket/connect_success",
-	"socket/connect_fail",
-];
-const [DISCONNECT, DISCONNECT_SUCCESS, DISCONNECT_FAIL] = [
-	"socket/disconnect",
-	"socket/disconnect_success",
-	"socket/disconnect_fail",
-];
-const [LISTEN_GAMEDATA, LISTEN_GAMEDATA_SUCCESS, LISTEN_GAMEDATA_FAIL] = [
-	"game/listen_gamedata",
-	"game/listen_gamedata_success",
-	"game/listen_gamedata_fail",
-];
-const RECIEVE_GAMEDATA = "game/recieve_gamedata";
+import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
+import socketClient from "./socketClient";
 
-export function connectSocket() {
-	return {
-		type: "socket",
-		types: [CONNECT, CONNECT_SUCCESS, CONNECT_FAIL],
-		promise: socket => socket.connect(),
-	};
-}
+/** Redux thunk action - connect the socket */
+export const connectSocket = createAsyncThunk("socket/connect", async () => socketClient.connect());
 
-export function disconnectSocket() {
-	return {
-		type: "socket",
-		types: [DISCONNECT, DISCONNECT_SUCCESS, DISCONNECT_FAIL],
-		promise: socket => socket.disconnect(),
-	};
-}
+/** Redux thunk action - disconnect the socket*/
+export const disconnectSocket = createAsyncThunk("socket/disconnect", async () =>
+	socketClient.disconnect()
+);
 
-export function listenForData() {
-	return dispatch => {
-		const recieve = gameInfo => {
-			return dispatch({
-				type: RECIEVE_GAMEDATA,
-				payload: gameInfo,
+/** Socket reducer - handle all actions related to connections with socket */
+const socket = createSlice({
+	name: "socket",
+	initialState: {
+		connected: false,
+		loading: false,
+	},
+	reducers: {},
+	extraReducers: {
+		[connectSocket.pending]: state => {
+			state.loading = true;
+		},
+		[connectSocket.fulfilled]: state => {
+			state.loading = false;
+			state.connected = true;
+		},
+		[connectSocket.rejected]: (state, action) => {
+			state.loading = false;
+			state.error = action.error;
+		},
+		[disconnectSocket.fulfilled]: state => {
+			state.connected = false;
+		},
+	},
+});
+
+const recieveDataAction = createAction("game/receive_data");
+
+/** Redux thunk action - listen for data through the socket, and dispatch action when recieved */
+export const listenForData = createAsyncThunk("game/get_data", async (_, { dispatch }) => {
+	return socketClient.on("game_ready", data => {
+		dispatch(recieveDataAction(data));
+	});
+});
+
+/** game data reducer - handles all action related to game data */
+const gameData = createSlice({
+	name: "gameData",
+	initialState: {
+		loading: false,
+	},
+	reducers: {},
+	extraReducers: {
+		[recieveDataAction]: (state, action) => {
+			state.loading = false;
+			state.gameID = action.payload.id;
+			state.gameData = action.payload.data;
+		},
+		[listenForData.pending]: state => {
+			state.loading = true;
+		},
+		[listenForData.rejected]: (state, action) => {
+			state.loading = false;
+			state.error = action.error;
+		},
+	},
+});
+
+export const socketReducer = socket.reducer;
+export const gameDataReducer = gameData.reducer;
+
+export const recieveLevelResult = createAction("game/recieve_response");
+
+/** Redux thunk action - send the selected level choice on the socket, and listen for the response */
+export const sendChoiceAndListen = createAsyncThunk(
+	"game/send_choice",
+	async (user_choice, { getState, dispatch, rejectWithValue }) => {
+		try {
+			const { game } = getState();
+			if (game.play.currLevel != user_choice.level) return rejectWithValue("Level mismatch");
+			socketClient.emit("submit_level", user_choice);
+			return socketClient.on("level_response", level_result => {
+				if (
+					game.play.currLevel != user_choice.level ||
+					game.play.currLevel != level_result.level ||
+					user_choice.level != level_result.level ||
+					level_result.error
+				) {
+					return rejectWithValue(level_result.error || "Level mismatch");
+				}
+				dispatch(recieveLevelResult(level_result));
 			});
-		};
-		return dispatch({
-			type: "socket",
-			types: [LISTEN_GAMEDATA, LISTEN_GAMEDATA_SUCCESS, LISTEN_GAMEDATA_FAIL],
-			promise: socket => socket.on("game_ready", recieve),
-		});
-	};
-}
-
-export function connectReducer(state = { connected: false }, action) {
-	switch (action.type) {
-		case CONNECT_SUCCESS:
-			return {
-				...state,
-				loading: false,
-				connected: true,
-			};
-		case CONNECT_FAIL:
-			return {
-				...state,
-				loading: false,
-				connected: false,
-				error: action.error,
-			};
-
-		case DISCONNECT_FAIL:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
-			};
-		default:
-			return state;
+		} catch (e) {
+			return Promise.reject(e);
+		}
 	}
-}
-
-export function gameDataReducer(state = { loading: true }, action) {
-	switch (action.type) {
-		case LISTEN_GAMEDATA_FAIL:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
-			};
-		case RECIEVE_GAMEDATA:
-			return {
-				...state,
-				loading: false,
-				gameID: action.payload.id,
-				gameData: action.payload.data,
-			};
-		default:
-			return state;
-	}
-}
+);

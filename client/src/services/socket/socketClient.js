@@ -1,6 +1,9 @@
 import io from "socket.io-client";
 import { SOCKET_HOST as host } from "../../utils/constants";
 
+/** Class manages all communication over the socket.
+ * All actions are mimicked as regular requests using promises - they are resolved or rejected
+ */
 class socketAPI {
 	constructor() {
 		this.socket = undefined;
