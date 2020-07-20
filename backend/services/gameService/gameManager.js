@@ -36,9 +36,13 @@ class GameManager {
 	checkIfRight(selection) {
 		const { level, chosenOption } = selection;
 		const levelAnswer = this.gameData.handleUserChoice(level, chosenOption);
-		if (!levelAnswer) return;
-		console.log(levelAnswer);
-		pino.info(`>> Level #${level} - ${levelAnswer.levelPassed ? "right" : "wrong"} answer!`);
+		if (!levelAnswer) {
+			this.gameCommunication.signalLevelAnswer({
+				error: "Level already played",
+			});
+			return;
+		}
+		pino.info(`>> Level #${level} - ${levelAnswer.levelPassed ? "passed" : "failed"}!`);
 		this.gameCommunication.signalLevelAnswer({
 			level,
 			...levelAnswer,

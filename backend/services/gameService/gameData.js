@@ -119,9 +119,8 @@ class GameData {
 	}
 
 	handleUserChoice(level, chosenOption) {
-		console.log(`Handling level ${level}, chosen option ${chosenOption}`);
 		if (level in this.userProgress.levels) {
-			console.log("Level already existed..");
+			pino.warn("Level already played");
 			return;
 		}
 		const levelPassed = this.answers[level] == chosenOption;
