@@ -1,67 +1,95 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Box } from "@chakra-ui/core";
 import { Redirect } from "react-router-dom";
 import Level from "./components/Level";
 import Countdown from "./components/Countdown";
+import "./style.scss";
 
-const Game = ({ data, gameplay, ...actions }) => {
+const Game = ({ data, id, gameplay, ...actions }) => {
+	const [gameOver, setGameOver] = useState(false);
+	// State for current level
 	const [level, setLevel] = useState();
+	// State for a the game countdown
 	const [counter, setCounter] = useState(3);
-	const [levelDone, setLevelDone] = useState(false);
+	// General variable for all timer related functionalities
+	const timer = useRef();
+	const handleOptionClick = useCallback(
+		chosenOption => {
+			actions.sendChoiceAndListen({
+				level,
+				chosenOption,
+			});
+		},
+		[level]
+	);
+	// When level is completely done (after showing all animations), go to the next level
+	const handleLevelDone = useCallback(() => {
+		clearTimeout(timer.current);
+		timer.current = undefined;
+		levelChange(level + 1);
+	}, [level]);
 
+	/**
+	 * Handle level changes
+	 * Dispatch an action to update the level in the redux store,
+	 * update the level in the current component state,
+	 * and set a timer for 10 seconds to change to the next level
+	 */
 	const levelChange = level => {
-		if (level > Object.keys(data).length) {
-			level = 1;
+		console.log(`level is changing to ${level}`);
+		if (level > Object.keys(data || {}).length) {
+			setGameOver(true);
+			return;
 		}
-		actions.updateLevel(level);
 		setLevel(level);
-		setTimeout(() => levelChange(level + 1), 10000);
+		actions.updateLevel(level);
+		timer.current = setTimeout(() => {
+			actions.sendChoiceAndListen({ level });
+			timer.current = undefined;
+		}, 10000);
 	};
-	const handleClick = () => {
-		if (!gameplay.loading) {
-			setLevelDone(true);
-		}
-		gameplay.loading && setLevelDone(true);
-	};
+
+	// Show a 3, 2, 1 countdown
 	useEffect(() => {
-		console.log(`COUNTER ${counter}`);
+		if (!data || Object.keys(data || {}).length == 0) return;
 		if (counter > 0) {
 			setTimeout(() => setCounter(counter - 1), 1000);
 		} else {
-			console.log("Game Starting");
 			levelChange(1);
 		}
 	}, [counter]);
-
 	if (!data || Object.keys(data || {}).length == 0) {
 		console.log("No game data, redirecting");
 		return <Redirect to="/" />;
 	}
+	if (gameOver) {
+		return <Redirect to={`/results/${id}`} />;
+	}
 	if (level === undefined) {
-		console.log(`Still loading ${counter}, level ${level}`);
 		return <Countdown counter={counter} />;
 	} else {
-		console.log(`counter: ${counter}, level: ${level}`);
 		return (
-			<Box
-				className="game-body"
-				flexGrow="2"
-				d="flex"
-				flexDirection="column"
-				h="full"
-				w="full"
-				alignItems="center"
-			>
-				<Level
-					levelNumber={level}
-					line={data[level].line}
-					options={Object.values(data[level].options)}
-					sendChoiceAndListen={actions.sendChoiceAndListen}
-					loading={gameplay.loading}
-					passed={gameplay.gameProgress && gameplay.gameProgress[level]}
-					handleClick={handleClick}
-				/>
-			</Box>
+			<>
+				<div className="time-left" />
+				<Box
+					flexGrow="2"
+					d="flex"
+					flexDirection="column"
+					h="full"
+					w="full"
+					alignItems="center"
+				>
+					<Level
+						levelNumber={level}
+						line={data[level].line}
+						options={Object.values(data[level].options)}
+						loading={gameplay.loading}
+						results={gameplay.results[level]}
+						handleOptionClick={handleOptionClick}
+						handleLevelDone={handleLevelDone}
+					/>
+				</Box>
+			</>
 		);
 	}
 };

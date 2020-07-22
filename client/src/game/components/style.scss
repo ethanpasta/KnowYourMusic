@@ -1,0 +1,24 @@
+.progress-bar {
+	height: 20px;
+	width: 100%;
+	.in {
+		height: 100%;
+		background-color: purple;
+		animation: fill 10s linear 1;
+	}
+	.play {
+		animation-play-state: running;
+	}
+	.stop {
+		animation-play-state: paused;
+	}
+}
+
+@keyframes fill {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}

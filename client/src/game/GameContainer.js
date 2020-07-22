@@ -3,10 +3,14 @@ import GameComponent from "./GameComponent";
 import { sendChoiceAndListen, updateLevel } from "./gameSlice";
 
 const mapStateToProps = state => {
-	const { game } = state;
+	const {
+		data: { gameData: data, gameID: id },
+		play: gameplay,
+	} = state.game;
 	return {
-		data: game.data.gameData,
-		gameplay: game.play,
+		data,
+		gameplay,
+		id,
 	};
 };
 

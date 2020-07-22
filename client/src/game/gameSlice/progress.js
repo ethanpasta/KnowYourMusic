@@ -7,7 +7,7 @@ const gameplay = createSlice({
 		loading: false,
 		currLevel: 0,
 		score: 0,
-		levelProgress: {},
+		results: {},
 	},
 	reducers: {
 		updateLevel: (state, action) => {
@@ -29,7 +29,7 @@ const gameplay = createSlice({
 			state.loading = false;
 			const { levelPassed, correctOption } = action.payload;
 			state.score += levelPassed;
-			state.levelProgress[state.currLevel] = { levelPassed, correctOption };
+			state.results[state.currLevel] = { levelPassed, correctOption };
 		},
 	},
 });
