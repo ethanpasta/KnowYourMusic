@@ -123,7 +123,7 @@ class GameData {
 			pino.warn("Level already played");
 			return;
 		}
-		const levelPassed = this.answers[level] == chosenOption;
+		const levelPassed = chosenOption ? this.answers[level] == chosenOption : false;
 		this.userProgress.score += levelPassed;
 		this.userProgress.levels[level] = levelPassed;
 		return { levelPassed, ...(levelPassed ? {} : { correctOption: this.answers[level] }) };
