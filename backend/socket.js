@@ -13,8 +13,7 @@ function socketInit(sio) {
 			return;
 		}
 		pino.info(`Connecting socket '${socket.id}' for user '${socket.request.session.user}'`);
-		let gameManager = user.getGameManager();
-		gameManager ? gameManager.start() : user.setGameManager(new GameManager(user.id, socket));
+		user.setGameManager(new GameManager(user.id, socket));
 		socket.on("disconnect", () => {
 			pino.info(`Disconnecting socket #${socket.id} for user ${user}`);
 		});
