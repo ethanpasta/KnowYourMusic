@@ -14,6 +14,22 @@ A game that determines how well you know your music. Login with your Spotify acc
 
 Game data and basic user data is stored for a full user experience.
 
+## Technologies
+
+### Front-end
+
+- React (with hooks)
+- Redux for state management (with the official Redux Toolkit)
+- Feature-first architecture design, and a React pattern of presentational components vs containers for better seperation of concerns.
+- Socket.IO client side
+
+### Back-end
+
+- Node.js + Express
+- MongoDB
+- Socket.IO for real-time communication during gameplay
+- A lyric scraping service with multiple sources
+
 # Getting Started 👇
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
