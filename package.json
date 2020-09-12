@@ -42,7 +42,7 @@
 		"human-readable-ids": "^1.0.4",
 		"mongoose": "^5.9.13",
 		"mongoose-unique-validator": "^2.0.3",
-		"node-fetch": "^2.6.0",
+		"node-fetch": "^2.6.1",
 		"query-string": "^6.12.1",
 		"shortid": "^2.2.15",
 		"socket.io": "^2.3.0",
